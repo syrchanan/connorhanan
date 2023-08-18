@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "about/index.html",
+    "href": "about/index.html",
+    "title": "About",
+    "section": "",
+    "text": "Hi, I’m Connor! I’m from Carlsbad, CA and am a data scientist.\nI started my journey into data science from the world of television news production after I had the realization that audience viewing habits impact TV coverage in a huge way. Ever since I started working on the research and data science side of the industry (rather than production), I have developed a greater appreciation for and fascination in the media landscape as a whole.\nMy largest projects to date have involved forecasting the average audience of a cable network’s programming - weeks to years ahead of time - all to be able to help decide whether special events are worth broadcasting, to sell advertisements ahead of time, and to help set the network’s overall budget. All of this facets of forecasting involve handling anomalous viewership, accounting for elections and varying political climates, monitoring the integrity of 3rd party data, and many other factors.\nWhen not performing data dives, you can often find me at the beach, playing and coaching water polo, or even reenacting the American Civil War.\nIf you would like to learn more about me, or what I do, please check out some of the links on the left - and don’t hesitate to reach out!"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Connor Hanan",
+    "section": "",
+    "text": "I am Connor Hanan, a data scientist and television researcher.\nPassionate about the growing intersection of data analytics and television, I am interested in applying data-driven visualizations and models to explore the future of news media."
+  },
+  {
+    "objectID": "portfolio/index.html",
+    "href": "portfolio/index.html",
+    "title": "Portfolio",
+    "section": "",
+    "text": "# library(gh)\n# library(purrr)\n# library(tibble)\n# \n# r_projects <- gh::gh(\"/repos/syrchanan/portfolio/contents/r_projects\")\n# py_projects <- gh::gh(\"/repos/syrchanan/portfolio/contents/python_projects\")\n# \n# paths <- tibble(\n#   names = c(\n#     map_chr(r_projects, ~.x$name),\n#     map_chr(py_projects, ~.x$name)\n#   ),\n#   paths = c(\n#     map_chr(r_projects, ~.x$path),\n#     map_chr(py_projects, ~.x$path)\n#   )\n# )\n# \n# map_vec(paths$paths, \n#         ~gh::gh(paste0(\"/repos/syrchanan/portfolio/contents/\", .x, \"/README.md/\"))\n# )"
+  },
+  {
+    "objectID": "resume/index.html",
+    "href": "resume/index.html",
+    "title": "Resume",
+    "section": "",
+    "text": "Download current resume"
+  }
+]
