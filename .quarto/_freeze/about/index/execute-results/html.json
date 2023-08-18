@@ -1,0 +1,14 @@
+{
+  "hash": "1af43e8b24f4f157ecca88ebb907eb74",
+  "result": {
+    "markdown": "---\ntitle: \"About\"\nimage: ../images/hanan_tall.jpg\nabout:\n  image-width: 15em\n  image-shape: round\n  template: trestles\n  links: \n    - icon: github\n      text: Github\n      href: https://github.com/syrchanan\n    - icon: linkedin\n      text: LinkedIn\n      href: https://www.linkedin.com/in/connorhanan/\n    - icon: globe\n      text: Blog\n      href: https://syrchanan.quarto.pub/\n    - icon: envelope\n      text: Contact Me\n      href: mailto:connorhanan4@gmail.com\n---\n\n\nAbout this site\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

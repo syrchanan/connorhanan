@@ -1,0 +1,34 @@
+project:
+  type: website
+
+website:
+  title: "connorhanan"
+  navbar:
+    pinned: true
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about/index.qmd
+        text: About
+      - href: portfolio/index.qmd
+        text: Portfolio
+      - href: resume/index.qmd
+        text: Resume
+    right:
+    
+      - icon: github
+        href: https://github.com/syrchanan
+      - icon: linkedin
+        href: https://www.linkedin.com/in/connorhanan/
+      - icon: globe
+        href: https://syrchanan.quarto.pub/
+      - icon: envelope
+        href: mailto:connorhanan4@gmail.com
+        
+  favicon: ./images/icon.png
+
+format:
+  html:
+    theme: journal
+    css: styles.css
+    toc: true

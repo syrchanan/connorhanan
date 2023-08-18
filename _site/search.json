@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Connor Hanan",
+    "section": "",
+    "text": "I am Connor Hanan, a data scientist and television researcher.\nPassionate about the growing intersection of data analytics and television, I am interested in applying data-driven visualizations and models to explore the future of news media."
+  },
+  {
+    "objectID": "about/index.html",
+    "href": "about/index.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "resume/index.html",
+    "href": "resume/index.html",
+    "title": "Resume",
+    "section": "",
+    "text": "Download current resume"
+  },
+  {
+    "objectID": "portfolio/index.html",
+    "href": "portfolio/index.html",
+    "title": "Portfolio",
+    "section": "",
+    "text": "# library(gh)\n# library(purrr)\n# library(tibble)\n# \n# r_projects <- gh::gh(\"/repos/syrchanan/portfolio/contents/r_projects\")\n# py_projects <- gh::gh(\"/repos/syrchanan/portfolio/contents/python_projects\")\n# \n# paths <- tibble(\n#   names = c(\n#     map_chr(r_projects, ~.x$name),\n#     map_chr(py_projects, ~.x$name)\n#   ),\n#   paths = c(\n#     map_chr(r_projects, ~.x$path),\n#     map_chr(py_projects, ~.x$path)\n#   )\n# )\n# \n# map_vec(paths$paths, \n#         ~gh::gh(paste0(\"/repos/syrchanan/portfolio/contents/\", .x, \"/README.md/\"))\n# )"
+  }
+]

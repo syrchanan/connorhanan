@@ -1,0 +1,27 @@
+---
+title: "About"
+image: ../images/hanan_tall.jpg
+about:
+  image-width: 15em
+  image-shape: round
+  template: trestles
+  links: 
+    - icon: github
+      text: Github
+      href: https://github.com/syrchanan
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/connorhanan/
+    - icon: globe
+      text: Blog
+      href: https://syrchanan.quarto.pub/
+    - icon: envelope
+      text: Contact Me
+      href: mailto:connorhanan4@gmail.com
+---
+
+About this site
+
+```{r}
+1 + 1
+```

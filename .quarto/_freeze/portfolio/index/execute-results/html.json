@@ -1,0 +1,14 @@
+{
+  "hash": "6e878d57bbb166a09b2c1eba8523ba29",
+  "result": {
+    "markdown": "---\ntitle: \"Portfolio\"\nabout: \n  template: solana\nengine: knitr \nresume:\n  pdf: \"Resume_Connor_Hanan.pdf\"\n---\n\n::: {.cell}\n\n```{.r .cell-code}\n# library(gh)\n# library(purrr)\n# library(tibble)\n# \n# r_projects <- gh::gh(\"/repos/syrchanan/portfolio/contents/r_projects\")\n# py_projects <- gh::gh(\"/repos/syrchanan/portfolio/contents/python_projects\")\n# \n# paths <- tibble(\n#   names = c(\n#     map_chr(r_projects, ~.x$name),\n#     map_chr(py_projects, ~.x$name)\n#   ),\n#   paths = c(\n#     map_chr(r_projects, ~.x$path),\n#     map_chr(py_projects, ~.x$path)\n#   )\n# )\n# \n# map_vec(paths$paths, \n#         ~gh::gh(paste0(\"/repos/syrchanan/portfolio/contents/\", .x, \"/README.md/\"))\n# )\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

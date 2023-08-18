@@ -1,0 +1,35 @@
+---
+title: "Portfolio"
+about: 
+  template: solana
+engine: knitr 
+resume:
+  pdf: "Resume_Connor_Hanan.pdf"
+---
+
+```{r get_portfolio}
+
+# library(gh)
+# library(purrr)
+# library(tibble)
+# 
+# r_projects <- gh::gh("/repos/syrchanan/portfolio/contents/r_projects")
+# py_projects <- gh::gh("/repos/syrchanan/portfolio/contents/python_projects")
+# 
+# paths <- tibble(
+#   names = c(
+#     map_chr(r_projects, ~.x$name),
+#     map_chr(py_projects, ~.x$name)
+#   ),
+#   paths = c(
+#     map_chr(r_projects, ~.x$path),
+#     map_chr(py_projects, ~.x$path)
+#   )
+# )
+# 
+# map_vec(paths$paths, 
+#         ~gh::gh(paste0("/repos/syrchanan/portfolio/contents/", .x, "/README.md/"))
+# )
+
+```
+
