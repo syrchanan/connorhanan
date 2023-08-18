@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "connorhanan"
@@ -10,8 +11,8 @@ website:
         text: Home
       - href: about/index.qmd
         text: About
-      - href: portfolio/index.qmd
-        text: Portfolio
+      #- href: portfolio/index.qmd
+      #  text: Portfolio
       - href: resume/index.qmd
         text: Resume
     right:
