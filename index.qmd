@@ -1,6 +1,6 @@
 ---
 title: "Connor Hanan"
-image: images/hanan_headshot_crop.jpg
+image: images/hanan_headshot_crop_min.jpg
 about:
   image-width: 15em
   image-shape: round

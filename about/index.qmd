@@ -1,6 +1,6 @@
 ---
 title: "About"
-image: ../images/hanan_tall.jpg
+image: ../images/hanan_tall_min.jpg
 about:
   image-width: 15em
   image-shape: round
