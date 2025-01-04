@@ -14,7 +14,7 @@ about:
       href: https://www.linkedin.com/in/connorhanan/
     - icon: globe
       text: Blog
-      href: https://syrchanan.quarto.pub/
+      href: https://www.blog.connorhanan.com
     - icon: envelope
       text: Contact Me
       href: mailto:connorhanan4@gmail.com
