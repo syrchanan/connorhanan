@@ -32,14 +32,14 @@
     "href": "portfolio/index.html",
     "title": "Portfolio",
     "section": "",
-    "text": "Installing package into 'C:/Users/cdawg/AppData/Local/R/win-library/4.4'\n(as 'lib' is unspecified)\npackage ‘gitcreds’ successfully unpacked and MD5 sums checked package ‘httr2’ successfully unpacked and MD5 sums checked package ‘ini’ successfully unpacked and MD5 sums checked package ‘gh’ successfully unpacked and MD5 sums checked\nThe downloaded binary packages are in C:2pLcxF_packages"
+    "text": "A side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.\nClick here to check it out!"
   },
   {
     "objectID": "portfolio/index.html#automated-television-ratings",
     "href": "portfolio/index.html#automated-television-ratings",
     "title": "Portfolio",
-    "section": "Automated Television Ratings",
-    "text": "Automated Television Ratings\nA side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.\nClick here to check it out!"
+    "section": "",
+    "text": "A side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.\nClick here to check it out!"
   },
   {
     "objectID": "portfolio/index.html#data-mining-sem-project",
