@@ -18,8 +18,8 @@ website:
         text: Portfolio
       - href: resume/index.qmd
         text: Resume
+        
     right:
-    
       - icon: github
         href: https://github.com/syrchanan
       - icon: linkedin
@@ -35,4 +35,4 @@ format:
   html:
     theme: journal
     css: styles.css
-    toc: true
+    # toc: true
