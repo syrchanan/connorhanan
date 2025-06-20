@@ -15,7 +15,7 @@ resume:
 #| output: asis
 
 if (!require("pacman", quietly = T)) install.packages("pacman", quiet = T)
-pacman::p_load("tidyverse", "gh", "jsonlite")
+pacman::p_load("tidyverse", "gh", "jsonlite") |> invisible()
 set.seed(8675309)
 
 r_projects <- gh::gh("/repos/syrchanan/portfolio/contents/r_projects", .token = gh::gh_token())
@@ -37,9 +37,7 @@ paths %>%
                       ~ gh::gh(
                         paste0("/repos/syrchanan/portfolio/contents/", .x, "/README.md/"),
                         .token = gh::gh_token()
-                      ))) -> paths_readme
-
-paths_readme %>% 
+                      ))) %>% 
   mutate(content = map(readme,
                      ~ rawToChar(base64_dec(.x[[10]]))),
          link = map(readme,
