@@ -1,0 +1,170 @@
+---
+title: "Exploring Lambda Calculus (Part 3)"
+subtitle: "Mucking Around with Pre-Turing Computer Programming"
+date: "2025-06-15"
+execute: 
+  echo: true
+  eval: true
+format: 
+  html: 
+    code-line-numbers: false
+# image: "./ElmerEllsworthphoto01.jpg"
+categories:
+  - OJS
+draft: false
+---
+
+```{ojs}
+//| echo: false
+TRUE = a => b => a
+FALSE = a => b => b
+N0 = f => a => a
+N1 = f => a => f(a)
+N2 = f => a => f(f(a))
+N3 = f => a => f(f(f(a)))
+N4 = f => a => f(f(f(f(a))))
+SUCC = n => f => x => f(n(f)(x))
+PLUS = m => n => f => x => m(f)(n(f)(x))
+MULT = m => n => f => m(n(f))
+POW = b => e => e(b)
+lambda_to_js = (bool) => bool("TRUE")("FALSE")
+lambda_to_int = (int) => {
+  return int(x => x + 1)(0)
+}
+```
+
+## Recap
+
+Last time, we left off with our second truth table exploring Church Numerals and some incrementing mathematical operations. If you missed it, [catch up here](../20250520-lambda-calculus/index.qmd) before moving on to this post's topic: data structures and some new mathematical operations. [^1]
+
+[^1]: Inspired by [Eric Wastl's](http://hexatlas.com/entries/7) and [Stuart Patience's](https://www.driverlesscrocodile.com/tools-and-techniques/lambda-calculus-for-people-a-step-behind-me-2-boolean-logic/) posts.
+
+## Data Structures
+
+Now that we can represent numbers as functions, and critically, operate on them doing basic arithmetic, we need to find a way to store values for reference later. For example, the most basic of data structures is the *n-tuple*, which is an ordered list of *n* values.
+
+Storing values gets pretty tricky in lambda calculus -- remember, everything is a function, and functions naturally want to execute their operations on their arguments. However, we can get around this by using a form of encapsulation.
+
+Our outer function will wrap the arguments, doing nothing with them. Then, when we need a value, we pass an successor function to the stored value, finally executing on it, and retrieving the real value. Straightforward? Not in the least.
+
+Let's make some functions, then walk through them on the other side:
+
+```{ojs}
+BUILD_3TUPLE = a => b => c => f => f(a)(b)(c)
+```
+
+```{ojs}
+GET_A = t => t(a => b => c => a)
+```
+
+```{ojs}
+GET_B = t => t(a => b => c => b)
+```
+
+```{ojs}
+GET_C = t => t(a => b => c => c)
+```
+
+In the above `BUILD_3TUPLE`, can you decipher which part is our "tuple"? Indeed, it is the portion `f => f(a)(b)(c)`! This is because the function *f* doesn't actually do anything, it's just going to hold on to the tuple *(a,b,c)* until we need them.
+
+Once we do need them, it's time to call our accessor functions! These `GET_*` functions all do the same thing: retrieve the positional value by using *t* to unwrap the tuple, and only return the position we need.
+
+Let's try an example, where we want to extract the middle value from the tuple (0, 1, 2).
+
+```{ojs}
+{
+  const tuple = BUILD_3TUPLE(N0)(N1)(N2)
+  const b_val = GET_B(tuple)
+  return lambda_to_int( b_val )
+}
+```
+
+Using this idea, we can now implement a *decrementing* function -- a procedure that seems fairly trivial, considering we have it's counterpart already defined. However, it's not so straight forward as it appears.
+
+Incrementing something is easy with functions; if you recall, we just wrap another layer around the outside. However, to get the predecessor, you would have to unwrap a layer of the nested functions, which we have no great way of doing.
+
+Instead, we'll have to keep values "in memory". Let's start by defining a 2-tuple (PAIR), and the needed accessors:
+
+```{ojs}
+PAIR = a => b => f => f(a)(b)
+```
+
+```{ojs}
+FIRST = t => t(a => b => a)
+```
+
+```{ojs}
+SECOND = t => t(a => b => b)
+```
+
+With this in hand, we can create a function known as *shift-and-increment* (or *phi*), which takes a pair of numbers and returns a new pair of the second number and its increment: `(a, b) => (b, b+1)`.
+
+There can be many uses for this (looking at you, linked lists), but for now, we will use the concept to achieve our decrement function. The *phi* of a pair will always contain it's predecessor, so we can back our way into coming up with the previous number:
+
+```{ojs}
+PHI = p => PAIR( SECOND(p) )( SUCC( SECOND(p) ) )
+```
+
+Above, we are forming a `PAIR` based on *p* (prior pair). This means that we want the second element of *p* to become the first of *PHI*: (`SECOND(p)`), and the increment/successor of the second element of *p* as the second element of *PHI*: (`SUCC(SECOND(p))`).
+
+```{ojs}
+PRED = n => FIRST( n(PHI)( PAIR(N0)(N0) ) )
+```
+
+```{ojs}
+SUB = m => n => n(PRED)(m)
+```
+
+In the above, we are implementing `PRED` and then `SUB`, which utilizes `PRED` in its underlying logic.
+
+`PRED` is our decrement function, which takes a 2-tuple and starts counting up to it from (0,0). Once we hit our target number in the second position, we can then return the number in the first position, since we know that should be one less.
+
+`SUB` takes this farther by adding framework around `PRED`. Specifically, we are applying `PRED` *n* times to *m*. In other words, starting at *m*, we are then subtracting 1 from it *n* times. I will note this is not an efficient implementation whatsoever -- for each step, we have to count up from 0 to get the prior number. It works fine here since our numbers are low, but if you imagine doing 1000-999, or something even more drastic, you can imagine how long it would take.
+
+Using this idea, we can use a neat trick of the number functions themselves to check whether the number is 0 or not. Remember, a number is just the number of nested functions are in a stack - so 0 is represented by no functions in the stack. This is helpful because we can now check how many functions are called: any number of times \> 1 means it is not equal to 0, no calls means it is:
+
+```{ojs}
+ISZERO = n => n(x => FALSE)(TRUE)
+```
+
+Similarly, we can take advantage of a feature of subtraction to find if a value is less than or equal to another. Technically, since none of our numbers are signed (how would you even add a sign based on nested functions???), we can just check if the result of subtracting the terms is 0. It's ambiguous, yes (0 could mean the value is negative or 0), but in this case, we can use that "feature" to determine our inequality:
+
+```{ojs}
+LEQ = m => n => ISZERO( SUB(m)(n) )
+```
+
+With these brand new operations in hand, let's update our truth table from last post with our newest functions:
+
+```{ojs}
+part_3_math_table = {
+  const output = [];
+  
+  [N0, N1, N2, N3, N4].forEach(a => {    
+    output.push({
+      n: lambda_to_int(a),
+      succ: lambda_to_int( SUCC(a) ),
+      plus: lambda_to_int( PLUS(a)(a) ),
+      mult: lambda_to_int( MULT(a)(a) ),
+      pow: lambda_to_int( POW(a)(a) ),
+      pred: lambda_to_int( PRED(a) ),
+      "sub(2)": lambda_to_int( SUB(a)(N2) ),
+      iszero: lambda_to_js( ISZERO(a) ),
+      "leq(2)": lambda_to_js( LEQ(a)(N2) )
+    })
+  })
+
+  return output
+}
+```
+
+```{ojs}
+Inputs.table(part_3_math_table)
+```
+
+------------------------------------------------------------------------
+
+In the immortal words of Bill and Ted, excellent! We've got some basic data structures and even more operations built out.
+
+I'm not yet sure if I'll continue this series past this point, as I feel like I have a solid feel for lambda calculus at this point.
+
+-CH

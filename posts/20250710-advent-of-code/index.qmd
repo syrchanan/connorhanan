@@ -1,0 +1,289 @@
+---
+title: "2024 Day 8: Resonant Collinearity"
+subtitle: "Advent of Code"
+date: "2025-07-10"
+format: 
+  html: 
+    code-line-numbers: false
+categories:
+  - Advent of Code
+  - OJS
+draft: false
+---
+
+I'm back with more 2024 Advent of Code! Back in December, I solved about 18/25, though never copied them over from my Observable Notebooks. It's about time I post them here, so I'll be both catching up on old days as well as working to finish out the rest of the 2024 puzzles.
+
+With further ado, let's get started with [day 8](https://adventofcode.com/2024/day/8)!
+
+```{r}
+#| echo: false
+#| tags: [parameters]
+
+sample = FALSE
+
+```
+
+```{r}
+#| echo: false
+
+pacman::p_load("tidyverse")
+
+if (sample) {
+  raw = '............
+........0...
+.....0......
+.......0....
+....0.......
+......A.....
+............
+............
+........A...
+.........A..
+............
+............'
+} else {
+  raw = '.............4....O..........w....R...............
+.................................f................
+..............4...j......NW0......................
+....................R..W..........................
+...............R..................................
+..................................................
+v.......................f.......0W................
+.....9L............l...N.........w................
+....L....9.......ON........8......................
+.1.........49L........f..0..N.....................
+..........................V...l...................
+..........4.......................................
+.....................j...................3.....U..
+....O.....U.......................................
+........J......................l..................
+.O....s.Q.......j.....l.....w..........F...q......
+..................................................
+.U.......................j..8.....................
+................U...............................3.
+2.............................J............3......
+..............................F...................
+.....s...R...........J..................F.........
+.s......................x..........F.....q........
+.......2.....Q........3........x..................
+...........v......................u...............
+..............v...........n......8............q...
+.......f..................8........i..............
+.5..................1n..............P.....i.......
+............7............Q..................X.....
+......5...p....................V..................
+.................J..........nx............q.......
+.......p............W...........................0.
+......2.............p.5.....1....P................
+......I.................7.X....i...P..............
+............s.....r...w................V..........
+...............or...6.................V...........
+............................PS.7..................
+..........o...........................S...........
+...........5..............o..1.......n............
+...........I.........r.......7.......6............
+.................o.r...........X..................
+................................x.........u.......
+.........p..Q....2................................
+.........v.................S.....................u
+I...........................S.....6...............
+..................................................
+.......I..........................................
+..................................................
+.......................................6..........
+.................................X................'
+}
+
+# for OJS if needed
+ojs_define(raw = raw)
+
+```
+
+First, let's parse the input – this is fairly standard fare for Advent of Code. Grid parsing is probably one of the most common problem setups, so it's nothing a little regex can't fix. However, based on the problem (matching antennae based on matching character sets), I chose to use a `Map` object type. It could have easily been done with regular objects, but why not try something new?
+
+```{ojs}
+//| echo: true
+
+input = {
+  // split on newlines and separate each char
+  const parsed = raw.split("\n").map(d => d.split(""))
+
+  // create map of each antenna type
+  const antennae = parsed.reduce((acc, nxt, row) => {
+    nxt.forEach((elem, col) => {
+      if (elem !== ".") {
+        acc.set( 
+            elem, 
+            [...acc.get(elem) || [], {row: row, col: col}] 
+        )
+      }
+    })
+    return acc
+  }, new Map())
+
+  // return map and general grid info
+  return {
+      antennae: antennae, 
+      nrow: parsed.length, 
+      ncol: parsed[0].length, 
+      grid: parsed
+  }
+}
+
+```
+
+### Part 1
+
+In part 1, we need to find all the possible antinode locations, which are derived from pairs of matching antennae sets. To do so, we'll need to create a little bit of infrastructure below:
+
+```{ojs}
+
+function pairwise(arrays, dupes = false) {
+  // recursive so we need a short circuit
+  if (arrays.length === 0) return []
+  // extract matching item
+  const [first, ...rest] = arrays
+  // get all other pairs recursively
+  const end = pairwise(rest)
+  // if we allow dupes, nest them together
+  const other = end.map(([first2, rest2]) => {
+    return dupes
+      ? [first2, [first, ...rest2]]
+      : [first2, [...rest2]]
+  }) 
+  return [[first, rest], ...other]
+}
+
+```
+
+Above, we created a function to create all pairwise matches from an array. Using this, we can find all the locations of antinodes, since the new ones must be on the same plane as the existing antennae.
+
+Once we have our pairs, then we actually have to find the possible locations. Luckily for us, this is quite simple, since we can use the good ol' slope formula to calculate the possible positions.
+
+```{ojs}
+
+function find_antinodes(a, b, n) {
+    // y2 - y1 / x2 - x1
+    const slope = [ a[0] - b[0], a[1] - b[1] ]
+    // return the new positions in both directions
+    return [
+      [ a[0] + n*slope[0], a[1] + n*slope[1] ],
+      [ b[0] - n*slope[0], b[1] - n*slope[1] ]
+    ]
+  }
+
+```
+
+With these in hand, the solution becomes fairly trivial; all we need to do now is iterate through our input Map to:
+
+1.  Get all the pairwise matches of antennae in each group
+2.  Calculate the slope of each sub-pair
+3.  Count all unique antinode locations
+
+```{ojs}
+
+part_1 = {
+
+  const antinodes = []
+
+  // for each set
+  input.antennae.forEach(antenna_set => {
+    antinodes.push(
+      // get all pairwise matches
+      pairwise(antenna_set, false).flatMap(([ref, pair]) => {
+        return pair
+            // get the possible locations for each pair
+            .flatMap(d => find_antinodes( 
+                [ref.row, ref.col], 
+                [d.row, d.col], 
+                1 )
+            )
+          // remove any outside grid boundaries
+      }).filter(([row, col]) => 
+                row >= 0 &&
+                row < input.nrow &&
+                col >= 0 &&
+                col < input.ncol            
+      )
+    )
+  })
+
+  return new Set(
+    antinodes
+        .flat()
+        // combine coords with left shift and bitwise OR
+        .map(d => d[0] << 8 | d[1])
+    ).size
+
+}
+
+```
+
+```{ojs}
+//| echo: false
+
+part_1
+
+```
+
+⭐
+
+### Part 2
+
+In part 2, the difference is that antinodes may be more than 1-step away from existing antennae. This makes it fairly easy, since we can just extend our functions from before to look at a longer range!
+
+With a quick tweak to `n` in our `find_antinodes()` function (by using number of rows we can be sure that we will exceed the bounds for each antennae set in both directions), we can easily cross this day off our list!
+
+```{ojs}
+
+part_2 = {
+  const antinodes = []
+  // get array of row count to iterate across as N
+  const n_mults = Array(input.nrow).fill(0).map((_, i) => i+1)
+  
+  input.antennae.forEach(antenna_set => {
+    antinodes.push(
+      // same as before
+      pairwise(antenna_set, false).flatMap(([ref, pair]) => {
+        return n_mults.flatMap(n => {
+          // map across all N distances
+          return pair.flatMap(d => find_antinodes( [ref.row, ref.col], [d.row, d.col], n ))
+        })
+          // same filter as before to check boundaries
+      }).filter(([row, col]) => 
+                  row >= 0 &&
+                  row < input.nrow &&
+                  col >= 0 &&
+                  col < input.ncol            
+      )
+    )
+  })
+
+  // left shift and bitwise OR
+  const all_antinode = antinodes.flat().map(d => d[0] << 8 | d[1])
+  // do the same for antennae positions, since they count in this part
+  const all_antennae = [...input.antennae.entries()]
+      .map(d => d[1])
+      .flat()
+      .map(d => d.row << 8 | d.col)
+
+  // count unique antinodes AND antennae
+  return new Set( [ ...all_antinode, ...all_antennae ] ).size
+}
+
+```
+
+```{ojs}
+//| echo: false
+part_2
+```
+
+⭐
+
+------------------------------------------------------------------------
+
+Pretty fun day! I always enjoy a bit of regex, and some classic math to boot.
+
+I'm looking forward to catching up on a bunch of these AoC days, so stay tuned for more soon!
+
+-CH

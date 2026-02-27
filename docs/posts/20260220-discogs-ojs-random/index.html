@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-02-20">
+
+<title>Discogs Randomizer – connorhanan</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../.././images/icon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-36055dde38e1c66a85944b0e21486264.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script type="ojs-define">
+
+{"contents":[{"name":"DISCOGS_API_TOKEN","value":"GhbvJbneBiJKWwuRulPkgBdyZmDLJdCRkGpdXmBa"}]}
+
+</script>
+
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">connorhanan</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio/index.html"> 
+<span class="menu-text">Portfolio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/index.html"> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/syrchanan"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:connorhanan4@gmail.com"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../posts/index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Discogs Randomizer</h1>
+<p class="subtitle lead">Don’t know what to listen to? Let the randomizer decide for you!</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">OJS</div>
+    <div class="quarto-category">Music</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 20, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This tool will import your discogs collection and offer a randomized selection of which record to play, with filters for your convenience.</p>
+<p>Enter username below (case-sensitive) to get started.*</p>
+<p>*Please note it may take up to a minute to load your collection depending on size.</p>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="28" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 27;"><span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>viewof username <span class="op">=</span> <span class="fu">guard</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  ({ template }) <span class="kw">=&gt;</span> Inputs<span class="op">.</span><span class="fu">form</span>(</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">username</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">text</span>({ <span class="dt">label</span><span class="op">:</span> <span class="st">'Discogs Username: '</span><span class="op">,</span> <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">placeholder</span><span class="op">:</span> <span class="st">'e.g., syrchanan'</span> })</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    { template }</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  )<span class="op">,</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">resetLabel</span><span class="op">:</span> <span class="st">"Reset to Previous"</span><span class="op">,</span> <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">resubmit</span><span class="op">:</span> <span class="kw">false</span> }</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`## Filters`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="40" data-source-offset="-292"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>viewof filters <span class="op">=</span> <span class="fu">guard</span>(</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  ({ template }) <span class="kw">=&gt;</span> Inputs<span class="op">.</span><span class="fu">form</span>(</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>      <span class="dt">year</span><span class="op">:</span> <span class="fu">interval</span>(</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        d3<span class="op">.</span><span class="fu">extent</span>(cleanCollection<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">year</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> d<span class="op">.</span><span class="at">year</span> <span class="op">:</span> <span class="kw">null</span>))<span class="op">,</span> </span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        {<span class="dt">label</span><span class="op">:</span> <span class="st">'Year'</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">disabled</span><span class="op">:</span> <span class="op">!</span>username<span class="op">.</span><span class="at">username</span>}</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>      )<span class="op">,</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>      <span class="dt">label</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">search</span>(</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="kw">new</span> <span class="bu">Set</span>(cleanCollection<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">?.</span><span class="at">labels</span><span class="op">?.</span><span class="at">name</span>))<span class="op">,</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        {<span class="dt">label</span><span class="op">:</span> <span class="fu">md</span><span class="vs">`Record Label &lt;br/&gt; (leave empty to include all)`</span><span class="op">,</span> <span class="dt">disabled</span><span class="op">:</span> <span class="op">!</span>username<span class="op">.</span><span class="at">username</span>}</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    { template }</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  )<span class="op">,</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="dt">submitLabel</span><span class="op">:</span> <span class="st">"Reroll"</span><span class="op">,</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="dt">resetLabel</span><span class="op">:</span> <span class="st">"Reset to Previous"</span><span class="op">,</span> </span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="dt">required</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> </span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="dt">resubmit</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="65" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 64;"><span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  <span class="co">// reload on username.submit</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  username</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>username<span class="op">.</span><span class="at">username</span>) <span class="cf">return</span> <span class="fu">md</span><span class="vs">``</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  <span class="co">// retrigger on button press</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>  filters<span class="op">.</span><span class="at">reroll</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>  <span class="co">// subsetting and </span><span class="al">TODO</span><span class="co"> markdown output</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> subset <span class="op">=</span> cleanCollection<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> {</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (d<span class="op">.</span><span class="at">year</span> <span class="op">&gt;=</span> filters<span class="op">.</span><span class="at">year</span>[<span class="dv">0</span>] <span class="op">&amp;&amp;</span> d<span class="op">.</span><span class="at">year</span> <span class="op">&lt;=</span> filters<span class="op">.</span><span class="at">year</span>[<span class="dv">1</span>]) <span class="op">&amp;&amp;</span> </span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>      (filters<span class="op">.</span><span class="at">label</span><span class="op">.</span><span class="fu">includes</span>(d<span class="op">?.</span><span class="at">labels</span><span class="op">?.</span><span class="at">name</span>))</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> record <span class="op">=</span> <span class="fu">getRandomItem</span>(subset)</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">!</span>record <span class="op">?</span> <span class="fu">md</span><span class="vs">`</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;br/&gt;</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="vs">  Invalid filters resulted in an empty search. </span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;br/&gt; </span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="vs">  Please adjust and try again.`</span> <span class="op">:</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">md</span><span class="vs">`</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;br/&gt;</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;br/&gt;</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="vs">Your selection is...</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;br/&gt;</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;br/&gt;</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="vs">## </span><span class="sc">${</span>record<span class="op">.</span><span class="at">title</span><span class="sc">}</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="vs">**</span><span class="sc">${</span>record<span class="op">.</span><span class="at">artists</span><span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">**  </span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span>record<span class="op">.</span><span class="at">artists</span><span class="op">.</span><span class="at">anv</span> <span class="op">?</span> <span class="vs">`*</span><span class="sc">${</span>record<span class="op">.</span><span class="at">artists</span><span class="op">.</span><span class="at">anv</span><span class="sc">}</span><span class="vs">*`</span> <span class="op">:</span> <span class="st">''</span><span class="sc">}</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div style="</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: flex;</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="vs">  flex-wrap: wrap;</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="vs">  gap: 2rem;</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="vs">  align-items: flex-start;</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="vs">  flex-direction: row;</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="vs">"&gt;</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="flex: 0 0 300px; min-width: 150px; text-align: center;"&gt;</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;img src="</span><span class="sc">${</span>record<span class="op">.</span><span class="at">img</span><span class="sc">}</span><span class="vs">" alt="</span><span class="sc">${</span>record<span class="op">.</span><span class="at">title</span><span class="sc">}</span><span class="vs">" style="height:300px;object-fit:contain;max-width:100%;"&gt;</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="flex: 1 1 300px; min-width: 250px; max-width: 400px;"&gt;</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;table&gt;</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;tr&gt;&lt;th style='text-align:left;'&gt;Year&lt;/th&gt;&lt;td&gt;</span><span class="sc">${</span>record<span class="op">.</span><span class="at">year</span><span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;tr&gt;&lt;th style='text-align:left;'&gt;Label&lt;/th&gt;&lt;td&gt;</span><span class="sc">${</span>record<span class="op">.</span><span class="at">labels</span><span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs"> · Cat# </span><span class="sc">${</span>record<span class="op">.</span><span class="at">labels</span><span class="op">.</span><span class="at">catno</span><span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;tr&gt;&lt;th style='text-align:left;'&gt;Format&lt;/th&gt;&lt;td&gt;</span><span class="sc">${</span>record<span class="op">.</span><span class="at">formats</span><span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>record<span class="op">.</span><span class="at">formats</span><span class="op">.</span><span class="at">descriptions</span><span class="op">.</span><span class="fu">join</span>(<span class="st">', '</span>)<span class="sc">}</span><span class="vs">)&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;tr&gt;&lt;th style='text-align:left;'&gt;Genre&lt;/th&gt;&lt;td&gt;</span><span class="sc">${</span>record<span class="op">.</span><span class="at">genres</span><span class="op">?.</span><span class="fu">join</span>(<span class="st">', '</span>) <span class="op">??</span> <span class="st">'—'</span><span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;tr&gt;&lt;th style='text-align:left;'&gt;Style&lt;/th&gt;&lt;td&gt;</span><span class="sc">${</span>record<span class="op">.</span><span class="at">styles</span><span class="op">?.</span><span class="fu">join</span>(<span class="st">', '</span>) <span class="op">??</span> <span class="st">'—'</span><span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;/tr&gt;</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/table&gt;</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;style&gt;</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="vs">@media (max-width: 700px) {</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="vs">  div[style*="display: flex"] {</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="vs">    flex-direction: column !important;</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="vs">    gap: 1rem !important;</span></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="vs">  }</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="vs">table th, table td {</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: 0.5em 1.5em 0.5em 0.5em;</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/style&gt;</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb4" data-startfrom="139" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">guard</span>(fn<span class="op">,</span> options <span class="op">=</span> {}) {</span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {</span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>    submitLabel <span class="op">=</span> <span class="st">"Submit"</span><span class="op">,</span></span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>    resetLabel <span class="op">=</span> <span class="st">"Reset"</span><span class="op">,</span></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a>    required <span class="op">=</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>    resubmit <span class="op">=</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="st">"fit-content"</span><span class="op">,</span></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>    justify <span class="op">=</span> <span class="st">"start"</span><span class="op">,</span></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>    valid <span class="op">=</span> input <span class="kw">=&gt;</span> <span class="op">!</span>input<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">":invalid"</span>)<span class="op">,</span></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>  } <span class="op">=</span> options<span class="op">;</span></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> onSubmit <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> input<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>    submit<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="op">!</span>resubmit <span class="op">||</span> invalid<span class="op">;</span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>    reset<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>    wrapper<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">"input"</span><span class="op">,</span> { <span class="dt">bubbles</span><span class="op">:</span> <span class="kw">true</span> }))<span class="op">;</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> onReset <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>    input<span class="op">.</span><span class="at">value</span> <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>    submit<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="op">!</span>resubmit <span class="op">||</span> invalid<span class="op">;</span></span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>    reset<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> onInnerInputCapture <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>    invalid <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>    submit<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> onInnerInput <span class="op">=</span> e <span class="kw">=&gt;</span> {</span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>    e<span class="op">.</span><span class="fu">stopPropagation</span>()<span class="op">;</span></span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>    invalid <span class="op">=</span> <span class="op">!</span><span class="fu">valid</span>(input)<span class="op">;</span></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>    submit<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> invalid <span class="op">?</span> <span class="kw">true</span> <span class="op">:</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>    reset<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> submit <span class="op">=</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;button </span><span class="sc">${</span>{<span class="dt">disabled</span><span class="op">:</span> <span class="op">!</span>resubmit <span class="op">&amp;&amp;</span> <span class="op">!</span>required<span class="op">,</span> <span class="dt">onclick</span><span class="op">:</span> onSubmit}<span class="sc">}</span><span class="vs">&gt;</span><span class="sc">${</span>submitLabel<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> reset <span class="op">=</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;button </span><span class="sc">${</span>{<span class="dt">disabled</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">onclick</span><span class="op">:</span> onReset}<span class="sc">}</span><span class="vs">&gt;</span><span class="sc">${</span>resetLabel<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> footer <span class="op">=</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;div&gt;&lt;hr style="padding:0;margin:10px 0"&gt;&lt;div style="display:flex;gap:1ch;justify-content:</span><span class="sc">${</span>justify<span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span>submit<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>reset<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> template <span class="op">=</span> inputs <span class="kw">=&gt;</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;div&gt;</span><span class="sc">${</span></span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(inputs) <span class="op">?</span> inputs <span class="op">:</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(inputs)</span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>  <span class="sc">}${</span>footer<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> <span class="fu">fn</span>({submit<span class="op">,</span> reset<span class="op">,</span> footer<span class="op">,</span> template<span class="op">,</span> onSubmit<span class="op">,</span> onReset})<span class="op">;</span></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> invalid <span class="op">=</span> <span class="op">!!</span>input<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">":invalid"</span>)<span class="op">;</span></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>  submit<span class="op">.</span><span class="at">disabled</span> <span class="op">=</span> <span class="op">!</span>resubmit <span class="op">||</span> invalid<span class="op">;</span></span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>  input<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"input"</span><span class="op">,</span> onInnerInputCapture<span class="op">,</span> {<span class="dt">capture</span><span class="op">:</span> <span class="kw">true</span>})<span class="op">;</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a>  input<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"input"</span><span class="op">,</span> onInnerInput)<span class="op">;</span></span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> value <span class="op">=</span> required <span class="op">?</span> <span class="kw">undefined</span> <span class="op">:</span> input<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> wrapper <span class="op">=</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;div style="width:</span><span class="sc">${</span>width<span class="sc">}</span><span class="vs">"&gt;</span><span class="sc">${</span>input<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>  wrapper<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"submit"</span><span class="op">,</span> onSubmit)<span class="op">;</span></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">defineProperty</span>(wrapper<span class="op">,</span> <span class="st">"value"</span><span class="op">,</span> {</span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>    <span class="kw">get</span><span class="op">:</span> () <span class="kw">=&gt;</span> value<span class="op">,</span></span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span><span class="op">:</span> (v) <span class="kw">=&gt;</span> { input<span class="op">.</span><span class="at">value</span> <span class="op">=</span> v }<span class="op">,</span></span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">interval</span>(range <span class="op">=</span> []<span class="op">,</span> options <span class="op">=</span> {}) {</span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> [min <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> max <span class="op">=</span> <span class="dv">1</span>] <span class="op">=</span> range<span class="op">;</span></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {</span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> <span class="op">.</span><span class="bn">001</span><span class="op">,</span></span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> [min<span class="op">,</span> max]<span class="op">,</span></span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>    format <span class="op">=</span> ([start<span class="op">,</span> end]) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>start<span class="sc">}</span><span class="vs"> … </span><span class="sc">${</span>end<span class="sc">}</span><span class="vs">`</span><span class="op">,</span></span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>    color<span class="op">,</span></span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>    theme<span class="op">,</span></span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>    __ns__ <span class="op">=</span> <span class="fu">randomScope</span>()<span class="op">,</span></span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>  } <span class="op">=</span> options<span class="op">;</span></span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> css <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a><span class="vs">#</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs"> {</span></span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a><span class="vs">  font: 13px/1.2 var(--sans-serif);</span></span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: flex;</span></span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a><span class="vs">  align-items: baseline;</span></span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a><span class="vs">  flex-wrap: wrap;</span></span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a><span class="vs">  max-width: 100%;</span></span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: auto;</span></span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a><span class="vs">@media only screen and (min-width: 30em) {</span></span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a><span class="vs">  #</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs"> {</span></span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a><span class="vs">    flex-wrap: nowrap;</span></span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a><span class="vs">    width: </span><span class="sc">${</span><span class="fu">cssLength</span>(width)<span class="sc">}</span><span class="vs">;</span></span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a><span class="vs">  }</span></span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a><span class="vs">#</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs"> .label {</span></span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: 120px;</span></span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: 5px 0 4px 0;</span></span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin-right: 6.5px;</span></span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a><span class="vs">  flex-shrink: 0;</span></span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a><span class="vs">#</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs"> .form {</span></span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: flex;</span></span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: 100%;</span></span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a><span class="vs">#</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs"> .range {</span></span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a><span class="vs">  flex-shrink: 1;</span></span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: 100%;</span></span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a><span class="vs">#</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs"> .range-slider {</span></span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: 100%;</span></span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="op">;</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> $range <span class="op">=</span> <span class="fu">rangeInput</span>({min<span class="op">,</span> max<span class="op">,</span> <span class="dt">value</span><span class="op">:</span> [value[<span class="dv">0</span>]<span class="op">,</span> value[<span class="dv">1</span>]]<span class="op">,</span> step<span class="op">,</span> color<span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="st">"100%"</span><span class="op">,</span> theme})<span class="op">;</span></span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> $output <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;output&gt;`</span><span class="op">;</span></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> $view <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div id=</span><span class="sc">${</span>__ns__<span class="sc">}</span><span class="vs">&gt;</span></span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span>label <span class="op">==</span> <span class="kw">null</span> <span class="op">?</span> <span class="st">''</span> <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;div class="label"&gt;</span><span class="sc">${</span>label<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span></span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class=form&gt;</span></span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class=range&gt;</span></span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>$range<span class="sc">}</span><span class="vs">&lt;div class=range-output&gt;</span><span class="sc">${</span>$output<span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span><span class="fu">html</span><span class="vs">`&lt;style&gt;</span><span class="sc">${</span>css<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span></span>
+<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="op">;</span></span>
+<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> update <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> content <span class="op">=</span> <span class="fu">format</span>([$range<span class="op">.</span><span class="at">value</span>[<span class="dv">0</span>]<span class="op">,</span> $range<span class="op">.</span><span class="at">value</span>[<span class="dv">1</span>]])<span class="op">;</span></span>
+<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="kw">typeof</span> content <span class="op">===</span> <span class="st">'string'</span>) $output<span class="op">.</span><span class="at">value</span> <span class="op">=</span> content<span class="op">;</span></span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a>      <span class="cf">while</span>($output<span class="op">.</span><span class="at">lastChild</span>) $output<span class="op">.</span><span class="at">lastChild</span><span class="op">.</span><span class="fu">remove</span>()<span class="op">;</span></span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>      $output<span class="op">.</span><span class="fu">appendChild</span>(content)<span class="op">;</span></span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>  $range<span class="op">.</span><span class="at">oninput</span> <span class="op">=</span> update<span class="op">;</span></span>
+<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>()<span class="op">;</span></span>
+<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">defineProperty</span>($view<span class="op">,</span> <span class="st">'value'</span><span class="op">,</span> {</span>
+<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>    <span class="kw">get</span><span class="op">:</span> () <span class="kw">=&gt;</span> $range<span class="op">.</span><span class="at">value</span><span class="op">,</span></span>
+<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span><span class="op">:</span> ([a<span class="op">,</span> b]) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a>      $range<span class="op">.</span><span class="at">value</span> <span class="op">=</span> [a<span class="op">,</span> b]<span class="op">;</span></span>
+<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>      <span class="fu">update</span>()<span class="op">;</span></span>
+<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">rangeInput</span>(options <span class="op">=</span> {}) {</span>
+<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {</span>
+<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>    min <span class="op">=</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a>    max <span class="op">=</span> <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> <span class="st">'any'</span><span class="op">,</span></span>
+<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> defaultValue <span class="op">=</span> [min<span class="op">,</span> max]<span class="op">,</span></span>
+<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a>    color<span class="op">,</span></span>
+<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a>    width<span class="op">,</span></span>
+<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a>    theme <span class="op">=</span> theme_Flat<span class="op">,</span></span>
+<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a>  } <span class="op">=</span> options<span class="op">;</span></span>
+<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> controls <span class="op">=</span> {}<span class="op">;</span></span>
+<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> scope <span class="op">=</span> <span class="fu">randomScope</span>()<span class="op">;</span></span>
+<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> clamp <span class="op">=</span> (a<span class="op">,</span> b<span class="op">,</span> v) <span class="kw">=&gt;</span> v <span class="op">&lt;</span> a <span class="op">?</span> a <span class="op">:</span> v <span class="op">&gt;</span> b <span class="op">?</span> b <span class="op">:</span> v<span class="op">;</span></span>
+<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Will be used to sanitize values while avoiding floating point issues.</span></span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;input type=range </span><span class="sc">${</span>{min<span class="op">,</span> max<span class="op">,</span> step}<span class="sc">}</span><span class="vs">&gt;`</span><span class="op">;</span></span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dom <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class=</span><span class="sc">${</span><span class="vs">`</span><span class="sc">${</span>scope<span class="sc">}</span><span class="vs"> range-slider`</span><span class="sc">}</span><span class="vs"> style=</span><span class="sc">${</span>{</span>
+<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>    color<span class="op">,</span></span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>    <span class="dt">width</span><span class="op">:</span> <span class="fu">cssLength</span>(width)<span class="op">,</span></span>
+<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>  }<span class="sc">}</span><span class="vs">&gt;</span></span>
+<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a><span class="vs">  </span><span class="sc">${</span>controls<span class="op">.</span><span class="at">track</span> <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="range-track"&gt;</span></span>
+<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>controls<span class="op">.</span><span class="at">zone</span> <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="range-track-zone"&gt;</span></span>
+<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a><span class="vs">      </span><span class="sc">${</span>controls<span class="op">.</span><span class="at">range</span> <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="range-select" tabindex=0&gt;</span></span>
+<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>controls<span class="op">.</span><span class="at">min</span> <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="thumb thumb-min" tabindex=0&gt;`</span><span class="sc">}</span></span>
+<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>controls<span class="op">.</span><span class="at">max</span> <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="thumb thumb-max" tabindex=0&gt;`</span><span class="sc">}</span></span>
+<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a><span class="vs">      `</span><span class="sc">}</span></span>
+<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a><span class="vs">    `</span><span class="sc">}</span></span>
+<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="sc">}</span></span>
+<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a><span class="vs">  </span><span class="sc">${</span><span class="fu">html</span><span class="vs">`&lt;style&gt;</span><span class="sc">${</span>theme<span class="op">.</span><span class="fu">replace</span>(<span class="ss">/:scope</span><span class="sc">\b</span><span class="ss">/g</span><span class="op">,</span> <span class="st">'.'</span><span class="op">+</span>scope)<span class="sc">}</span><span class="vs">`</span><span class="sc">}</span></span>
+<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> value <span class="op">=</span> []<span class="op">,</span> changed <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Object</span><span class="op">.</span><span class="fu">defineProperty</span>(dom<span class="op">,</span> <span class="st">'value'</span><span class="op">,</span> {</span>
+<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a>    <span class="kw">get</span><span class="op">:</span> () <span class="kw">=&gt;</span> [<span class="op">...</span>value]<span class="op">,</span></span>
+<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span><span class="op">:</span> ([a<span class="op">,</span> b]) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a>      value <span class="op">=</span> <span class="fu">sanitize</span>(a<span class="op">,</span> b)<span class="op">;</span></span>
+<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a>      <span class="fu">updateRange</span>()<span class="op">;</span></span>
+<span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sanitize <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> <span class="pp">isNaN</span>(a) <span class="op">?</span> min <span class="op">:</span> ((input<span class="op">.</span><span class="at">value</span> <span class="op">=</span> a)<span class="op">,</span> input<span class="op">.</span><span class="at">valueAsNumber</span>)<span class="op">;</span></span>
+<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="pp">isNaN</span>(b) <span class="op">?</span> max <span class="op">:</span> ((input<span class="op">.</span><span class="at">value</span> <span class="op">=</span> b)<span class="op">,</span> input<span class="op">.</span><span class="at">valueAsNumber</span>)<span class="op">;</span></span>
+<span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(a<span class="op">,</span> b)<span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(a<span class="op">,</span> b)]<span class="op">;</span></span>
+<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> updateRange <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> ratio <span class="op">=</span> v <span class="kw">=&gt;</span> (v <span class="op">-</span> min) <span class="op">/</span> (max <span class="op">-</span> min)<span class="op">;</span></span>
+<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a>    dom<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="fu">setProperty</span>(<span class="st">'--range-min'</span><span class="op">,</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">ratio</span>(value[<span class="dv">0</span>]) <span class="op">*</span> <span class="dv">100</span><span class="sc">}</span><span class="vs">%`</span>)<span class="op">;</span></span>
+<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a>    dom<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="fu">setProperty</span>(<span class="st">'--range-max'</span><span class="op">,</span> <span class="vs">`</span><span class="sc">${</span><span class="fu">ratio</span>(value[<span class="dv">1</span>]) <span class="op">*</span> <span class="dv">100</span><span class="sc">}</span><span class="vs">%`</span>)<span class="op">;</span></span>
+<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-327"><a href="#cb4-327" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dispatch <span class="op">=</span> name <span class="kw">=&gt;</span> {</span>
+<span id="cb4-328"><a href="#cb4-328" aria-hidden="true" tabindex="-1"></a>    dom<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(name<span class="op">,</span> {<span class="dt">bubbles</span><span class="op">:</span> <span class="kw">true</span>}))<span class="op">;</span></span>
+<span id="cb4-329"><a href="#cb4-329" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-330"><a href="#cb4-330" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> setValue <span class="op">=</span> (vmin<span class="op">,</span> vmax) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-331"><a href="#cb4-331" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [pmin<span class="op">,</span> pmax] <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb4-332"><a href="#cb4-332" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="fu">sanitize</span>(vmin<span class="op">,</span> vmax)<span class="op">;</span></span>
+<span id="cb4-333"><a href="#cb4-333" aria-hidden="true" tabindex="-1"></a>    <span class="fu">updateRange</span>()<span class="op">;</span></span>
+<span id="cb4-334"><a href="#cb4-334" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Only dispatch if values have changed.</span></span>
+<span id="cb4-335"><a href="#cb4-335" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(pmin <span class="op">===</span> value[<span class="dv">0</span>] <span class="op">&amp;&amp;</span> pmax <span class="op">===</span> value[<span class="dv">1</span>]) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-336"><a href="#cb4-336" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dispatch</span>(<span class="st">'input'</span>)<span class="op">;</span></span>
+<span id="cb4-337"><a href="#cb4-337" aria-hidden="true" tabindex="-1"></a>    changed <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-339"><a href="#cb4-339" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setValue</span>(<span class="op">...</span>defaultValue)<span class="op">;</span></span>
+<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-342"><a href="#cb4-342" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Mousemove handlers.</span></span>
+<span id="cb4-343"><a href="#cb4-343" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> handlers <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span>([</span>
+<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a>    [controls<span class="op">.</span><span class="at">min</span><span class="op">,</span> (dt<span class="op">,</span> ov) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-345"><a href="#cb4-345" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> v <span class="op">=</span> <span class="fu">clamp</span>(min<span class="op">,</span> ov[<span class="dv">1</span>]<span class="op">,</span> ov[<span class="dv">0</span>] <span class="op">+</span> dt <span class="op">*</span> (max <span class="op">-</span> min))<span class="op">;</span></span>
+<span id="cb4-346"><a href="#cb4-346" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setValue</span>(v<span class="op">,</span> ov[<span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb4-347"><a href="#cb4-347" aria-hidden="true" tabindex="-1"></a>    }]<span class="op">,</span></span>
+<span id="cb4-348"><a href="#cb4-348" aria-hidden="true" tabindex="-1"></a>    [controls<span class="op">.</span><span class="at">max</span><span class="op">,</span> (dt<span class="op">,</span> ov) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-349"><a href="#cb4-349" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> v <span class="op">=</span> <span class="fu">clamp</span>(ov[<span class="dv">0</span>]<span class="op">,</span> max<span class="op">,</span> ov[<span class="dv">1</span>] <span class="op">+</span> dt <span class="op">*</span> (max <span class="op">-</span> min))<span class="op">;</span></span>
+<span id="cb4-350"><a href="#cb4-350" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setValue</span>(ov[<span class="dv">0</span>]<span class="op">,</span> v)<span class="op">;</span></span>
+<span id="cb4-351"><a href="#cb4-351" aria-hidden="true" tabindex="-1"></a>    }]<span class="op">,</span></span>
+<span id="cb4-352"><a href="#cb4-352" aria-hidden="true" tabindex="-1"></a>    [controls<span class="op">.</span><span class="at">range</span><span class="op">,</span> (dt<span class="op">,</span> ov) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-353"><a href="#cb4-353" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> d <span class="op">=</span> ov[<span class="dv">1</span>] <span class="op">-</span> ov[<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb4-354"><a href="#cb4-354" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> v <span class="op">=</span> <span class="fu">clamp</span>(min<span class="op">,</span> max <span class="op">-</span> d<span class="op">,</span> ov[<span class="dv">0</span>] <span class="op">+</span> dt <span class="op">*</span> (max <span class="op">-</span> min))<span class="op">;</span></span>
+<span id="cb4-355"><a href="#cb4-355" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setValue</span>(v<span class="op">,</span> v <span class="op">+</span> d)<span class="op">;</span></span>
+<span id="cb4-356"><a href="#cb4-356" aria-hidden="true" tabindex="-1"></a>    }]<span class="op">,</span></span>
+<span id="cb4-357"><a href="#cb4-357" aria-hidden="true" tabindex="-1"></a>  ])<span class="op">;</span></span>
+<span id="cb4-358"><a href="#cb4-358" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-359"><a href="#cb4-359" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Returns client offset object.</span></span>
+<span id="cb4-360"><a href="#cb4-360" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pointer <span class="op">=</span> e <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">touches</span> <span class="op">?</span> e<span class="op">.</span><span class="at">touches</span>[<span class="dv">0</span>] <span class="op">:</span> e<span class="op">;</span></span>
+<span id="cb4-361"><a href="#cb4-361" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Note: Chrome defaults "passive" for touch events to true.</span></span>
+<span id="cb4-362"><a href="#cb4-362" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> on  <span class="op">=</span> (e<span class="op">,</span> fn) <span class="kw">=&gt;</span> e<span class="op">.</span><span class="fu">split</span>(<span class="st">' '</span>)<span class="op">.</span><span class="fu">map</span>(e <span class="kw">=&gt;</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(e<span class="op">,</span> fn<span class="op">,</span> {<span class="dt">passive</span><span class="op">:</span> <span class="kw">false</span>}))<span class="op">;</span></span>
+<span id="cb4-363"><a href="#cb4-363" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> off <span class="op">=</span> (e<span class="op">,</span> fn) <span class="kw">=&gt;</span> e<span class="op">.</span><span class="fu">split</span>(<span class="st">' '</span>)<span class="op">.</span><span class="fu">map</span>(e <span class="kw">=&gt;</span> <span class="bu">document</span><span class="op">.</span><span class="fu">removeEventListener</span>(e<span class="op">,</span> fn<span class="op">,</span> {<span class="dt">passive</span><span class="op">:</span> <span class="kw">false</span>}))<span class="op">;</span></span>
+<span id="cb4-364"><a href="#cb4-364" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-365"><a href="#cb4-365" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> initialX<span class="op">,</span> initialV<span class="op">,</span> target<span class="op">,</span> dragging <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-366"><a href="#cb4-366" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">handleDrag</span>(e) {</span>
+<span id="cb4-367"><a href="#cb4-367" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Gracefully handle exit and reentry of the viewport.</span></span>
+<span id="cb4-368"><a href="#cb4-368" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span>e<span class="op">.</span><span class="at">buttons</span> <span class="op">&amp;&amp;</span> <span class="op">!</span>e<span class="op">.</span><span class="at">touches</span>) {</span>
+<span id="cb4-369"><a href="#cb4-369" aria-hidden="true" tabindex="-1"></a>      <span class="fu">handleDragStop</span>()<span class="op">;</span></span>
+<span id="cb4-370"><a href="#cb4-370" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-371"><a href="#cb4-371" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-372"><a href="#cb4-372" aria-hidden="true" tabindex="-1"></a>    dragging <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-373"><a href="#cb4-373" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> w <span class="op">=</span> controls<span class="op">.</span><span class="at">zone</span><span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">.</span><span class="at">width</span><span class="op">;</span></span>
+<span id="cb4-374"><a href="#cb4-374" aria-hidden="true" tabindex="-1"></a>    e<span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span></span>
+<span id="cb4-375"><a href="#cb4-375" aria-hidden="true" tabindex="-1"></a>    handlers<span class="op">.</span><span class="fu">get</span>(target)((<span class="fu">pointer</span>(e)<span class="op">.</span><span class="at">clientX</span> <span class="op">-</span> initialX) <span class="op">/</span> w<span class="op">,</span> initialV)<span class="op">;</span></span>
+<span id="cb4-376"><a href="#cb4-376" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-377"><a href="#cb4-377" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-378"><a href="#cb4-378" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-379"><a href="#cb4-379" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">handleDragStop</span>(e) {</span>
+<span id="cb4-380"><a href="#cb4-380" aria-hidden="true" tabindex="-1"></a>    <span class="fu">off</span>(<span class="st">'mousemove touchmove'</span><span class="op">,</span> handleDrag)<span class="op">;</span></span>
+<span id="cb4-381"><a href="#cb4-381" aria-hidden="true" tabindex="-1"></a>    <span class="fu">off</span>(<span class="st">'mouseup touchend'</span><span class="op">,</span> handleDragStop)<span class="op">;</span></span>
+<span id="cb4-382"><a href="#cb4-382" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(changed) <span class="fu">dispatch</span>(<span class="st">'change'</span>)<span class="op">;</span></span>
+<span id="cb4-383"><a href="#cb4-383" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-384"><a href="#cb4-384" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-385"><a href="#cb4-385" aria-hidden="true" tabindex="-1"></a>  invalidation<span class="op">.</span><span class="fu">then</span>(handleDragStop)<span class="op">;</span></span>
+<span id="cb4-386"><a href="#cb4-386" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-387"><a href="#cb4-387" aria-hidden="true" tabindex="-1"></a>  dom<span class="op">.</span><span class="at">ontouchstart</span> <span class="op">=</span> dom<span class="op">.</span><span class="at">onmousedown</span> <span class="op">=</span> e <span class="kw">=&gt;</span> {</span>
+<span id="cb4-388"><a href="#cb4-388" aria-hidden="true" tabindex="-1"></a>    dragging <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-389"><a href="#cb4-389" aria-hidden="true" tabindex="-1"></a>    changed <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-390"><a href="#cb4-390" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span>handlers<span class="op">.</span><span class="fu">has</span>(e<span class="op">.</span><span class="at">target</span>)) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-391"><a href="#cb4-391" aria-hidden="true" tabindex="-1"></a>    <span class="fu">on</span>(<span class="st">'mousemove touchmove'</span><span class="op">,</span> handleDrag)<span class="op">;</span></span>
+<span id="cb4-392"><a href="#cb4-392" aria-hidden="true" tabindex="-1"></a>    <span class="fu">on</span>(<span class="st">'mouseup touchend'</span><span class="op">,</span> handleDragStop)<span class="op">;</span></span>
+<span id="cb4-393"><a href="#cb4-393" aria-hidden="true" tabindex="-1"></a>    e<span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span></span>
+<span id="cb4-394"><a href="#cb4-394" aria-hidden="true" tabindex="-1"></a>    e<span class="op">.</span><span class="fu">stopPropagation</span>()<span class="op">;</span></span>
+<span id="cb4-395"><a href="#cb4-395" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-396"><a href="#cb4-396" aria-hidden="true" tabindex="-1"></a>    target <span class="op">=</span> e<span class="op">.</span><span class="at">target</span><span class="op">;</span></span>
+<span id="cb4-397"><a href="#cb4-397" aria-hidden="true" tabindex="-1"></a>    initialX <span class="op">=</span> <span class="fu">pointer</span>(e)<span class="op">.</span><span class="at">clientX</span><span class="op">;</span></span>
+<span id="cb4-398"><a href="#cb4-398" aria-hidden="true" tabindex="-1"></a>    initialV <span class="op">=</span> value<span class="op">.</span><span class="fu">slice</span>()<span class="op">;</span></span>
+<span id="cb4-399"><a href="#cb4-399" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-400"><a href="#cb4-400" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-401"><a href="#cb4-401" aria-hidden="true" tabindex="-1"></a>  controls<span class="op">.</span><span class="at">track</span><span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> e <span class="kw">=&gt;</span> {</span>
+<span id="cb4-402"><a href="#cb4-402" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(dragging) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-403"><a href="#cb4-403" aria-hidden="true" tabindex="-1"></a>    changed <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-404"><a href="#cb4-404" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> r <span class="op">=</span> controls<span class="op">.</span><span class="at">zone</span><span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">;</span></span>
+<span id="cb4-405"><a href="#cb4-405" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> t <span class="op">=</span> <span class="fu">clamp</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> (<span class="fu">pointer</span>(e)<span class="op">.</span><span class="at">clientX</span> <span class="op">-</span> r<span class="op">.</span><span class="at">left</span>) <span class="op">/</span> r<span class="op">.</span><span class="at">width</span>)<span class="op">;</span></span>
+<span id="cb4-406"><a href="#cb4-406" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> v <span class="op">=</span> min <span class="op">+</span> t <span class="op">*</span> (max <span class="op">-</span> min)<span class="op">;</span></span>
+<span id="cb4-407"><a href="#cb4-407" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [vmin<span class="op">,</span> vmax] <span class="op">=</span> value<span class="op">,</span> d <span class="op">=</span> vmax <span class="op">-</span> vmin<span class="op">;</span></span>
+<span id="cb4-408"><a href="#cb4-408" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(v <span class="op">&lt;</span> vmin) <span class="fu">setValue</span>(v<span class="op">,</span> v <span class="op">+</span> d)<span class="op">;</span></span>
+<span id="cb4-409"><a href="#cb4-409" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span>(v <span class="op">&gt;</span> vmax) <span class="fu">setValue</span>(v <span class="op">-</span> d<span class="op">,</span> v)<span class="op">;</span></span>
+<span id="cb4-410"><a href="#cb4-410" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(changed) <span class="fu">dispatch</span>(<span class="st">'change'</span>)<span class="op">;</span></span>
+<span id="cb4-411"><a href="#cb4-411" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-412"><a href="#cb4-412" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-413"><a href="#cb4-413" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> dom<span class="op">;</span></span>
+<span id="cb4-414"><a href="#cb4-414" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-415"><a href="#cb4-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-416"><a href="#cb4-416" aria-hidden="true" tabindex="-1"></a>cssLength <span class="op">=</span> v <span class="kw">=&gt;</span> v <span class="op">==</span> <span class="kw">null</span> <span class="op">?</span> <span class="kw">null</span> <span class="op">:</span> <span class="kw">typeof</span> v <span class="op">===</span> <span class="st">'number'</span> <span class="op">?</span> <span class="vs">`</span><span class="sc">${</span>v<span class="sc">}</span><span class="vs">px`</span> <span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>v<span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb4-417"><a href="#cb4-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-418"><a href="#cb4-418" aria-hidden="true" tabindex="-1"></a>html <span class="op">=</span> htl<span class="op">.</span><span class="at">html</span></span>
+<span id="cb4-419"><a href="#cb4-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-420"><a href="#cb4-420" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">randomScope</span>(prefix <span class="op">=</span> <span class="st">'scope-'</span>) {</span>
+<span id="cb4-421"><a href="#cb4-421" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> prefix <span class="op">+</span> (<span class="bu">performance</span><span class="op">.</span><span class="fu">now</span>() <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>())<span class="op">.</span><span class="fu">toString</span>(<span class="dv">32</span>)<span class="op">.</span><span class="fu">replace</span>(<span class="st">'.'</span><span class="op">,</span> <span class="st">'-'</span>)<span class="op">;</span></span>
+<span id="cb4-422"><a href="#cb4-422" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-423"><a href="#cb4-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-424"><a href="#cb4-424" aria-hidden="true" tabindex="-1"></a>theme_Flat <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb4-425"><a href="#cb4-425" aria-hidden="true" tabindex="-1"></a><span class="vs">/* Options */</span></span>
+<span id="cb4-426"><a href="#cb4-426" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope {</span></span>
+<span id="cb4-427"><a href="#cb4-427" aria-hidden="true" tabindex="-1"></a><span class="vs">  color: #3b99fc;</span></span>
+<span id="cb4-428"><a href="#cb4-428" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: 240px;</span></span>
+<span id="cb4-429"><a href="#cb4-429" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-430"><a href="#cb4-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-431"><a href="#cb4-431" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope {</span></span>
+<span id="cb4-432"><a href="#cb4-432" aria-hidden="true" tabindex="-1"></a><span class="vs">  position: relative;</span></span>
+<span id="cb4-433"><a href="#cb4-433" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: inline-block;</span></span>
+<span id="cb4-434"><a href="#cb4-434" aria-hidden="true" tabindex="-1"></a><span class="vs">  --thumb-size: 15px;</span></span>
+<span id="cb4-435"><a href="#cb4-435" aria-hidden="true" tabindex="-1"></a><span class="vs">  --thumb-radius: calc(var(--thumb-size) / 2);</span></span>
+<span id="cb4-436"><a href="#cb4-436" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: var(--thumb-radius) 0;</span></span>
+<span id="cb4-437"><a href="#cb4-437" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 2px;</span></span>
+<span id="cb4-438"><a href="#cb4-438" aria-hidden="true" tabindex="-1"></a><span class="vs">  vertical-align: middle;</span></span>
+<span id="cb4-439"><a href="#cb4-439" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-440"><a href="#cb4-440" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .range-track {</span></span>
+<span id="cb4-441"><a href="#cb4-441" aria-hidden="true" tabindex="-1"></a><span class="vs">  box-sizing: border-box;</span></span>
+<span id="cb4-442"><a href="#cb4-442" aria-hidden="true" tabindex="-1"></a><span class="vs">  position: relative;</span></span>
+<span id="cb4-443"><a href="#cb4-443" aria-hidden="true" tabindex="-1"></a><span class="vs">  height: 7px;</span></span>
+<span id="cb4-444"><a href="#cb4-444" aria-hidden="true" tabindex="-1"></a><span class="vs">  background-color: hsl(0, 0%, 80%);</span></span>
+<span id="cb4-445"><a href="#cb4-445" aria-hidden="true" tabindex="-1"></a><span class="vs">  overflow: visible;</span></span>
+<span id="cb4-446"><a href="#cb4-446" aria-hidden="true" tabindex="-1"></a><span class="vs">  border-radius: 4px;</span></span>
+<span id="cb4-447"><a href="#cb4-447" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: 0 var(--thumb-radius);</span></span>
+<span id="cb4-448"><a href="#cb4-448" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-449"><a href="#cb4-449" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .range-track-zone {</span></span>
+<span id="cb4-450"><a href="#cb4-450" aria-hidden="true" tabindex="-1"></a><span class="vs">  box-sizing: border-box;</span></span>
+<span id="cb4-451"><a href="#cb4-451" aria-hidden="true" tabindex="-1"></a><span class="vs">  position: relative;</span></span>
+<span id="cb4-452"><a href="#cb4-452" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-453"><a href="#cb4-453" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .range-select {</span></span>
+<span id="cb4-454"><a href="#cb4-454" aria-hidden="true" tabindex="-1"></a><span class="vs">  box-sizing: border-box;</span></span>
+<span id="cb4-455"><a href="#cb4-455" aria-hidden="true" tabindex="-1"></a><span class="vs">  position: relative;</span></span>
+<span id="cb4-456"><a href="#cb4-456" aria-hidden="true" tabindex="-1"></a><span class="vs">  left: var(--range-min);</span></span>
+<span id="cb4-457"><a href="#cb4-457" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: calc(var(--range-max) - var(--range-min));</span></span>
+<span id="cb4-458"><a href="#cb4-458" aria-hidden="true" tabindex="-1"></a><span class="vs">  cursor: ew-resize;</span></span>
+<span id="cb4-459"><a href="#cb4-459" aria-hidden="true" tabindex="-1"></a><span class="vs">  background: currentColor;</span></span>
+<span id="cb4-460"><a href="#cb4-460" aria-hidden="true" tabindex="-1"></a><span class="vs">  height: 7px;</span></span>
+<span id="cb4-461"><a href="#cb4-461" aria-hidden="true" tabindex="-1"></a><span class="vs">  border: inherit;</span></span>
+<span id="cb4-462"><a href="#cb4-462" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-463"><a href="#cb4-463" aria-hidden="true" tabindex="-1"></a><span class="vs">/* Expands the hotspot area. */</span></span>
+<span id="cb4-464"><a href="#cb4-464" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .range-select:before {</span></span>
+<span id="cb4-465"><a href="#cb4-465" aria-hidden="true" tabindex="-1"></a><span class="vs">  content: "";</span></span>
+<span id="cb4-466"><a href="#cb4-466" aria-hidden="true" tabindex="-1"></a><span class="vs">  position: absolute;</span></span>
+<span id="cb4-467"><a href="#cb4-467" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: 100%;</span></span>
+<span id="cb4-468"><a href="#cb4-468" aria-hidden="true" tabindex="-1"></a><span class="vs">  height: var(--thumb-size);</span></span>
+<span id="cb4-469"><a href="#cb4-469" aria-hidden="true" tabindex="-1"></a><span class="vs">  left: 0;</span></span>
+<span id="cb4-470"><a href="#cb4-470" aria-hidden="true" tabindex="-1"></a><span class="vs">  top: calc(2px - var(--thumb-radius));</span></span>
+<span id="cb4-471"><a href="#cb4-471" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-472"><a href="#cb4-472" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .range-select:focus,</span></span>
+<span id="cb4-473"><a href="#cb4-473" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .thumb:focus {</span></span>
+<span id="cb4-474"><a href="#cb4-474" aria-hidden="true" tabindex="-1"></a><span class="vs">  outline: none;</span></span>
+<span id="cb4-475"><a href="#cb4-475" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-476"><a href="#cb4-476" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .thumb {</span></span>
+<span id="cb4-477"><a href="#cb4-477" aria-hidden="true" tabindex="-1"></a><span class="vs">  box-sizing: border-box;</span></span>
+<span id="cb4-478"><a href="#cb4-478" aria-hidden="true" tabindex="-1"></a><span class="vs">  position: absolute;</span></span>
+<span id="cb4-479"><a href="#cb4-479" aria-hidden="true" tabindex="-1"></a><span class="vs">  width: var(--thumb-size);</span></span>
+<span id="cb4-480"><a href="#cb4-480" aria-hidden="true" tabindex="-1"></a><span class="vs">  height: var(--thumb-size);</span></span>
+<span id="cb4-481"><a href="#cb4-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-482"><a href="#cb4-482" aria-hidden="true" tabindex="-1"></a><span class="vs">  background: #fcfcfc;</span></span>
+<span id="cb4-483"><a href="#cb4-483" aria-hidden="true" tabindex="-1"></a><span class="vs">  top: -4px;</span></span>
+<span id="cb4-484"><a href="#cb4-484" aria-hidden="true" tabindex="-1"></a><span class="vs">  border-radius: 100%;</span></span>
+<span id="cb4-485"><a href="#cb4-485" aria-hidden="true" tabindex="-1"></a><span class="vs">  border: 1px solid hsl(0,0%,55%);</span></span>
+<span id="cb4-486"><a href="#cb4-486" aria-hidden="true" tabindex="-1"></a><span class="vs">  cursor: default;</span></span>
+<span id="cb4-487"><a href="#cb4-487" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0;</span></span>
+<span id="cb4-488"><a href="#cb4-488" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-489"><a href="#cb4-489" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .thumb:active {</span></span>
+<span id="cb4-490"><a href="#cb4-490" aria-hidden="true" tabindex="-1"></a><span class="vs">  box-shadow: inset 0 var(--thumb-size) #0002;</span></span>
+<span id="cb4-491"><a href="#cb4-491" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-492"><a href="#cb4-492" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .thumb-min {</span></span>
+<span id="cb4-493"><a href="#cb4-493" aria-hidden="true" tabindex="-1"></a><span class="vs">  left: calc(-1px - var(--thumb-radius));</span></span>
+<span id="cb4-494"><a href="#cb4-494" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-495"><a href="#cb4-495" aria-hidden="true" tabindex="-1"></a><span class="vs">:scope .thumb-max {</span></span>
+<span id="cb4-496"><a href="#cb4-496" aria-hidden="true" tabindex="-1"></a><span class="vs">  right: calc(-1px - var(--thumb-radius));</span></span>
+<span id="cb4-497"><a href="#cb4-497" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb4-498"><a href="#cb4-498" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-3-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb5" data-startfrom="503" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb5-503"><a href="#cb5-503" aria-hidden="true" tabindex="-1"></a>sleep <span class="op">=</span> (ms) <span class="kw">=&gt;</span> <span class="kw">new</span> <span class="bu">Promise</span>(resolve <span class="kw">=&gt;</span> <span class="pp">setTimeout</span>(resolve<span class="op">,</span> ms))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb6" data-startfrom="509" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 508;"><span id="cb6-509"><a href="#cb6-509" aria-hidden="true" tabindex="-1"></a>getRandomItem <span class="op">=</span> (arr) <span class="kw">=&gt;</span> arr[<span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> arr<span class="op">.</span><span class="at">length</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb7" data-startfrom="515" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 514;"><span id="cb7-515"><a href="#cb7-515" aria-hidden="true" tabindex="-1"></a>pageLim <span class="op">=</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb8" data-startfrom="521" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 520;"><span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a>cleanCollection <span class="op">=</span> {</span>
+<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> page <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> releases <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalPages <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>  <span class="co">// reload on username</span></span>
+<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a>  username</span>
+<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>username<span class="op">.</span><span class="at">username</span>) <span class="cf">return</span> []</span>
+<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a>  <span class="cf">do</span> {</span>
+<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(</span>
+<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a>      <span class="vs">`https://api.discogs.com/users/</span><span class="sc">${</span>username<span class="op">.</span><span class="at">username</span><span class="sc">}</span><span class="vs">/collection/folders/0/releases?per_page=100&amp;page=</span><span class="sc">${</span>page<span class="sc">}</span><span class="vs">&amp;sort=added&amp;sort_order=desc`</span><span class="op">,</span></span>
+<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a>      { </span>
+<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a>        <span class="dt">headers</span><span class="op">:</span> { </span>
+<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a>        <span class="st">"User-Agent"</span><span class="op">:</span> <span class="st">"DiscogsSuggestedPlay/0.1"</span><span class="op">,</span> </span>
+<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Authorization"</span><span class="op">:</span> <span class="vs">`Discogs token=</span><span class="sc">${</span>DISCOGS_API_TOKEN<span class="sc">}</span><span class="vs">`</span> } </span>
+<span id="cb8-539"><a href="#cb8-539" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data<span class="op">?.</span><span class="at">message</span> <span class="op">||</span> <span class="vs">`Parsing Collection Page: </span><span class="sc">${</span>page<span class="sc">}</span><span class="vs">/</span><span class="sc">${</span>totalPages<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (data<span class="op">?.</span><span class="at">message</span>) {</span>
+<span id="cb8-544"><a href="#cb8-544" aria-hidden="true" tabindex="-1"></a>      <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`</span><span class="sc">${</span>data<span class="op">.</span><span class="at">message</span><span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-546"><a href="#cb8-546" aria-hidden="true" tabindex="-1"></a>    totalPages <span class="op">=</span> data<span class="op">.</span><span class="at">pagination</span><span class="op">.</span><span class="at">pages</span></span>
+<span id="cb8-547"><a href="#cb8-547" aria-hidden="true" tabindex="-1"></a>    releases <span class="op">=</span> releases<span class="op">.</span><span class="fu">concat</span>(data<span class="op">.</span><span class="at">releases</span>)</span>
+<span id="cb8-548"><a href="#cb8-548" aria-hidden="true" tabindex="-1"></a>    page<span class="op">++</span></span>
+<span id="cb8-549"><a href="#cb8-549" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (page <span class="op">&gt;=</span> pageLim) {</span>
+<span id="cb8-550"><a href="#cb8-550" aria-hidden="true" tabindex="-1"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'pageLim reached, stopping early'</span>)</span>
+<span id="cb8-551"><a href="#cb8-551" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb8-552"><a href="#cb8-552" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-553"><a href="#cb8-553" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> <span class="fu">sleep</span>(<span class="dv">1000</span>)</span>
+<span id="cb8-554"><a href="#cb8-554" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">while</span> (page <span class="op">&lt;=</span> totalPages)</span>
+<span id="cb8-555"><a href="#cb8-555" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-556"><a href="#cb8-556" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> releases<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> {</span>
+<span id="cb8-557"><a href="#cb8-557" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb8-558"><a href="#cb8-558" aria-hidden="true" tabindex="-1"></a>      <span class="dt">title</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">title</span><span class="op">,</span></span>
+<span id="cb8-559"><a href="#cb8-559" aria-hidden="true" tabindex="-1"></a>      <span class="dt">year</span><span class="op">:</span> <span class="op">+</span>d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">year</span><span class="op">,</span></span>
+<span id="cb8-560"><a href="#cb8-560" aria-hidden="true" tabindex="-1"></a>      <span class="dt">formats</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">formats</span>[<span class="dv">0</span>]<span class="op">,</span></span>
+<span id="cb8-561"><a href="#cb8-561" aria-hidden="true" tabindex="-1"></a>      <span class="dt">labels</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">labels</span>[<span class="dv">0</span>]<span class="op">,</span></span>
+<span id="cb8-562"><a href="#cb8-562" aria-hidden="true" tabindex="-1"></a>      <span class="dt">artists</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">artists</span>[<span class="dv">0</span>]<span class="op">,</span></span>
+<span id="cb8-563"><a href="#cb8-563" aria-hidden="true" tabindex="-1"></a>      <span class="dt">genres</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">genres</span><span class="op">,</span></span>
+<span id="cb8-564"><a href="#cb8-564" aria-hidden="true" tabindex="-1"></a>      <span class="dt">styles</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">styles</span><span class="op">,</span></span>
+<span id="cb8-565"><a href="#cb8-565" aria-hidden="true" tabindex="-1"></a>      <span class="dt">img</span><span class="op">:</span> d<span class="op">.</span><span class="at">basic_information</span><span class="op">?.</span><span class="at">cover_image</span></span>
+<span id="cb8-566"><a href="#cb8-566" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-567"><a href="#cb8-567" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb8-568"><a href="#cb8-568" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<hr>
+<p>Inspired by Real_gone_daddy45’s trove - hopefully this should solve any music indecision!</p>
+<p>-CH</p>
+
+
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiB1c2VybmFtZSA9IGd1YXJkKFxuICAoeyB0ZW1wbGF0ZSB9KSA9PiBJbnB1dHMuZm9ybShcbiAgICB7XG4gICAgICB1c2VybmFtZTogSW5wdXRzLnRleHQoeyBsYWJlbDogJ0Rpc2NvZ3MgVXNlcm5hbWU6ICcsIHJlcXVpcmVkOiB0cnVlLCBwbGFjZWhvbGRlcjogJ2UuZy4sIHN5cmNoYW5hbicgfSlcbiAgICB9LFxuICAgIHsgdGVtcGxhdGUgfVxuICApLFxuICB7IHJlc2V0TGFiZWw6IFwiUmVzZXQgdG8gUHJldmlvdXNcIiwgcmVxdWlyZWQ6IHRydWUsIHJlc3VibWl0OiBmYWxzZSB9XG4pXG5cbm1kYCMjIEZpbHRlcnNgXG5cbnZpZXdvZiBmaWx0ZXJzID0gZ3VhcmQoXG4gICh7IHRlbXBsYXRlIH0pID0+IElucHV0cy5mb3JtKFxuICAgIHtcbiAgICAgIHllYXI6IGludGVydmFsKFxuICAgICAgICBkMy5leHRlbnQoY2xlYW5Db2xsZWN0aW9uLm1hcChkID0+IGQueWVhciA+IDAgPyBkLnllYXIgOiBudWxsKSksIFxuICAgICAgICB7bGFiZWw6ICdZZWFyJywgc3RlcDogMSwgdmFsdWU6IDAsIGRpc2FibGVkOiAhdXNlcm5hbWUudXNlcm5hbWV9XG4gICAgICApLFxuICAgICAgbGFiZWw6IElucHV0cy5zZWFyY2goXG4gICAgICAgIG5ldyBTZXQoY2xlYW5Db2xsZWN0aW9uLm1hcChkID0+IGQ/LmxhYmVscz8ubmFtZSkpLFxuICAgICAgICB7bGFiZWw6IG1kYFJlY29yZCBMYWJlbCA8YnIvPiAobGVhdmUgZW1wdHkgdG8gaW5jbHVkZSBhbGwpYCwgZGlzYWJsZWQ6ICF1c2VybmFtZS51c2VybmFtZX1cbiAgICAgIClcbiAgICB9LFxuICAgIHsgdGVtcGxhdGUgfVxuICApLFxuICB7IFxuICAgIHN1Ym1pdExhYmVsOiBcIlJlcm9sbFwiLFxuICAgIHJlc2V0TGFiZWw6IFwiUmVzZXQgdG8gUHJldmlvdXNcIiwgXG4gICAgcmVxdWlyZWQ6IGZhbHNlLCBcbiAgICByZXN1Ym1pdDogdHJ1ZVxuICB9XG4pXG5cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IntcblxuICAvLyByZWxvYWQgb24gdXNlcm5hbWUuc3VibWl0XG4gIHVzZXJuYW1lXG4gIFxuICBpZiAoIXVzZXJuYW1lLnVzZXJuYW1lKSByZXR1cm4gbWRgYFxuICBcbiAgLy8gcmV0cmlnZ2VyIG9uIGJ1dHRvbiBwcmVzc1xuICBmaWx0ZXJzLnJlcm9sbFxuXG4gIC8vIHN1YnNldHRpbmcgYW5kIFRPRE8gbWFya2Rvd24gb3V0cHV0XG4gIGxldCBzdWJzZXQgPSBjbGVhbkNvbGxlY3Rpb24uZmlsdGVyKGQgPT4ge1xuICAgIHJldHVybiAoZC55ZWFyID49IGZpbHRlcnMueWVhclswXSAmJiBkLnllYXIgPD0gZmlsdGVycy55ZWFyWzFdKSAmJiBcbiAgICAgIChmaWx0ZXJzLmxhYmVsLmluY2x1ZGVzKGQ/LmxhYmVscz8ubmFtZSkpXG4gIH0pXG5cbiAgbGV0IHJlY29yZCA9IGdldFJhbmRvbUl0ZW0oc3Vic2V0KVxuXG4gIHJldHVybiAhcmVjb3JkID8gbWRgXG4gIDxici8+XG4gIEludmFsaWQgZmlsdGVycyByZXN1bHRlZCBpbiBhbiBlbXB0eSBzZWFyY2guIFxuICA8YnIvPiBcbiAgUGxlYXNlIGFkanVzdCBhbmQgdHJ5IGFnYWluLmAgOlxuXG4gIG1kYFxuPGJyLz5cbjxici8+XG5Zb3VyIHNlbGVjdGlvbiBpcy4uLlxuPGJyLz5cbjxici8+XG5cbiMjICR7cmVjb3JkLnRpdGxlfVxuKioke3JlY29yZC5hcnRpc3RzLm5hbWV9KiogIFxuJHtyZWNvcmQuYXJ0aXN0cy5hbnYgPyBgKiR7cmVjb3JkLmFydGlzdHMuYW52fSpgIDogJyd9XG5cbjxkaXYgc3R5bGU9XCJcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBnYXA6IDJyZW07XG4gIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xuXCI+XG4gIDxkaXYgc3R5bGU9XCJmbGV4OiAwIDAgMzAwcHg7IG1pbi13aWR0aDogMTUwcHg7IHRleHQtYWxpZ246IGNlbnRlcjtcIj5cbiAgICA8aW1nIHNyYz1cIiR7cmVjb3JkLmltZ31cIiBhbHQ9XCIke3JlY29yZC50aXRsZX1cIiBzdHlsZT1cImhlaWdodDozMDBweDtvYmplY3QtZml0OmNvbnRhaW47bWF4LXdpZHRoOjEwMCU7XCI+XG4gIDwvZGl2PlxuICA8ZGl2IHN0eWxlPVwiZmxleDogMSAxIDMwMHB4OyBtaW4td2lkdGg6IDI1MHB4OyBtYXgtd2lkdGg6IDQwMHB4O1wiPlxuICAgIDx0YWJsZT5cbiAgICAgIDx0cj48dGggc3R5bGU9J3RleHQtYWxpZ246bGVmdDsnPlllYXI8L3RoPjx0ZD4ke3JlY29yZC55ZWFyfTwvdGQ+PC90cj5cbiAgICAgIDx0cj48dGggc3R5bGU9J3RleHQtYWxpZ246bGVmdDsnPkxhYmVsPC90aD48dGQ+JHtyZWNvcmQubGFiZWxzLm5hbWV9IMK3IENhdCMgJHtyZWNvcmQubGFiZWxzLmNhdG5vfTwvdGQ+PC90cj5cbiAgICAgIDx0cj48dGggc3R5bGU9J3RleHQtYWxpZ246bGVmdDsnPkZvcm1hdDwvdGg+PHRkPiR7cmVjb3JkLmZvcm1hdHMubmFtZX0gKCR7cmVjb3JkLmZvcm1hdHMuZGVzY3JpcHRpb25zLmpvaW4oJywgJyl9KTwvdGQ+PC90cj5cbiAgICAgIDx0cj48dGggc3R5bGU9J3RleHQtYWxpZ246bGVmdDsnPkdlbnJlPC90aD48dGQ+JHtyZWNvcmQuZ2VucmVzPy5qb2luKCcsICcpID8/ICfigJQnfTwvdGQ+PC90cj5cbiAgICAgIDx0cj48dGggc3R5bGU9J3RleHQtYWxpZ246bGVmdDsnPlN0eWxlPC90aD48dGQ+JHtyZWNvcmQuc3R5bGVzPy5qb2luKCcsICcpID8/ICfigJQnfTwvdGQ+PC90cj5cbiAgICA8L3RhYmxlPlxuICA8L2Rpdj5cbjwvZGl2PlxuPHN0eWxlPlxuQG1lZGlhIChtYXgtd2lkdGg6IDcwMHB4KSB7XG4gIGRpdltzdHlsZSo9XCJkaXNwbGF5OiBmbGV4XCJdIHtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uICFpbXBvcnRhbnQ7XG4gICAgZ2FwOiAxcmVtICFpbXBvcnRhbnQ7XG4gIH1cbn1cbnRhYmxlIHRoLCB0YWJsZSB0ZCB7XG4gIHBhZGRpbmc6IDAuNWVtIDEuNWVtIDAuNWVtIDAuNWVtO1xufVxuPC9zdHlsZT5cbmBcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImZ1bmN0aW9uIGd1YXJkKGZuLCBvcHRpb25zID0ge30pIHtcbiAgY29uc3Qge1xuICAgIHN1Ym1pdExhYmVsID0gXCJTdWJtaXRcIixcbiAgICByZXNldExhYmVsID0gXCJSZXNldFwiLFxuICAgIHJlcXVpcmVkID0gZmFsc2UsXG4gICAgcmVzdWJtaXQgPSB0cnVlLFxuICAgIHdpZHRoID0gXCJmaXQtY29udGVudFwiLFxuICAgIGp1c3RpZnkgPSBcInN0YXJ0XCIsXG4gICAgdmFsaWQgPSBpbnB1dCA9PiAhaW5wdXQucXVlcnlTZWxlY3RvcihcIjppbnZhbGlkXCIpLFxuICB9ID0gb3B0aW9ucztcblxuICBjb25zdCBvblN1Ym1pdCA9ICgpID0+IHtcbiAgICB2YWx1ZSA9IGlucHV0LnZhbHVlO1xuICAgIHN1Ym1pdC5kaXNhYmxlZCA9ICFyZXN1Ym1pdCB8fCBpbnZhbGlkO1xuICAgIHJlc2V0LmRpc2FibGVkID0gdHJ1ZTtcbiAgICB3cmFwcGVyLmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KFwiaW5wdXRcIiwgeyBidWJibGVzOiB0cnVlIH0pKTtcbiAgfTtcbiAgY29uc3Qgb25SZXNldCA9ICgpID0+IHtcbiAgICBpbnB1dC52YWx1ZSA9IHZhbHVlO1xuICAgIHN1Ym1pdC5kaXNhYmxlZCA9ICFyZXN1Ym1pdCB8fCBpbnZhbGlkO1xuICAgIHJlc2V0LmRpc2FibGVkID0gdHJ1ZTtcbiAgfTtcbiAgY29uc3Qgb25Jbm5lcklucHV0Q2FwdHVyZSA9ICgpID0+IHtcbiAgICBpbnZhbGlkID0gdHJ1ZTtcbiAgICBzdWJtaXQuZGlzYWJsZWQgPSB0cnVlO1xuICB9O1xuICBjb25zdCBvbklubmVySW5wdXQgPSBlID0+IHtcbiAgICBlLnN0b3BQcm9wYWdhdGlvbigpO1xuICAgIGludmFsaWQgPSAhdmFsaWQoaW5wdXQpO1xuICAgIHN1Ym1pdC5kaXNhYmxlZCA9IGludmFsaWQgPyB0cnVlIDogZmFsc2U7XG4gICAgcmVzZXQuZGlzYWJsZWQgPSBmYWxzZTtcbiAgfTtcbiAgXG4gIGNvbnN0IHN1Ym1pdCA9IGh0bC5odG1sYDxidXR0b24gJHt7ZGlzYWJsZWQ6ICFyZXN1Ym1pdCAmJiAhcmVxdWlyZWQsIG9uY2xpY2s6IG9uU3VibWl0fX0+JHtzdWJtaXRMYWJlbH1gO1xuICBjb25zdCByZXNldCA9IGh0bC5odG1sYDxidXR0b24gJHt7ZGlzYWJsZWQ6IHRydWUsIG9uY2xpY2s6IG9uUmVzZXR9fT4ke3Jlc2V0TGFiZWx9YDtcbiAgY29uc3QgZm9vdGVyID0gaHRsLmh0bWxgPGRpdj48aHIgc3R5bGU9XCJwYWRkaW5nOjA7bWFyZ2luOjEwcHggMFwiPjxkaXYgc3R5bGU9XCJkaXNwbGF5OmZsZXg7Z2FwOjFjaDtqdXN0aWZ5LWNvbnRlbnQ6JHtqdXN0aWZ5fVwiPiR7c3VibWl0fSAke3Jlc2V0fWA7XG4gIGNvbnN0IHRlbXBsYXRlID0gaW5wdXRzID0+IGh0bC5odG1sYDxkaXY+JHtcbiAgICBBcnJheS5pc0FycmF5KGlucHV0cykgPyBpbnB1dHMgOiBPYmplY3QudmFsdWVzKGlucHV0cylcbiAgfSR7Zm9vdGVyfWA7XG4gIFxuICBjb25zdCBpbnB1dCA9IGZuKHtzdWJtaXQsIHJlc2V0LCBmb290ZXIsIHRlbXBsYXRlLCBvblN1Ym1pdCwgb25SZXNldH0pO1xuICBsZXQgaW52YWxpZCA9ICEhaW5wdXQucXVlcnlTZWxlY3RvcihcIjppbnZhbGlkXCIpO1xuICBzdWJtaXQuZGlzYWJsZWQgPSAhcmVzdWJtaXQgfHwgaW52YWxpZDtcblxuICBpbnB1dC5hZGRFdmVudExpc3RlbmVyKFwiaW5wdXRcIiwgb25Jbm5lcklucHV0Q2FwdHVyZSwge2NhcHR1cmU6IHRydWV9KTtcbiAgaW5wdXQuYWRkRXZlbnRMaXN0ZW5lcihcImlucHV0XCIsIG9uSW5uZXJJbnB1dCk7XG4gIGxldCB2YWx1ZSA9IHJlcXVpcmVkID8gdW5kZWZpbmVkIDogaW5wdXQudmFsdWU7XG4gIGNvbnN0IHdyYXBwZXIgPSBodGwuaHRtbGA8ZGl2IHN0eWxlPVwid2lkdGg6JHt3aWR0aH1cIj4ke2lucHV0fWA7XG4gIHdyYXBwZXIuYWRkRXZlbnRMaXN0ZW5lcihcInN1Ym1pdFwiLCBvblN1Ym1pdCk7XG4gIHJldHVybiBPYmplY3QuZGVmaW5lUHJvcGVydHkod3JhcHBlciwgXCJ2YWx1ZVwiLCB7XG4gICAgZ2V0OiAoKSA9PiB2YWx1ZSxcbiAgICBzZXQ6ICh2KSA9PiB7IGlucHV0LnZhbHVlID0gdiB9LFxuICB9KTtcbn1cblxuZnVuY3Rpb24gaW50ZXJ2YWwocmFuZ2UgPSBbXSwgb3B0aW9ucyA9IHt9KSB7XG4gIGNvbnN0IFttaW4gPSAwLCBtYXggPSAxXSA9IHJhbmdlO1xuICBjb25zdCB7XG4gICAgc3RlcCA9IC4wMDEsXG4gICAgbGFiZWwgPSBudWxsLFxuICAgIHZhbHVlID0gW21pbiwgbWF4XSxcbiAgICBmb3JtYXQgPSAoW3N0YXJ0LCBlbmRdKSA9PiBgJHtzdGFydH0g4oCmICR7ZW5kfWAsXG4gICAgY29sb3IsXG4gICAgd2lkdGggPSAzNjAsXG4gICAgdGhlbWUsXG4gICAgX19uc19fID0gcmFuZG9tU2NvcGUoKSxcbiAgfSA9IG9wdGlvbnM7XG5cbiAgY29uc3QgY3NzID0gYFxuIyR7X19uc19ffSB7XG4gIGZvbnQ6IDEzcHgvMS4yIHZhcigtLXNhbnMtc2VyaWYpO1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogYmFzZWxpbmU7XG4gIGZsZXgtd3JhcDogd3JhcDtcbiAgbWF4LXdpZHRoOiAxMDAlO1xuICB3aWR0aDogYXV0bztcbn1cbkBtZWRpYSBvbmx5IHNjcmVlbiBhbmQgKG1pbi13aWR0aDogMzBlbSkge1xuICAjJHtfX25zX199IHtcbiAgICBmbGV4LXdyYXA6IG5vd3JhcDtcbiAgICB3aWR0aDogJHtjc3NMZW5ndGgod2lkdGgpfTtcbiAgfVxufVxuIyR7X19uc19ffSAubGFiZWwge1xuICB3aWR0aDogMTIwcHg7XG4gIHBhZGRpbmc6IDVweCAwIDRweCAwO1xuICBtYXJnaW4tcmlnaHQ6IDYuNXB4O1xuICBmbGV4LXNocmluazogMDtcbn1cbiMke19fbnNfX30gLmZvcm0ge1xuICBkaXNwbGF5OiBmbGV4O1xuICB3aWR0aDogMTAwJTtcbn1cbiMke19fbnNfX30gLnJhbmdlIHtcbiAgZmxleC1zaHJpbms6IDE7XG4gIHdpZHRoOiAxMDAlO1xufVxuIyR7X19uc19ffSAucmFuZ2Utc2xpZGVyIHtcbiAgd2lkdGg6IDEwMCU7XG59XG4gIGA7XG4gIFxuICBjb25zdCAkcmFuZ2UgPSByYW5nZUlucHV0KHttaW4sIG1heCwgdmFsdWU6IFt2YWx1ZVswXSwgdmFsdWVbMV1dLCBzdGVwLCBjb2xvciwgd2lkdGg6IFwiMTAwJVwiLCB0aGVtZX0pO1xuICBjb25zdCAkb3V0cHV0ID0gaHRtbGA8b3V0cHV0PmA7XG4gIGNvbnN0ICR2aWV3ID0gaHRtbGA8ZGl2IGlkPSR7X19uc19ffT5cbiR7bGFiZWwgPT0gbnVsbCA/ICcnIDogaHRtbGA8ZGl2IGNsYXNzPVwibGFiZWxcIj4ke2xhYmVsfWB9XG48ZGl2IGNsYXNzPWZvcm0+XG4gIDxkaXYgY2xhc3M9cmFuZ2U+XG4gICAgJHskcmFuZ2V9PGRpdiBjbGFzcz1yYW5nZS1vdXRwdXQ+JHskb3V0cHV0fTwvZGl2PlxuICA8L2Rpdj5cbjwvZGl2PlxuJHtodG1sYDxzdHlsZT4ke2Nzc31gfVxuICBgO1xuXG4gIGNvbnN0IHVwZGF0ZSA9ICgpID0+IHtcbiAgICBjb25zdCBjb250ZW50ID0gZm9ybWF0KFskcmFuZ2UudmFsdWVbMF0sICRyYW5nZS52YWx1ZVsxXV0pO1xuICAgIGlmKHR5cGVvZiBjb250ZW50ID09PSAnc3RyaW5nJykgJG91dHB1dC52YWx1ZSA9IGNvbnRlbnQ7XG4gICAgZWxzZSB7XG4gICAgICB3aGlsZSgkb3V0cHV0Lmxhc3RDaGlsZCkgJG91dHB1dC5sYXN0Q2hpbGQucmVtb3ZlKCk7XG4gICAgICAkb3V0cHV0LmFwcGVuZENoaWxkKGNvbnRlbnQpO1xuICAgIH1cbiAgfTtcbiAgJHJhbmdlLm9uaW5wdXQgPSB1cGRhdGU7XG4gIHVwZGF0ZSgpO1xuICBcbiAgcmV0dXJuIE9iamVjdC5kZWZpbmVQcm9wZXJ0eSgkdmlldywgJ3ZhbHVlJywge1xuICAgIGdldDogKCkgPT4gJHJhbmdlLnZhbHVlLFxuICAgIHNldDogKFthLCBiXSkgPT4ge1xuICAgICAgJHJhbmdlLnZhbHVlID0gW2EsIGJdO1xuICAgICAgdXBkYXRlKCk7XG4gICAgfSxcbiAgfSk7XG59XG5cbmZ1bmN0aW9uIHJhbmdlSW5wdXQob3B0aW9ucyA9IHt9KSB7XG4gIGNvbnN0IHtcbiAgICBtaW4gPSAwLFxuICAgIG1heCA9IDEwMCxcbiAgICBzdGVwID0gJ2FueScsXG4gICAgdmFsdWU6IGRlZmF1bHRWYWx1ZSA9IFttaW4sIG1heF0sXG4gICAgY29sb3IsXG4gICAgd2lkdGgsXG4gICAgdGhlbWUgPSB0aGVtZV9GbGF0LFxuICB9ID0gb3B0aW9ucztcbiAgXG4gIGNvbnN0IGNvbnRyb2xzID0ge307XG4gIGNvbnN0IHNjb3BlID0gcmFuZG9tU2NvcGUoKTtcbiAgY29uc3QgY2xhbXAgPSAoYSwgYiwgdikgPT4gdiA8IGEgPyBhIDogdiA+IGIgPyBiIDogdjtcblxuICAvLyBXaWxsIGJlIHVzZWQgdG8gc2FuaXRpemUgdmFsdWVzIHdoaWxlIGF2b2lkaW5nIGZsb2F0aW5nIHBvaW50IGlzc3Vlcy5cbiAgY29uc3QgaW5wdXQgPSBodG1sYDxpbnB1dCB0eXBlPXJhbmdlICR7e21pbiwgbWF4LCBzdGVwfX0+YDtcbiAgXG4gIGNvbnN0IGRvbSA9IGh0bWxgPGRpdiBjbGFzcz0ke2Ake3Njb3BlfSByYW5nZS1zbGlkZXJgfSBzdHlsZT0ke3tcbiAgICBjb2xvcixcbiAgICB3aWR0aDogY3NzTGVuZ3RoKHdpZHRoKSxcbiAgfX0+XG4gICR7Y29udHJvbHMudHJhY2sgPSBodG1sYDxkaXYgY2xhc3M9XCJyYW5nZS10cmFja1wiPlxuICAgICR7Y29udHJvbHMuem9uZSA9IGh0bWxgPGRpdiBjbGFzcz1cInJhbmdlLXRyYWNrLXpvbmVcIj5cbiAgICAgICR7Y29udHJvbHMucmFuZ2UgPSBodG1sYDxkaXYgY2xhc3M9XCJyYW5nZS1zZWxlY3RcIiB0YWJpbmRleD0wPlxuICAgICAgICAke2NvbnRyb2xzLm1pbiA9IGh0bWxgPGRpdiBjbGFzcz1cInRodW1iIHRodW1iLW1pblwiIHRhYmluZGV4PTA+YH1cbiAgICAgICAgJHtjb250cm9scy5tYXggPSBodG1sYDxkaXYgY2xhc3M9XCJ0aHVtYiB0aHVtYi1tYXhcIiB0YWJpbmRleD0wPmB9XG4gICAgICBgfVxuICAgIGB9XG4gIGB9XG4gICR7aHRtbGA8c3R5bGU+JHt0aGVtZS5yZXBsYWNlKC86c2NvcGVcXGIvZywgJy4nK3Njb3BlKX1gfVxuPC9kaXY+YDtcblxuICBsZXQgdmFsdWUgPSBbXSwgY2hhbmdlZCA9IGZhbHNlO1xuICBPYmplY3QuZGVmaW5lUHJvcGVydHkoZG9tLCAndmFsdWUnLCB7XG4gICAgZ2V0OiAoKSA9PiBbLi4udmFsdWVdLFxuICAgIHNldDogKFthLCBiXSkgPT4ge1xuICAgICAgdmFsdWUgPSBzYW5pdGl6ZShhLCBiKTtcbiAgICAgIHVwZGF0ZVJhbmdlKCk7XG4gICAgfSxcbiAgfSk7XG5cbiAgY29uc3Qgc2FuaXRpemUgPSAoYSwgYikgPT4ge1xuICAgIGEgPSBpc05hTihhKSA/IG1pbiA6ICgoaW5wdXQudmFsdWUgPSBhKSwgaW5wdXQudmFsdWVBc051bWJlcik7XG4gICAgYiA9IGlzTmFOKGIpID8gbWF4IDogKChpbnB1dC52YWx1ZSA9IGIpLCBpbnB1dC52YWx1ZUFzTnVtYmVyKTtcbiAgICByZXR1cm4gW01hdGgubWluKGEsIGIpLCBNYXRoLm1heChhLCBiKV07XG4gIH1cbiAgXG4gIGNvbnN0IHVwZGF0ZVJhbmdlID0gKCkgPT4ge1xuICAgIGNvbnN0IHJhdGlvID0gdiA9PiAodiAtIG1pbikgLyAobWF4IC0gbWluKTtcbiAgICBkb20uc3R5bGUuc2V0UHJvcGVydHkoJy0tcmFuZ2UtbWluJywgYCR7cmF0aW8odmFsdWVbMF0pICogMTAwfSVgKTtcbiAgICBkb20uc3R5bGUuc2V0UHJvcGVydHkoJy0tcmFuZ2UtbWF4JywgYCR7cmF0aW8odmFsdWVbMV0pICogMTAwfSVgKTtcbiAgfTtcblxuICBjb25zdCBkaXNwYXRjaCA9IG5hbWUgPT4ge1xuICAgIGRvbS5kaXNwYXRjaEV2ZW50KG5ldyBFdmVudChuYW1lLCB7YnViYmxlczogdHJ1ZX0pKTtcbiAgfTtcbiAgY29uc3Qgc2V0VmFsdWUgPSAodm1pbiwgdm1heCkgPT4ge1xuICAgIGNvbnN0IFtwbWluLCBwbWF4XSA9IHZhbHVlO1xuICAgIHZhbHVlID0gc2FuaXRpemUodm1pbiwgdm1heCk7XG4gICAgdXBkYXRlUmFuZ2UoKTtcbiAgICAvLyBPbmx5IGRpc3BhdGNoIGlmIHZhbHVlcyBoYXZlIGNoYW5nZWQuXG4gICAgaWYocG1pbiA9PT0gdmFsdWVbMF0gJiYgcG1heCA9PT0gdmFsdWVbMV0pIHJldHVybjtcbiAgICBkaXNwYXRjaCgnaW5wdXQnKTtcbiAgICBjaGFuZ2VkID0gdHJ1ZTtcbiAgfTtcbiAgXG4gIHNldFZhbHVlKC4uLmRlZmF1bHRWYWx1ZSk7XG4gIFxuICAvLyBNb3VzZW1vdmUgaGFuZGxlcnMuXG4gIGNvbnN0IGhhbmRsZXJzID0gbmV3IE1hcChbXG4gICAgW2NvbnRyb2xzLm1pbiwgKGR0LCBvdikgPT4ge1xuICAgICAgY29uc3QgdiA9IGNsYW1wKG1pbiwgb3ZbMV0sIG92WzBdICsgZHQgKiAobWF4IC0gbWluKSk7XG4gICAgICBzZXRWYWx1ZSh2LCBvdlsxXSk7XG4gICAgfV0sXG4gICAgW2NvbnRyb2xzLm1heCwgKGR0LCBvdikgPT4ge1xuICAgICAgY29uc3QgdiA9IGNsYW1wKG92WzBdLCBtYXgsIG92WzFdICsgZHQgKiAobWF4IC0gbWluKSk7XG4gICAgICBzZXRWYWx1ZShvdlswXSwgdik7XG4gICAgfV0sXG4gICAgW2NvbnRyb2xzLnJhbmdlLCAoZHQsIG92KSA9PiB7XG4gICAgICBjb25zdCBkID0gb3ZbMV0gLSBvdlswXTtcbiAgICAgIGNvbnN0IHYgPSBjbGFtcChtaW4sIG1heCAtIGQsIG92WzBdICsgZHQgKiAobWF4IC0gbWluKSk7XG4gICAgICBzZXRWYWx1ZSh2LCB2ICsgZCk7XG4gICAgfV0sXG4gIF0pO1xuICBcbiAgLy8gUmV0dXJucyBjbGllbnQgb2Zmc2V0IG9iamVjdC5cbiAgY29uc3QgcG9pbnRlciA9IGUgPT4gZS50b3VjaGVzID8gZS50b3VjaGVzWzBdIDogZTtcbiAgLy8gTm90ZTogQ2hyb21lIGRlZmF1bHRzIFwicGFzc2l2ZVwiIGZvciB0b3VjaCBldmVudHMgdG8gdHJ1ZS5cbiAgY29uc3Qgb24gID0gKGUsIGZuKSA9PiBlLnNwbGl0KCcgJykubWFwKGUgPT4gZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcihlLCBmbiwge3Bhc3NpdmU6IGZhbHNlfSkpO1xuICBjb25zdCBvZmYgPSAoZSwgZm4pID0+IGUuc3BsaXQoJyAnKS5tYXAoZSA9PiBkb2N1bWVudC5yZW1vdmVFdmVudExpc3RlbmVyKGUsIGZuLCB7cGFzc2l2ZTogZmFsc2V9KSk7XG4gIFxuICBsZXQgaW5pdGlhbFgsIGluaXRpYWxWLCB0YXJnZXQsIGRyYWdnaW5nID0gZmFsc2U7XG4gIGZ1bmN0aW9uIGhhbmRsZURyYWcoZSkge1xuICAgIC8vIEdyYWNlZnVsbHkgaGFuZGxlIGV4aXQgYW5kIHJlZW50cnkgb2YgdGhlIHZpZXdwb3J0LlxuICAgIGlmKCFlLmJ1dHRvbnMgJiYgIWUudG91Y2hlcykge1xuICAgICAgaGFuZGxlRHJhZ1N0b3AoKTtcbiAgICAgIHJldHVybjtcbiAgICB9XG4gICAgZHJhZ2dpbmcgPSB0cnVlO1xuICAgIGNvbnN0IHcgPSBjb250cm9scy56b25lLmdldEJvdW5kaW5nQ2xpZW50UmVjdCgpLndpZHRoO1xuICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICBoYW5kbGVycy5nZXQodGFyZ2V0KSgocG9pbnRlcihlKS5jbGllbnRYIC0gaW5pdGlhbFgpIC8gdywgaW5pdGlhbFYpO1xuICB9XG4gIFxuICBcbiAgZnVuY3Rpb24gaGFuZGxlRHJhZ1N0b3AoZSkge1xuICAgIG9mZignbW91c2Vtb3ZlIHRvdWNobW92ZScsIGhhbmRsZURyYWcpO1xuICAgIG9mZignbW91c2V1cCB0b3VjaGVuZCcsIGhhbmRsZURyYWdTdG9wKTtcbiAgICBpZihjaGFuZ2VkKSBkaXNwYXRjaCgnY2hhbmdlJyk7XG4gIH1cbiAgXG4gIGludmFsaWRhdGlvbi50aGVuKGhhbmRsZURyYWdTdG9wKTtcbiAgXG4gIGRvbS5vbnRvdWNoc3RhcnQgPSBkb20ub25tb3VzZWRvd24gPSBlID0+IHtcbiAgICBkcmFnZ2luZyA9IGZhbHNlO1xuICAgIGNoYW5nZWQgPSBmYWxzZTtcbiAgICBpZighaGFuZGxlcnMuaGFzKGUudGFyZ2V0KSkgcmV0dXJuO1xuICAgIG9uKCdtb3VzZW1vdmUgdG91Y2htb3ZlJywgaGFuZGxlRHJhZyk7XG4gICAgb24oJ21vdXNldXAgdG91Y2hlbmQnLCBoYW5kbGVEcmFnU3RvcCk7XG4gICAgZS5wcmV2ZW50RGVmYXVsdCgpO1xuICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7XG4gICAgXG4gICAgdGFyZ2V0ID0gZS50YXJnZXQ7XG4gICAgaW5pdGlhbFggPSBwb2ludGVyKGUpLmNsaWVudFg7XG4gICAgaW5pdGlhbFYgPSB2YWx1ZS5zbGljZSgpO1xuICB9O1xuICBcbiAgY29udHJvbHMudHJhY2sub25jbGljayA9IGUgPT4ge1xuICAgIGlmKGRyYWdnaW5nKSByZXR1cm47XG4gICAgY2hhbmdlZCA9IGZhbHNlO1xuICAgIGNvbnN0IHIgPSBjb250cm9scy56b25lLmdldEJvdW5kaW5nQ2xpZW50UmVjdCgpO1xuICAgIGNvbnN0IHQgPSBjbGFtcCgwLCAxLCAocG9pbnRlcihlKS5jbGllbnRYIC0gci5sZWZ0KSAvIHIud2lkdGgpO1xuICAgIGNvbnN0IHYgPSBtaW4gKyB0ICogKG1heCAtIG1pbik7XG4gICAgY29uc3QgW3ZtaW4sIHZtYXhdID0gdmFsdWUsIGQgPSB2bWF4IC0gdm1pbjtcbiAgICBpZih2IDwgdm1pbikgc2V0VmFsdWUodiwgdiArIGQpO1xuICAgIGVsc2UgaWYodiA+IHZtYXgpIHNldFZhbHVlKHYgLSBkLCB2KTtcbiAgICBpZihjaGFuZ2VkKSBkaXNwYXRjaCgnY2hhbmdlJyk7XG4gIH07XG4gIFxuICByZXR1cm4gZG9tO1xufVxuXG5jc3NMZW5ndGggPSB2ID0+IHYgPT0gbnVsbCA/IG51bGwgOiB0eXBlb2YgdiA9PT0gJ251bWJlcicgPyBgJHt2fXB4YCA6IGAke3Z9YFxuXG5odG1sID0gaHRsLmh0bWxcblxuZnVuY3Rpb24gcmFuZG9tU2NvcGUocHJlZml4ID0gJ3Njb3BlLScpIHtcbiAgcmV0dXJuIHByZWZpeCArIChwZXJmb3JtYW5jZS5ub3coKSArIE1hdGgucmFuZG9tKCkpLnRvU3RyaW5nKDMyKS5yZXBsYWNlKCcuJywgJy0nKTtcbn1cblxudGhlbWVfRmxhdCA9IGBcbi8qIE9wdGlvbnMgKi9cbjpzY29wZSB7XG4gIGNvbG9yOiAjM2I5OWZjO1xuICB3aWR0aDogMjQwcHg7XG59XG5cbjpzY29wZSB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICAtLXRodW1iLXNpemU6IDE1cHg7XG4gIC0tdGh1bWItcmFkaXVzOiBjYWxjKHZhcigtLXRodW1iLXNpemUpIC8gMik7XG4gIHBhZGRpbmc6IHZhcigtLXRodW1iLXJhZGl1cykgMDtcbiAgbWFyZ2luOiAycHg7XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG59XG46c2NvcGUgLnJhbmdlLXRyYWNrIHtcbiAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBoZWlnaHQ6IDdweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogaHNsKDAsIDAlLCA4MCUpO1xuICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBwYWRkaW5nOiAwIHZhcigtLXRodW1iLXJhZGl1cyk7XG59XG46c2NvcGUgLnJhbmdlLXRyYWNrLXpvbmUge1xuICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG59XG46c2NvcGUgLnJhbmdlLXNlbGVjdCB7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgbGVmdDogdmFyKC0tcmFuZ2UtbWluKTtcbiAgd2lkdGg6IGNhbGModmFyKC0tcmFuZ2UtbWF4KSAtIHZhcigtLXJhbmdlLW1pbikpO1xuICBjdXJzb3I6IGV3LXJlc2l6ZTtcbiAgYmFja2dyb3VuZDogY3VycmVudENvbG9yO1xuICBoZWlnaHQ6IDdweDtcbiAgYm9yZGVyOiBpbmhlcml0O1xufVxuLyogRXhwYW5kcyB0aGUgaG90c3BvdCBhcmVhLiAqL1xuOnNjb3BlIC5yYW5nZS1zZWxlY3Q6YmVmb3JlIHtcbiAgY29udGVudDogXCJcIjtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiB2YXIoLS10aHVtYi1zaXplKTtcbiAgbGVmdDogMDtcbiAgdG9wOiBjYWxjKDJweCAtIHZhcigtLXRodW1iLXJhZGl1cykpO1xufVxuOnNjb3BlIC5yYW5nZS1zZWxlY3Q6Zm9jdXMsXG46c2NvcGUgLnRodW1iOmZvY3VzIHtcbiAgb3V0bGluZTogbm9uZTtcbn1cbjpzY29wZSAudGh1bWIge1xuICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHdpZHRoOiB2YXIoLS10aHVtYi1zaXplKTtcbiAgaGVpZ2h0OiB2YXIoLS10aHVtYi1zaXplKTtcblxuICBiYWNrZ3JvdW5kOiAjZmNmY2ZjO1xuICB0b3A6IC00cHg7XG4gIGJvcmRlci1yYWRpdXM6IDEwMCU7XG4gIGJvcmRlcjogMXB4IHNvbGlkIGhzbCgwLDAlLDU1JSk7XG4gIGN1cnNvcjogZGVmYXVsdDtcbiAgbWFyZ2luOiAwO1xufVxuOnNjb3BlIC50aHVtYjphY3RpdmUge1xuICBib3gtc2hhZG93OiBpbnNldCAwIHZhcigtLXRodW1iLXNpemUpICMwMDAyO1xufVxuOnNjb3BlIC50aHVtYi1taW4ge1xuICBsZWZ0OiBjYWxjKC0xcHggLSB2YXIoLS10aHVtYi1yYWRpdXMpKTtcbn1cbjpzY29wZSAudGh1bWItbWF4IHtcbiAgcmlnaHQ6IGNhbGMoLTFweCAtIHZhcigtLXRodW1iLXJhZGl1cykpO1xufVxuYFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoic2xlZXAgPSAobXMpID0+IG5ldyBQcm9taXNlKHJlc29sdmUgPT4gc2V0VGltZW91dChyZXNvbHZlLCBtcykpXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJnZXRSYW5kb21JdGVtID0gKGFycikgPT4gYXJyW01hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIGFyci5sZW5ndGgpXVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicGFnZUxpbSA9IDMwXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJjbGVhbkNvbGxlY3Rpb24gPSB7XG4gIFxuICBsZXQgcGFnZSA9IDE7XG4gIGxldCByZWxlYXNlcyA9IFtdO1xuICBsZXQgdG90YWxQYWdlcyA9IDE7XG5cbiAgLy8gcmVsb2FkIG9uIHVzZXJuYW1lXG4gIHVzZXJuYW1lXG4gIFxuICBpZiAoIXVzZXJuYW1lLnVzZXJuYW1lKSByZXR1cm4gW11cblxuICBkbyB7XG4gICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChcbiAgICAgIGBodHRwczovL2FwaS5kaXNjb2dzLmNvbS91c2Vycy8ke3VzZXJuYW1lLnVzZXJuYW1lfS9jb2xsZWN0aW9uL2ZvbGRlcnMvMC9yZWxlYXNlcz9wZXJfcGFnZT0xMDAmcGFnZT0ke3BhZ2V9JnNvcnQ9YWRkZWQmc29ydF9vcmRlcj1kZXNjYCxcbiAgICAgIHsgXG4gICAgICAgIGhlYWRlcnM6IHsgXG4gICAgICAgIFwiVXNlci1BZ2VudFwiOiBcIkRpc2NvZ3NTdWdnZXN0ZWRQbGF5LzAuMVwiLCBcbiAgICAgICAgXCJBdXRob3JpemF0aW9uXCI6IGBEaXNjb2dzIHRva2VuPSR7RElTQ09HU19BUElfVE9LRU59YCB9IFxuICAgICAgfVxuICAgIClcbiAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuanNvbigpXG4gICAgY29uc29sZS5sb2coZGF0YT8ubWVzc2FnZSB8fCBgUGFyc2luZyBDb2xsZWN0aW9uIFBhZ2U6ICR7cGFnZX0vJHt0b3RhbFBhZ2VzfWApXG4gICAgaWYgKGRhdGE/Lm1lc3NhZ2UpIHtcbiAgICAgIHRocm93IG5ldyBFcnJvcihgJHtkYXRhLm1lc3NhZ2V9YClcbiAgICB9XG4gICAgdG90YWxQYWdlcyA9IGRhdGEucGFnaW5hdGlvbi5wYWdlc1xuICAgIHJlbGVhc2VzID0gcmVsZWFzZXMuY29uY2F0KGRhdGEucmVsZWFzZXMpXG4gICAgcGFnZSsrXG4gICAgaWYgKHBhZ2UgPj0gcGFnZUxpbSkge1xuICAgICAgY29uc29sZS5sb2coJ3BhZ2VMaW0gcmVhY2hlZCwgc3RvcHBpbmcgZWFybHknKVxuICAgICAgYnJlYWtcbiAgICB9XG4gICAgYXdhaXQgc2xlZXAoMTAwMClcbiAgfSB3aGlsZSAocGFnZSA8PSB0b3RhbFBhZ2VzKVxuICBcbiAgcmV0dXJuIHJlbGVhc2VzLm1hcChkID0+IHtcbiAgICByZXR1cm4ge1xuICAgICAgdGl0bGU6IGQuYmFzaWNfaW5mb3JtYXRpb24/LnRpdGxlLFxuICAgICAgeWVhcjogK2QuYmFzaWNfaW5mb3JtYXRpb24/LnllYXIsXG4gICAgICBmb3JtYXRzOiBkLmJhc2ljX2luZm9ybWF0aW9uPy5mb3JtYXRzWzBdLFxuICAgICAgbGFiZWxzOiBkLmJhc2ljX2luZm9ybWF0aW9uPy5sYWJlbHNbMF0sXG4gICAgICBhcnRpc3RzOiBkLmJhc2ljX2luZm9ybWF0aW9uPy5hcnRpc3RzWzBdLFxuICAgICAgZ2VucmVzOiBkLmJhc2ljX2luZm9ybWF0aW9uPy5nZW5yZXMsXG4gICAgICBzdHlsZXM6IGQuYmFzaWNfaW5mb3JtYXRpb24/LnN0eWxlcyxcbiAgICAgIGltZzogZC5iYXNpY19pbmZvcm1hdGlvbj8uY292ZXJfaW1hZ2VcbiAgICB9XG4gIH0pXG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3VzZXJuYW1lJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2ZpbHRlcnMnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../posts/20260220-discogs-ojs-random";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/connorhanan\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,4212 @@
+[
+  {
+    "From": "'Elaine'",
+    "To": "'Kramer'",
+    "Type": "Professional"
+  },
+  {
+    "From": "'Elaine'",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "'Kramer'",
+    "To": "'Elaine'",
+    "Type": "Professional"
+  },
+  {
+    "From": "'Kramer'",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "'Kramer'",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Abby",
+    "To": "Cynthia",
+    "Type": "Professional"
+  },
+  {
+    "From": "Abby",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Alan",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Alex",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Allison",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Alton Benes",
+    "To": "Elaine Benes",
+    "Type": "Family"
+  },
+  {
+    "From": "Amy",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Angela",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Angela",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Anna",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Anna",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Art Vandelay",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Art Vandelay",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Art Vandelay",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Art Vandelay",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Audrey",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Audrey",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Audrey",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Audrey",
+    "To": "Poppie",
+    "Type": "Family"
+  },
+  {
+    "From": "Babs Kramer",
+    "To": "Cosmo Kramer",
+    "Type": "Family"
+  },
+  {
+    "From": "Babs Kramer",
+    "To": "Newman",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Babu",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Babu",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Barry",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Barry Prophet",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Barry Prophet",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Barry Prophet",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Barry Prophet",
+    "To": "Newman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Ben",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Beth",
+    "To": "David",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Beth",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Beth",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Bette Middler",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bette Middler",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Bette Middler",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Bette Middler",
+    "To": "The Understudy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Billy",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Bizarro George",
+    "To": "Bizarro Jerry",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bizarro George",
+    "To": "Bizarro Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bizarro Jerry",
+    "To": "Bizarro George",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bizarro Jerry",
+    "To": "Bizarro Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bizarro Jerry",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bizarro Jerry",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Bizarro Kramer",
+    "To": "Bizarro George",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bizarro Kramer",
+    "To": "Bizarro Jerry",
+    "Type": "Friend"
+  },
+  {
+    "From": "Bob",
+    "To": "Cedric",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Bob",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Bonnie",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Brett",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Brody",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Brody",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Bubble Boy",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Busboy",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Calvin Klein",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Calvin Klein",
+    "To": "Tia Van Camp",
+    "Type": "Professional"
+  },
+  {
+    "From": "Calvin Klein",
+    "To": "Tia Van Camp",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Carol",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Carrie",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Carrie",
+    "To": "Susan Ross",
+    "Type": "Family"
+  },
+  {
+    "From": "Cedric",
+    "To": "Bob",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cedric",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Celia",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Celia",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cheryl",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cheryl",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cheryl",
+    "To": "Ping",
+    "Type": "Family"
+  },
+  {
+    "From": "Cheryl",
+    "To": "Ping",
+    "Type": "Professional"
+  },
+  {
+    "From": "Christie",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cindy",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cindy",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Connie",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Connie",
+    "To": "Jackie Chiles",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "'Kramer'",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Art Vandelay",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Audrey",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Babs Kramer",
+    "Type": "Family"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Barry",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Barry Prophet",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Bette Middler",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Bob",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Brody",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Calvin Klein",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Cedric",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Connie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Darren",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Emily",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "FDR",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Frank Costanza",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Gail Cunningham",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Harry",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Howie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Jackie Chiles",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Jane",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Jodi",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Joe Davola",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Joe Davola",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Joe Mayo",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Julie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Karen",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Keith Hernandez",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Lloyd Braun",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Lola",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Lola",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Marion",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Mickey Abbott",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Mickey Abbott",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Mike Moffitt",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Mona",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Mr. Leland",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Mr. Lippman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Newman",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Nina",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Noreen",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Olive",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Pam",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Poppie",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Postmaster General",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Raquel Welch",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Silvio",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Sister Roberta",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Slippery Pete",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Soup Nazi",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Susan Ross",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Cable Guy",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Caddy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Drake",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Fruit Seller",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Jimmy",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Low Talker",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "The Maestro",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Tim Whatley",
+    "Type": "Friend"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Tina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Toby",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cosmo Kramer",
+    "To": "Wendy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Craig",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Cynthia",
+    "To": "Abby",
+    "Type": "Professional"
+  },
+  {
+    "From": "Cynthia",
+    "To": "Kenny Bania",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Dan",
+    "To": "Noreen",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Danielle",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Danielle",
+    "To": "Neil",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Daphne",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Darren",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Darryl",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "David",
+    "To": "Beth",
+    "Type": "Romantic"
+  },
+  {
+    "From": "David",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "David",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "David Puddy",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "David Puddy",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "David Puddy",
+    "To": "Mechanic",
+    "Type": "Professional"
+  },
+  {
+    "From": "Dolores",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Donna Chang",
+    "To": "Estelle Costanza",
+    "Type": "Friend"
+  },
+  {
+    "From": "Donna Chang",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Dr. Reston",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Dr. Reston",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Dr. Reston",
+    "To": "Joe Davola",
+    "Type": "Professional"
+  },
+  {
+    "From": "Dr. Sidarides",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Duncan",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Duncan",
+    "To": "Lois",
+    "Type": "Professional"
+  },
+  {
+    "From": "Eddie",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Alan",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Alton Benes",
+    "Type": "Family"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Anna",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Art Vandelay",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Barry Prophet",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Ben",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Beth",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Billy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Bizarro Jerry",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Bizarro Jerry",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Brett",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Craig",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Darryl",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "David",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "David Puddy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Dr. Reston",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Dr. Reston",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Eddie",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Fred",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Glenn",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Hal",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Holly",
+    "Type": "Family"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Hop Sing's Deliveryman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Howie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "J. Peterman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Jackie Chiles",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Jake Jarmel",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "James",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "James",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Jane",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Jean-Paul",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Joe Davola",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Joe Mayo",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Joel Rifkin",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "John",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Keith Hernandez",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Kurt",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Lisi",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Lloyd Braun",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Morty Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Mr. Lippman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Mr. Pitt",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Ned Isakoff",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Noel",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Noreen",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Owen March",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Peggy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Ping",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Pinter",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Poppie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Raquel Welch",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Russell Dalrymple",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Sam",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Sam",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Soup Nazi",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Sue Ellen Mischke",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Susan Ross",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Close-Talker",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Drake",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Driver",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Driver",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Jimmy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Maestro",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Sidler",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Sidler",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "The Wiz",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Tim Whatley",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Tim Whatley",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Tina",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Toby",
+    "Type": "Professional"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Tony",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Vincent",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Vivian",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Wendy",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Winona",
+    "Type": "Friend"
+  },
+  {
+    "From": "Elaine Benes",
+    "To": "Yuri Testikov",
+    "Type": "Professional"
+  },
+  {
+    "From": "Ellen",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Emily",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Enzo",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Eric the Clown",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Estelle Costanza",
+    "To": "Donna Chang",
+    "Type": "Friend"
+  },
+  {
+    "From": "Estelle Costanza",
+    "To": "Frank Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Estelle Costanza",
+    "To": "George Costanza",
+    "Type": "Family"
+  },
+  {
+    "From": "Estelle Costanza",
+    "To": "Helen Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Estelle Costanza",
+    "To": "Morty Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Evie",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Evie",
+    "To": "Mr. Lippman",
+    "Type": "Professional"
+  },
+  {
+    "From": "FDR",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Fragile Frankie",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "Estelle Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "George Costanza",
+    "Type": "Family"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "Helen Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "Kim",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "Lloyd Braun",
+    "Type": "Professional"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "Morty Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Frank Costanza",
+    "To": "The Maestro",
+    "Type": "Friend"
+  },
+  {
+    "From": "Fred",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Fred",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Fredo",
+    "To": "Phil",
+    "Type": "Friend"
+  },
+  {
+    "From": "Gail Cunningham",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Gail Cunningham",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "'Kramer'",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Allison",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Anna",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Art Vandelay",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Audrey",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Bette Middler",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Bonnie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Bubble Boy",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Busboy",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Carol",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Carrie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Celia",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Cheryl",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Danielle",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Daphne",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "David",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Eric the Clown",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Estelle Costanza",
+    "Type": "Family"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Evie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Frank Costanza",
+    "Type": "Family"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Heather",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Howie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Jackie Chiles",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Jane",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Janet",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Jason Hanky",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Joe Mayo",
+    "Type": "Friend"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Julie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Karen",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Lloyd Braun",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Lola",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Loretta",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Louise",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Marcy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Marlene",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mary Anne",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Maura",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mechanic",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Miranda",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Monica",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Monk's Waitress",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Heyman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Kruger",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Lippman",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Morgan",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Ross",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Steinbrenner",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Thomassoulo",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mr. Thomassoulo",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Mrs. Ross",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Neil",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Nina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Nina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Noel",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Patrice",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Pigeons",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Portuguese Waitress",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Rachel",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Reilly",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Reilly",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Rhisa",
+    "Type": "Family"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Rhisa",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Rick",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Robin",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Russell Dalrymple",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Ruthie Cohen",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Shlomo",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Slippery Pete",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Susan Ross",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Tara",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "T-Bone",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "T-Bone",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "The Drake",
+    "Type": "Friend"
+  },
+  {
+    "From": "George Costanza",
+    "To": "The Jimmy",
+    "Type": "Friend"
+  },
+  {
+    "From": "George Costanza",
+    "To": "The Laser Guy",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "The Low Talker",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "The Secretary",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "The Secretary",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Tim Whatley",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Tony",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Vivian",
+    "Type": "Romantic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Wendy",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Wilhelm",
+    "Type": "Professional"
+  },
+  {
+    "From": "George Costanza",
+    "To": "Wyck Thayer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Gina",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Gina",
+    "To": "Martin",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Glenn",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Grandpa Mandelbaum",
+    "To": "Izzy Mandelbaum",
+    "Type": "Family"
+  },
+  {
+    "From": "Grandpa Mandelbaum",
+    "To": "Izzy Mandelbaum, Jr.",
+    "Type": "Family"
+  },
+  {
+    "From": "Grandpa Mandelbaum",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Hal",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Hallie",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Hallie",
+    "To": "Susan Ross",
+    "Type": "Friend"
+  },
+  {
+    "From": "Harry",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Heather",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Estelle Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Frank Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Jerry Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Manya",
+    "Type": "Family"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Morty Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Mrs. Choate",
+    "Type": "Friend"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Nana Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Helen Seinfeld",
+    "To": "Uncle Leo",
+    "Type": "Family"
+  },
+  {
+    "From": "Holly",
+    "To": "Elaine Benes",
+    "Type": "Family"
+  },
+  {
+    "From": "Holly",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Hop Sing's Deliveryman",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Hop Sing's Deliveryman",
+    "To": "Ned Isakoff",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Howie",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Howie",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Howie",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Howie",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Izzy Mandelbaum",
+    "To": "Grandpa Mandelbaum",
+    "Type": "Family"
+  },
+  {
+    "From": "Izzy Mandelbaum",
+    "To": "Izzy Mandelbaum, Jr.",
+    "Type": "Family"
+  },
+  {
+    "From": "Izzy Mandelbaum",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Izzy Mandelbaum",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Izzy Mandelbaum",
+    "To": "Morty Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Izzy Mandelbaum, Jr.",
+    "To": "Grandpa Mandelbaum",
+    "Type": "Family"
+  },
+  {
+    "From": "Izzy Mandelbaum, Jr.",
+    "To": "Izzy Mandelbaum",
+    "Type": "Family"
+  },
+  {
+    "From": "Izzy Mandelbaum, Jr.",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "J. Peterman",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "J. Peterman",
+    "To": "Mama Peterman",
+    "Type": "Family"
+  },
+  {
+    "From": "J. Peterman",
+    "To": "Peggy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jack Klompus",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jack Klompus",
+    "To": "Morty Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jack Klompus",
+    "To": "Morty Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jackie Chiles",
+    "To": "Connie",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jackie Chiles",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jackie Chiles",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jackie Chiles",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jackie Chiles",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jackie Chiles",
+    "To": "Sidra",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jake Jarmel",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "James",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "James",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "James",
+    "To": "Mr. Morgan",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jane",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jane",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jane",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jane",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Janet",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jason Hanky",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jeannie",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jean-Paul",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jean-Paul",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jenna",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jenna",
+    "To": "Kenny Bania",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "'Elaine'",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Abby",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Alex",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Amy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Angela",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Angela",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Art Vandelay",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Audrey",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Babu",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Babu",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Barry Prophet",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Beth",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Bette Middler",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Brody",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Celia",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Cheryl",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Christie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Cindy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Cindy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "David Puddy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Dolores",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Donna Chang",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Dr. Sidarides",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Duncan",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Ellen",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Enzo",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Fragile Frankie",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Fred",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Gail Cunningham",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Gina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Grandpa Mandelbaum",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Hallie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Helen Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Holly",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Howie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Izzy Mandelbaum",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Izzy Mandelbaum",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Izzy Mandelbaum, Jr.",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jack Klompus",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jackie Chiles",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jane",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jeannie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jean-Paul",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jenna",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Jodi",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Joe Bookman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Joe Davola",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Joe Mayo",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Joel",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Joel",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Katie",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Keith Hernandez",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Kenny Bania",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Laura",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Lena",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Linette",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Lisi",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Lois",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Man Hands",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Manya",
+    "Type": "Family"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Margaret",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Marlene",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Martin",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Maryedith",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Matthew",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Mechanic",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Mechanic",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Melissa",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Meryl",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Mike Moffitt",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Milos",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Morty Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Mrs. Choate",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Nana Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Naomi",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Newman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Nicky",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Nina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Nina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Pam",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Patty",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Phil",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Poppie",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Rachel",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Ramon",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Russell Dalrymple",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Sally Weaver",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Schmoopie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Seth",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Sidra",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Sophie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Doorman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Drake",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Fruit Seller",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Gymnast",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Jimmy",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Low Talker",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Non-Laugher",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Understudy",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "The Virgin",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Tia Van Camp",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Tim Whatley",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Tim Whatley",
+    "Type": "Friend"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Tim Whatley",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Toby",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Two-Face",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Uncle Leo",
+    "Type": "Family"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Valerie",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jerry Seinfeld",
+    "To": "Winona",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Jodi",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Jodi",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Joe Bookman",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Joe Bookman",
+    "To": "Marion",
+    "Type": "Professional"
+  },
+  {
+    "From": "Joe Davola",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Joe Davola",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Joe Davola",
+    "To": "Dr. Reston",
+    "Type": "Professional"
+  },
+  {
+    "From": "Joe Davola",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Joe Davola",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Joe Mayo",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Joe Mayo",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Joe Mayo",
+    "To": "George Costanza",
+    "Type": "Friend"
+  },
+  {
+    "From": "Joe Mayo",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Joe Mayo",
+    "To": "Silvio",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Joel",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Joel",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Joel Rifkin",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Johnny",
+    "To": "Mickey Abbott",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "John",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Julie",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Julie",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Julie",
+    "To": "Karen",
+    "Type": "Friend"
+  },
+  {
+    "From": "Julie",
+    "To": "Mickey Abbott",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Karen",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Karen",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Karen",
+    "To": "Julie",
+    "Type": "Friend"
+  },
+  {
+    "From": "Karen",
+    "To": "Mickey Abbott",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Katie",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Keith Hernandez",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Keith Hernandez",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Keith Hernandez",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Keith Hernandez",
+    "To": "Newman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Kenny Bania",
+    "To": "Cynthia",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Kenny Bania",
+    "To": "Jenna",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Kenny Bania",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Kim",
+    "To": "Frank Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Kurt",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Laura",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lena",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Linette",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Linette",
+    "To": "Lyle",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lisi",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Lisi",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lloyd Braun",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Lloyd Braun",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lloyd Braun",
+    "To": "Frank Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Lloyd Braun",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Lois",
+    "To": "Duncan",
+    "Type": "Professional"
+  },
+  {
+    "From": "Lois",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lola",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Lola",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lola",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Loretta",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Louise",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lydia",
+    "To": "Uncle Leo",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Lyle",
+    "To": "Linette",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mama Peterman",
+    "To": "J. Peterman",
+    "Type": "Family"
+  },
+  {
+    "From": "Man Hands",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Manya",
+    "To": "Helen Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Manya",
+    "To": "Jerry Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Manya",
+    "To": "Nana Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Manya",
+    "To": "Uncle Leo",
+    "Type": "Family"
+  },
+  {
+    "From": "Marcy",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Margaret",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Margaret",
+    "To": "Newman",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Marion",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Marion",
+    "To": "Joe Bookman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Marlene",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Marlene",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Martin",
+    "To": "Gina",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Martin",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Martin",
+    "To": "Newman",
+    "Type": "Friend"
+  },
+  {
+    "From": "Mary Anne",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Maryedith",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Maryedith",
+    "To": "Matthew",
+    "Type": "Family"
+  },
+  {
+    "From": "Matthew",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Matthew",
+    "To": "Maryedith",
+    "Type": "Family"
+  },
+  {
+    "From": "Maura",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mechanic",
+    "To": "David Puddy",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mechanic",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mechanic",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mechanic",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Melissa",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Meryl",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mickey Abbott",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Mickey Abbott",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mickey Abbott",
+    "To": "Johnny",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mickey Abbott",
+    "To": "Karen",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mickey Abbott",
+    "To": "Ned Isakoff",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mike Moffitt",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Mike Moffitt",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Milos",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Miranda",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mona",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mona",
+    "To": "Susan Ross",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Monica",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Monk's Waitress",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Morty Seinfeld",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Morty Seinfeld",
+    "To": "Helen Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Morty Seinfeld",
+    "To": "Jack Klompus",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Morty Seinfeld",
+    "To": "Jack Klompus",
+    "Type": "Friend"
+  },
+  {
+    "From": "Morty Seinfeld",
+    "To": "Jerry Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Mr. Heyman",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mr. Kruger",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Kruger",
+    "To": "T-Bone",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Leland",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Lippman",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Lippman",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Lippman",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Lippman",
+    "To": "Toby",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Lippman",
+    "To": "Yuri Testikov",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Morgan",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Morgan",
+    "To": "Mr. Steinbrenner",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Morgan",
+    "To": "Wilhelm",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Pitt",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Ross",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mr. Ross",
+    "To": "Mrs. Ross",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mr. Ross",
+    "To": "Susan Ross",
+    "Type": "Family"
+  },
+  {
+    "From": "Mr. Ross",
+    "To": "Wyck Thayer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Steinbrenner",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Steinbrenner",
+    "To": "Mr. Morgan",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Steinbrenner",
+    "To": "Reilly",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Steinbrenner",
+    "To": "Wilhelm",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mr. Thomassoulo",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mr. Thomassoulo",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Mrs. Choate",
+    "To": "Helen Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Mrs. Choate",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mrs. Ross",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Mrs. Ross",
+    "To": "Mr. Ross",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Mrs. Ross",
+    "To": "Susan Ross",
+    "Type": "Family"
+  },
+  {
+    "From": "Mrs. Ross",
+    "To": "Wyck Thayer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Nana Seinfeld",
+    "To": "Jerry Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Nana Seinfeld",
+    "To": "Manya",
+    "Type": "Family"
+  },
+  {
+    "From": "Nana Seinfeld",
+    "To": "Morty Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Nana Seinfeld",
+    "To": "Uncle Leo",
+    "Type": "Family"
+  },
+  {
+    "From": "Naomi",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Ned Isakoff",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Ned Isakoff",
+    "To": "Mickey Abbott",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Neil",
+    "To": "Danielle",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Neil",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Newman",
+    "To": "Babs Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Newman",
+    "To": "Barry Prophet",
+    "Type": "Professional"
+  },
+  {
+    "From": "Newman",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Newman",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Newman",
+    "To": "Margaret",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Newman",
+    "To": "Postmaster General",
+    "Type": "Professional"
+  },
+  {
+    "From": "Newman",
+    "To": "Svetlana",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Newman",
+    "To": "Tim Whatley",
+    "Type": "Friend"
+  },
+  {
+    "From": "Nicky",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Nicky",
+    "To": "Todd Gack",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Nina",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "Nina",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Nina",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Nina",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Nina",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Noel",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Noel",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Noreen",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Noreen",
+    "To": "Dan",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Noreen",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Olive",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Owen March",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Pam",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Pam",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Patrice",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Patty",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Peggy",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Peggy",
+    "To": "J. Peterman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Phil",
+    "To": "Fredo",
+    "Type": "Friend"
+  },
+  {
+    "From": "Phil",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Pigeons",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Ping",
+    "To": "Cheryl",
+    "Type": "Family"
+  },
+  {
+    "From": "Ping",
+    "To": "Cheryl",
+    "Type": "Professional"
+  },
+  {
+    "From": "Ping",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Pinter",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Pinter",
+    "To": "Sue Ellen Mischke",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Poppie",
+    "To": "Audrey",
+    "Type": "Family"
+  },
+  {
+    "From": "Poppie",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Poppie",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Poppie",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Portuguese Waitress",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Postmaster General",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Postmaster General",
+    "To": "Newman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Rachel",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Rachel",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Ramon",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Raquel Welch",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Raquel Welch",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Reilly",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Reilly",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Reilly",
+    "To": "Mr. Steinbrenner",
+    "Type": "Professional"
+  },
+  {
+    "From": "Rhisa",
+    "To": "George Costanza",
+    "Type": "Family"
+  },
+  {
+    "From": "Rhisa",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Rick",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Robin",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Russell Dalrymple",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Russell Dalrymple",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Russell Dalrymple",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Russell Dalrymple",
+    "To": "Susan Ross",
+    "Type": "Professional"
+  },
+  {
+    "From": "Ruthie Cohen",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Sally Weaver",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Sally Weaver",
+    "To": "Susan Ross",
+    "Type": "Friend"
+  },
+  {
+    "From": "Sam",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Sam",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Schmoopie",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Seth",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Shlomo",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Shlomo",
+    "To": "Slippery Pete",
+    "Type": "Friend"
+  },
+  {
+    "From": "Sidra",
+    "To": "Jackie Chiles",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Sidra",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Silvio",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Silvio",
+    "To": "Joe Mayo",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Silvio",
+    "To": "Newman",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Silvio",
+    "To": "Svetlana",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Sister Roberta",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Slippery Pete",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Slippery Pete",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Slippery Pete",
+    "To": "Shlomo",
+    "Type": "Friend"
+  },
+  {
+    "From": "Sophie",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Soup Nazi",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Soup Nazi",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Sue Ellen Mischke",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Sue Ellen Mischke",
+    "To": "Pinter",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Carrie",
+    "Type": "Family"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Hallie",
+    "Type": "Friend"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Mona",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Mr. Ross",
+    "Type": "Family"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Mrs. Ross",
+    "Type": "Family"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Russell Dalrymple",
+    "Type": "Professional"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "Sally Weaver",
+    "Type": "Friend"
+  },
+  {
+    "From": "Susan Ross",
+    "To": "The Wigmaster",
+    "Type": "Friend"
+  },
+  {
+    "From": "Svetlana",
+    "To": "Newman",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Svetlana",
+    "To": "Silvio",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tara",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "T-Bone",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "T-Bone",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "T-Bone",
+    "To": "Mr. Kruger",
+    "Type": "Professional"
+  },
+  {
+    "From": "The Cable Guy",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Caddy",
+    "To": "Cosmo Kramer",
+    "Type": "Professional"
+  },
+  {
+    "From": "The Close-Talker",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Close-Talker",
+    "To": "Helen Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Close-Talker",
+    "To": "Morty Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Doorman",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Drake",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Drake",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Drake",
+    "To": "George Costanza",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Drake",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Driver",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Driver",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "The Fruit Seller",
+    "To": "Cosmo Kramer",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Fruit Seller",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Gymnast",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Jimmy",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Jimmy",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Jimmy",
+    "To": "George Costanza",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Jimmy",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Laser Guy",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Laugher",
+    "To": "The Non-Laugher",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Low Talker",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Low Talker",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Low Talker",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Maestro",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Maestro",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Maestro",
+    "To": "Frank Costanza",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Non-Laugher",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Non-Laugher",
+    "To": "The Laugher",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Secretary",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "The Secretary",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Sidler",
+    "To": "Elaine Benes",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "The Sidler",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "The Understudy",
+    "To": "Bette Middler",
+    "Type": "Professional"
+  },
+  {
+    "From": "The Understudy",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Virgin",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "The Wigmaster",
+    "To": "Susan Ross",
+    "Type": "Friend"
+  },
+  {
+    "From": "The Wiz",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tia Van Camp",
+    "To": "Calvin Klein",
+    "Type": "Professional"
+  },
+  {
+    "From": "Tia Van Camp",
+    "To": "Calvin Klein",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tia Van Camp",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Cosmo Kramer",
+    "Type": "Friend"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Jerry Seinfeld",
+    "Type": "Friend"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Jerry Seinfeld",
+    "Type": "Professional"
+  },
+  {
+    "From": "Tim Whatley",
+    "To": "Newman",
+    "Type": "Friend"
+  },
+  {
+    "From": "Tina",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tina",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Toby",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Toby",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Toby",
+    "To": "Jerry Seinfeld",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Toby",
+    "To": "Mr. Lippman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Tony",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Tony",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Two-Face",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Uncle Leo",
+    "To": "Helen Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Uncle Leo",
+    "To": "Jerry Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Uncle Leo",
+    "To": "Lydia",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Uncle Leo",
+    "To": "Manya",
+    "Type": "Family"
+  },
+  {
+    "From": "Uncle Leo",
+    "To": "Nana Seinfeld",
+    "Type": "Family"
+  },
+  {
+    "From": "Valerie",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Vincent",
+    "To": "Elaine Benes",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Vivian",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Vivian",
+    "To": "George Costanza",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Wendy",
+    "To": "Cosmo Kramer",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Wendy",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Wendy",
+    "To": "George Costanza",
+    "Type": "Antagonistic"
+  },
+  {
+    "From": "Wilhelm",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Wilhelm",
+    "To": "Mr. Morgan",
+    "Type": "Professional"
+  },
+  {
+    "From": "Wilhelm",
+    "To": "Mr. Steinbrenner",
+    "Type": "Professional"
+  },
+  {
+    "From": "Winona",
+    "To": "Elaine Benes",
+    "Type": "Friend"
+  },
+  {
+    "From": "Winona",
+    "To": "Jerry Seinfeld",
+    "Type": "Romantic"
+  },
+  {
+    "From": "Wyck Thayer",
+    "To": "George Costanza",
+    "Type": "Professional"
+  },
+  {
+    "From": "Wyck Thayer",
+    "To": "Mr. Ross",
+    "Type": "Professional"
+  },
+  {
+    "From": "Wyck Thayer",
+    "To": "Mrs. Ross",
+    "Type": "Professional"
+  },
+  {
+    "From": "Yuri Testikov",
+    "To": "Elaine Benes",
+    "Type": "Professional"
+  },
+  {
+    "From": "Yuri Testikov",
+    "To": "Mr. Lippman",
+    "Type": "Professional"
+  },
+  {
+    "From": "Todd Gack",
+    "To": "Nicky",
+    "Type": "Romantic"
+  }
+]

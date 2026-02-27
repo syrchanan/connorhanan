@@ -1,12 +1,19 @@
 project:
   type: website
   output-dir: docs
+  render: 
+    - "*.qmd"
+    - "!**/drafts/*.qmd"
+  preview: 
+    watch-inputs: true
+
   
 resources: 
   - CNAME
 
 website:
   title: "connorhanan"
+  site-url: https://connorhanan.com
   navbar:
     pinned: true
     left:
@@ -18,16 +25,18 @@ website:
         text: Portfolio
       - href: resume/index.qmd
         text: Resume
+      - href: posts/index.qmd
+        text: Blog
         
     right:
       - icon: github
         href: https://github.com/syrchanan
       - icon: linkedin
         href: https://www.linkedin.com/in/connorhanan/
-      - icon: globe
-        href: https://www.blog.connorhanan.com
       - icon: envelope
         href: mailto:connorhanan4@gmail.com
+      - icon: rss
+        href: posts/index.xml
         
   favicon: ./images/icon.png
 
