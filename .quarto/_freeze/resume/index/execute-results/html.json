@@ -1,8 +1,8 @@
 {
-  "hash": "fed796dbeaeddff57a975ee8e1f21251",
+  "hash": "3eeb23efc9aecdfe18e167c462a8e9a7",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"\"\nlayout: page\nengine: knitr \nresume:\n  pdf: \"Connor_Hanan_Resume_2025.pdf\"\n---\n\n\n::: {.cell}\n<style type=\"text/css\">\n.embed-container {\n    position: relative;\n    padding-bottom: 135%;\n    height: 0;\n    overflow: hidden;\n    max-width: 100%;\n}\n.embed-container iframe,\n.embed-container object,\n.embed-container embed {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n}\n</style>\n:::\n\n\n\n```{=html}\n<p class=\"text-center\">\n  <a class=\"btn btn-primary btn-lg cv-download\" href=\"Connor_Hanan_Resume_2025.pdf\" target=\"_blank\">\n    Download current resume\n  </a>\n</p>\n<div class=\"embed-container\">\n  <iframe src=\"Connor_Hanan_Resume_2025.pdf\" style=\"border: 0.5px\"></iframe>\n</div>\n```\n",
+    "markdown": "---\ntitle: \"Resume\"\nlayout: page\nengine: knitr \nresume:\n  pdf: \"Connor_Hanan_Resume_2025.pdf\"\n---\n\n\n::: {.cell}\n<style type=\"text/css\">\n.embed-container {\n    position: relative;\n    padding-bottom: 135%;\n    height: 0;\n    overflow: hidden;\n    max-width: 100%;\n}\n.embed-container iframe,\n.embed-container object,\n.embed-container embed {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n}\n</style>\n:::\n\n\n\n```{=html}\n<p class=\"text-center\">\n  <a class=\"btn btn-primary btn-lg cv-download\" href=\"Connor_Hanan_Resume_2025.pdf\" target=\"_blank\">\n    Download current resume\n  </a>\n</p>\n<div class=\"embed-container\">\n  <iframe src=\"Connor_Hanan_Resume_2025.pdf\" style=\"border: 0.5px\"></iframe>\n</div>\n```\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
