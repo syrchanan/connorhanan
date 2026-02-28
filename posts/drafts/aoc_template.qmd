@@ -1,0 +1,57 @@
+---
+title: "2024 Day #: "
+subtitle: "Advent of Code"
+date: "2024-12-02"
+format: 
+  html: 
+    code-line-numbers: false
+# image: "./ElmerEllsworthphoto01.jpg"
+categories:
+  - Advent of Code
+  - OJS
+  - R
+draft: true
+---
+
+Time for some [day #](https://adventofcode.com/2024/day/#) action!
+
+```{r}
+#| echo: false
+#| tags: [parameters]
+
+sample = TRUE
+
+```
+
+```{r}
+#| echo: false
+
+pacman::p_load("tidyverse")
+
+if (sample) {
+  raw = ''
+} else {
+  raw = ''
+}
+
+# for OJS if needed
+# ojs_define(raw = raw)
+
+```
+
+### Part 1
+
+```{r}
+
+```
+
+⭐
+
+### Part 2
+
+
+⭐
+
+------------------------------------------------------------------------
+
+-CH

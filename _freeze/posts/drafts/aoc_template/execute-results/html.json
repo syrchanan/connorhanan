@@ -1,0 +1,15 @@
+{
+  "hash": "c9728828ebd376adeefe2565114a0795",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"2024 Day #: \"\nsubtitle: \"Advent of Code\"\ndate: \"2024-12-02\"\nformat: \n  html: \n    code-line-numbers: false\n# image: \"./ElmerEllsworthphoto01.jpg\"\ncategories:\n  - Advent of Code\n  - OJS\n  - R\ndraft: true\n---\n\nTime for some [day #](https://adventofcode.com/2024/day/#) action!\n\n\n::: {.cell tags='parameters'}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n\n### Part 1\n\n\n::: {.cell}\n\n:::\n\n\n⭐\n\n### Part 2\n\n\n⭐\n\n------------------------------------------------------------------------\n\n-CH\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

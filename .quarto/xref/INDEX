@@ -13,5 +13,86 @@
   },
   "resume/index.qmd": {
     "index.html": "d8b4dcb9"
+  },
+  "posts/20221024-john-hardy-vs-henry/index.qmd": {
+    "index.html": "fcbd66e2"
+  },
+  "posts/20221211-ga-runoff/index.qmd": {
+    "index.html": "f85c175e"
+  },
+  "posts/20230408-trump-arraignment-ny/index.qmd": {
+    "index.html": "419fcb54"
+  },
+  "posts/20230910-california-burritos/index.qmd": {
+    "index.html": "0b7712a9"
+  },
+  "posts/20230917-baker-zouave/index.qmd": {
+    "index.html": "238bec84"
+  },
+  "posts/20241115-whats-next/index.qmd": {
+    "index.html": "504447af"
+  },
+  "posts/20241201-advent-of-code/index.qmd": {
+    "index.html": "1a6c9f2a"
+  },
+  "posts/20241202-advent-of-code/index.qmd": {
+    "index.html": "bbdf2207"
+  },
+  "posts/20241203-advent-of-code/index.qmd": {
+    "index.html": "edf889ff"
+  },
+  "posts/20241204-advent-of-code/index.qmd": {
+    "index.html": "ea5a8d44"
+  },
+  "posts/20241205-advent-of-code/index.qmd": {
+    "index.html": "7a269fd8"
+  },
+  "posts/20241206-advent-of-code/index.qmd": {
+    "index.html": "4b455ccf"
+  },
+  "posts/20241207-advent-of-code/index.qmd": {
+    "index.html": "796fddf4"
+  },
+  "posts/20250430-lambda-calculus/index.qmd": {
+    "index.html": "81a136b1"
+  },
+  "posts/20250520-lambda-calculus/index.qmd": {
+    "index.html": "f2186e8b"
+  },
+  "posts/20250615-lambda-calculus/index.qmd": {
+    "index.html": "f0e3b706"
+  },
+  "posts/20250629-seinfeld-relationships/index.qmd": {
+    "index.html": "ba446a06"
+  },
+  "posts/20250710-advent-of-code/index.qmd": {
+    "index.html": "9209f30b"
+  },
+  "posts/20250711-advent-of-code/index.qmd": {
+    "index.html": "4279bcdd"
+  },
+  "posts/20250802-bury-me-not/index.qmd": {
+    "index.html": "8734efcf"
+  },
+  "posts/20250817-quintessential-american/index.qmd": {
+    "index.html": "05640d03"
+  },
+  "posts/20260220-discogs-ojs-random/index.qmd": {
+    "index.html": "92945d0c"
+  },
+  "posts/drafts/aoc_template.qmd": {
+    "aoc_template.html": "4a805392"
+  },
+  "posts/index.qmd": {
+    "index.html": "025bc2d9"
+  },
+  "posts/records/2026-02-27-discogs.qmd": {
+    "2026-02-27-discogs.html": "8c013738"
+  },
+  "posts/auto/2026-02-27-discogs/index.qmd": {
+    "index.html": "8cd9e1e4"
+  },
+  "posts/auto/2026-02-27-discogs.qmd": {
+    "2026-02-27-discogs.html": "4557906f"
   }
 }

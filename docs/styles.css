@@ -13,5 +13,37 @@
 
 .btn {
   background-color: #007ab2;
+  color: #fff;
   border: 1px solid #007ab2;
+}
+
+a {
+  color: #007ab2;
+}
+
+.pagination {
+  --bs-pagination-padding-x: 0.75rem;
+  --bs-pagination-padding-y: 0.375rem;
+  --bs-pagination-font-size: 1rem;
+  --bs-pagination-color: #007ab2;
+  --bs-pagination-bg: #fff;
+  --bs-pagination-border-width: 1px;
+  --bs-pagination-border-color: #dee2e6;
+  --bs-pagination-border-radius: 0.25rem;
+  --bs-pagination-hover-color: #fff;
+  --bs-pagination-hover-bg: #007ab2;
+  --bs-pagination-hover-border-color: #007ab2;
+  --bs-pagination-focus-color: rgb(0, 122, 178);
+  --bs-pagination-focus-bg: #eee;
+  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(235, 104, 100, 0.25);
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-active-bg: #007ab2;
+  --bs-pagination-active-border-color: #007ab2;
+  --bs-pagination-disabled-color: rgba(34, 34, 34, 0.75);
+  --bs-pagination-disabled-bg: #eee;
+  --bs-pagination-disabled-border-color: #dee2e6;
+  display: flex;
+  display: -webkit-flex;
+  padding-left: 0;
+  list-style: none;
 }

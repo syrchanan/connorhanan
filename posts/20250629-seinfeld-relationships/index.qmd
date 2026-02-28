@@ -1,0 +1,379 @@
+---
+title: "A Visualization About Nothing"
+subtitle: "D3: Exploring the Relationships of Seinfeld"
+date: "2025-06-29"
+code-overflow: wrap
+code-fold: true
+code-summary: "Show the Code"
+format: 
+  html: 
+    code-line-numbers: false
+categories:
+  - OJS
+  - TV
+  - Analysis
+draft: false
+---
+
+Across all of Seinfeld, we see many relationships develop between the main four characters and many others. Explore the visualisation below to view all the many friends, family, girlfriends/boyfriends, and foes of the series!
+
+::: callout-tip
+## Interactivity
+
+Many of the peripheral characters have relationships with multiple of the main characters (ex: Morty Seinfeld is obviously Jerry's father, and also goes into business with Kramer) -- which leads to very tight clusters.
+
+Click and drag the centroids apart for better visibility.
+:::
+
+```{ojs chart}
+//| echo: false
+relationship_chart = {
+  const height = 800
+  const width = 1200
+
+  const color = d3.scaleOrdinal()
+    .domain(lookups.legend.map(d => d.type))
+    .range(lookups.legend.map(d => d.color))
+
+  const links = relationships.links.map(d => ({source: d.From, target: d.To, type: d.Type}))
+  const nodes = relationships.nodes.map(d => ({...d}))
+
+  const sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+    .force("charge", d3.forceManyBody().strength(-50))
+    .force("collide", d3.forceCollide().radius(20))
+    .force("center", d3.forceCenter( width / 2, height / 2 ).strength(1.1))
+    .on("tick", ticked)
+
+  const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height])
+    .attr("style", "max-width: 100%; height: auto;")
+
+  const link = svg.append("g")
+      .attr("stroke", "#999")
+      .attr("stroke-opacity", 0.6)
+    .selectAll()
+    .data(links)
+    .join("line")
+      .attr("stroke-width", 1.1)
+      .attr("stroke", d => color(d.type))
+
+  const globs = svg.append("g")
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 1.1)
+    .selectAll("g")
+    .data(nodes)
+    .enter()
+    .append("g")
+
+  const node = globs.append("circle")
+      .attr("r", d => Math.max(3, Math.sqrt(d.count)+3))
+
+  node.append("title")
+    .text(d => `${d.id} (${d.count})`)
+
+  globs.append("text")
+    .text(d => d.id)
+    .attr("dy", "-1em")
+    .attr("text-anchor", "middle")
+    .attr("stroke", "black")
+    .attr("stroke-width", 0.1)
+    .style("font-size", "12px")
+  
+  globs.call(d3.drag()
+           .on("start", dragstarted)
+           .on("drag", dragged)
+           .on("end", dragended))
+
+  const legendDots = svg.append("g")
+    .selectAll("legendDots")
+    .data(lookups.legend.map(d => d.type))
+    .join("circle")
+      .attr("cx", width - 170)
+      .attr("cy", (d, i) => height - 50 - i*20)
+      .attr("r", 4)
+      .attr("fill", d => color(d))
+
+  const legendText = svg.append("g")
+    .selectAll("legendText")
+    .data(lookups.legend.map(d => d.type))
+    .join("text")
+      .attr("x", width - 160)
+      .attr("y", (d, i) => height - 50 - i*20)
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
+      .text(d => d)
+
+  const legendTitle = svg.append("g")
+    .selectAll("legendTitle")
+    .data(["Relationship Types"])
+    .join("text")
+      .attr("x", width - 190)
+      .attr("y", height - 155)
+      .text("Relationship Types")
+      .attr("text-anchor", "left")
+      .style("text-decoration", "underline")
+      .style("alignment-baseline", "middle")
+
+  function ticked() {
+    globs
+      .attr("transform", d => `translate(${d.x}, ${d.y})`)
+    
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y)
+
+  }
+
+  function dragstarted(event) {
+    if (!event.active) sim.alphaTarget(0.3).restart()
+    event.subject.fx = event.x
+    event.subject.fy = event.y
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x
+    event.subject.fy = event.y
+  }
+
+  function dragended(event) {
+    if (!event.active) sim.alphaTarget(0)
+    event.subject.fx = null
+    event.subject.fy = null
+  }
+
+  invalidation.then(() => sim.stop())
+  
+  return svg.node()
+
+}
+```
+
+Filter the visualization below:
+
+```{ojs character selex}
+//| echo: false
+viewof characters = Inputs.checkbox(
+  lookups.characters, {
+  value: lookups.characters,
+  label: html`<b>Main Characters</b>`
+  }
+)
+```
+
+```{ojs relationship selex}
+//| echo: false
+viewof types = Inputs.checkbox(
+  lookups.legend.map(d => d.type).reverse(), {
+  value: lookups.legend.map(d => d.type).reverse(), 
+  label: html`<b>Relationship Types</b>`,
+  format: x => html`<span style="text-transform: capitalize; border-bottom: solid 2px ${lookups.legend.filter(d => d.type === x)[0].color}; margin-bottom: -2px;">${x}`
+})
+```
+
+------------------------------------------------------------------------
+
+I took some inspiration from other visualizations[^1], but I really wanted to find a way to make it more interactive and dynamic. I've been slowly feeling my way through D3, so I figured it would be a great way to learn some of the `d3.force*` modules.
+
+[^1]: https://flowingdata.com/2009/09/02/the-world-of-seinfeld/
+
+Unfortunately, due to how tightly clustered these relationships are around the main characters, I did have to remove some links entirely which had no connection to the main four (ex: Micky Abbot's mother). Due to the math of the forces involved, these disconnected nodes were being shot out into the void outside the canvas as soon as their connection to the main characters disappeared, rendering them pointless. From here, I'd explore different ways to dynamically render the text, as I'm not entirely satisfied with it -- perhaps there is a way to check for overlaps, then only print the text that belongs to the larger node?
+
+Seinfeld is probably my all-time favorite series, so this was a lot of fun to make. While going through this project, I was hemming and hawing about which episode was my absolute favorite. In doing so, I couldn't decide between two: The Stake Out and The Marine Biologist. The latter is as classic as it gets; I'm sure this is on most everyone's lists. However, I think The Stake Out is a slept on episode for a few reasons:
+
+1.  Though the second episode of the series, it's the first with Elaine
+2.  Jerry's parents are also in it for the first time, with Liz Sheridan as Helen and Phil Bruns as Morty (the only one)
+3.  George's oft-used persona of the importer-exporter Art Vandelay is created
+
+If you'd like to explore the code behind the visualisation, continue below to the Appendix.
+
+-CH
+
+<br/>
+
+## Appendix
+
+```{ojs read data}
+// Read in data and parse
+relationships = {
+  let raw = await FileAttachment("seinfeld_relationships@7.json").json(), 
+      counts = new Object()
+  raw = raw.filter(d => (characters.includes(d.To) || characters.includes(d.From)) && (types.includes(d.Type)))
+  raw.map(d => d.From).forEach(d => {
+    return counts[d] ? counts[d]++ : counts[d] = 1
+  })
+  return {
+    nodes: Array.from(new Set(raw.map(d => d.From))).map(d => ({id: d, count: counts[d]})),
+    links: raw
+  }
+}
+```
+
+```{ojs lookups}
+// Build lookup for values
+lookups = ({
+  legend: [
+    {type: "Friend", color: "#2ca02c"},
+    {type: "Family", color: "#d62728"},
+    {type: "Antagonistic", color: "#ff7f0e"},
+    {type: "Romantic", color: "#1f77b4"},
+    {type: "Professional", color: "#9467bd"}
+  ],
+  characters: ["Jerry Seinfeld", "George Costanza", "Elaine Benes", "Cosmo Kramer"]
+})
+```
+
+```{ojs character selex dummy}
+//| eval: false
+// Create character selection
+viewof characters = Inputs.checkbox(
+  lookups.characters, {
+  value: lookups.characters,
+  label: html`<b>Main Characters</b>`
+  }
+)
+```
+
+```{ojs relationsip selex dummy}
+//| eval: false
+// Create relationship type selection
+viewof types = Inputs.checkbox(
+  lookups.legend.map(d => d.type).reverse(), {
+  value: lookups.legend.map(d => d.type).reverse(), 
+  label: html`<b>Relationship Types</b>`,
+  format: x => html`<span style="text-transform: capitalize; border-bottom: solid 2px ${lookups.legend.filter(d => d.type === x)[0].color}; margin-bottom: -2px;">${x}`
+})
+```
+
+```{ojs chart dummy}
+//| eval: false 
+// Build D3 chart
+relationship_chart = {
+  const height = 800
+  const width = 1200
+
+  const color = d3.scaleOrdinal()
+    .domain(lookups.legend.map(d => d.type))
+    .range(lookups.legend.map(d => d.color))
+
+  const links = relationships.links.map(d => ({source: d.From, target: d.To, type: d.Type}))
+  const nodes = relationships.nodes.map(d => ({...d}))
+
+  const sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+    .force("charge", d3.forceManyBody().strength(-50))
+    .force("collide", d3.forceCollide().radius(20))
+    .force("center", d3.forceCenter( width / 2, height / 2 ).strength(1.1))
+    .on("tick", ticked)
+
+  const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height])
+    .attr("style", "max-width: 100%; height: auto;")
+
+  const link = svg.append("g")
+      .attr("stroke", "#999")
+      .attr("stroke-opacity", 0.6)
+    .selectAll()
+    .data(links)
+    .join("line")
+      .attr("stroke-width", 1.1)
+      .attr("stroke", d => color(d.type))
+
+  const globs = svg.append("g")
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 1.1)
+    .selectAll("g")
+    .data(nodes)
+    .enter()
+    .append("g")
+
+  const node = globs.append("circle")
+      .attr("r", d => Math.max(3, Math.sqrt(d.count)+3))
+
+  node.append("title")
+    .text(d => `${d.id} (${d.count})`)
+
+  globs.append("text")
+    .text(d => d.id)
+    .attr("dy", "-1em")
+    .attr("text-anchor", "middle")
+    .attr("stroke", "black")
+    .attr("stroke-width", 0.1)
+    .style("font-size", "12px")
+  
+  globs.call(d3.drag()
+           .on("start", dragstarted)
+           .on("drag", dragged)
+           .on("end", dragended))
+
+  const legendDots = svg.append("g")
+    .selectAll("legendDots")
+    .data(lookups.legend.map(d => d.type))
+    .join("circle")
+      .attr("cx", width - 170)
+      .attr("cy", (d, i) => height - 50 - i*20)
+      .attr("r", 4)
+      .attr("fill", d => color(d))
+
+  const legendText = svg.append("g")
+    .selectAll("legendText")
+    .data(lookups.legend.map(d => d.type))
+    .join("text")
+      .attr("x", width - 160)
+      .attr("y", (d, i) => height - 50 - i*20)
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
+      .text(d => d)
+
+  const legendTitle = svg.append("g")
+    .selectAll("legendTitle")
+    .data(["Relationship Types"])
+    .join("text")
+      .attr("x", width - 190)
+      .attr("y", height - 155)
+      .text("Relationship Types")
+      .attr("text-anchor", "left")
+      .style("text-decoration", "underline")
+      .style("alignment-baseline", "middle")
+
+  function ticked() {
+    globs
+      .attr("transform", d => `translate(${d.x}, ${d.y})`)
+    
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y)
+
+  }
+
+  function dragstarted(event) {
+    if (!event.active) sim.alphaTarget(0.3).restart()
+    event.subject.fx = event.x
+    event.subject.fy = event.y
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x
+    event.subject.fy = event.y
+  }
+
+  function dragended(event) {
+    if (!event.active) sim.alphaTarget(0)
+    event.subject.fx = null
+    event.subject.fy = null
+  }
+
+  invalidation.then(() => sim.stop())
+  
+  return svg.node()
+
+}
+```

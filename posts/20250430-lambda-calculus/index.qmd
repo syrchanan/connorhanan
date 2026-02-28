@@ -1,0 +1,197 @@
+---
+title: "Exploring Lambda Calculus"
+subtitle: "Mucking Around with Pre-Turing Computer Programming"
+date: "2025-04-30"
+execute: 
+  echo: true
+  eval: true
+format: 
+  html: 
+    code-line-numbers: true
+# image: "./ElmerEllsworthphoto01.jpg"
+categories:
+  - OJS
+draft: false
+---
+
+## Introduction
+
+In short, lambda calculus is a pre-Turing machine implementation of computer programming. Rather than relying on memory, instructions, data structures, &c, lambda calculus only has functions. These functions carry a few rules:
+
+1.  Functions can only take 1 argument, and have 1 statement.
+2.  Closures (encapsulated function environments) are allowed, and needed.
+3.  We can create aliases to help in shorthand, but all of the code muse be operable without doing anything that the original function cannot.
+
+With those out of the way, let's begin... [^1]
+
+[^1]: Inspired by [Eric Wastl's](http://hexatlas.com/entries/7) and [Stuart Patience's](https://www.driverlesscrocodile.com/tools-and-techniques/lambda-calculus-for-people-a-step-behind-me-2-boolean-logic/) posts.
+
+## Basics
+
+```{ojs}
+IDENTITY = x => x
+```
+
+Our first function is very simple, but will show the foundation of what we are after.
+
+This is the *identity* function, which returns exactly what the input is. Notice we are following all rules above: 1 argument & statement, &c
+
+Let's extend that a little farther:
+
+```{ojs}
+RETURN_FIRST = a => b => a
+```
+
+```{ojs}
+RETURN_FIRST(1)(2)
+```
+
+```{ojs}
+RETURN_SECOND = a => b => b
+```
+
+```{ojs}
+RETURN_SECOND(1)(2)
+```
+
+In the above functions, we are technically nesting a function within another, such that the argument of the first may or may not be called by the second function. `RETURN_FIRST()` and `RETURN_SECOND()` do exactly as they say, and this 'switch' ability is going to be key to start adding logic.
+
+## Booleans and Logic Gates
+
+```{ojs}
+TRUE = a => b => a
+```
+
+```{ojs}
+FALSE = a => b => b
+```
+
+This may not seem like a lot, or more like a regurgitation of the sample switch return functions above, but this is critical to the base of our logic. The above are our replication of boolean states, which are identical to `RETURN_FIRST` and `RETURN_SECOND` – in fact, as we go on, it will be helpful to keep in mind that `TRUE` will always return the first argument, and `FALSE` the second.
+
+Naturally, these booleans can be combined together, creating `AND`/`OR` logic gates:
+
+```{ojs}
+AND = c => d => c(d)(c)
+```
+
+```{ojs}
+OR = c => d => c(c)(d)
+```
+
+As you can see, the arguments to the functions above are all functions, and will return functions. For example (below), calling `AND(TRUE)(FALSE)` and `OR(TRUE)(FALSE)` will return the appropriate functions, either `FALSE()`, or `TRUE()`.
+
+As an example, let's examine the `AND()` & `OR()` step by step:
+
+1.  First, they accept two arguments, which we've seen before. In this function, the shorthand is *c* and *d*, but we'll refer to them now as *first* and *second* arguments.
+2.  Once the arguments are collected, the bulk of the function is `c(d)(c)` or `c(c)(d)`.
+3.  Within these blocks, the order is critical, as the positions of the arguments of `TRUE()` and `FALSE()` dictate what the end result will be.
+
+We're able to use creative permutations of returning the first (`TRUE`) and second (`FALSE`) values, giving us our basic `AND`/`OR` logic gates. As a thought experiment, let's walk through all the possible permutations:
+
+-   `AND(TRUE)(TRUE)` will call `TRUE(TRUE)(TRUE)`, returning: `TRUE()`
+-   `AND(TRUE)(FALSE)` will call `TRUE(FALSE)(TRUE)`, returning: `FALSE()`
+-   `AND(FALSE)(FALSE)` will call `FALSE(FALSE)(FALSE)`, returning: `FALSE()`
+-   `AND(FALSE)(TRUE)` will call `FALSE(TRUE)(FALSE)`, returning: `FALSE()`
+
+Likewise, for `OR()`:
+
+-   `OR(TRUE)(TRUE)` will call `TRUE(TRUE)(TRUE)`, returning: `TRUE()`
+-   `OR(TRUE)(FALSE)` will call `TRUE(TRUE)(FALSE)`, returning: `TRUE()`
+-   `OR(FALSE)(FALSE)` will call `FALSE(FALSE)(FALSE)`, returning: `FALSE()`
+-   `OR(FALSE)(TRUE)` will call `FALSE(FALSE)(TRUE)`, returning: `TRUE()`
+
+And just to confirm that this is working as expected:
+
+```{ojs}
+AND(TRUE)(FALSE) === FALSE
+```
+
+```{ojs}
+OR(TRUE)(FALSE) === TRUE
+```
+
+As opposed to the above, `NOT()` looks like it will take 3 arguments rather than the 2 we've seen so far. However, the best way to think about it is that it takes only 1 argument: one of the other logic functions: `AND()`, `OR()`, &c.
+
+In the function, consider `c` as the outer function (`AND`, `OR`, &c.), so instead of calling `AND(a)(b)`, it acts as a wrapper around the logic gate and will flip the inputs, translating it into `AND(b)(a)`. If you refer back to the `AND()`/`OR()` tables above, you can pretty clearly see how this would negate all the results.
+
+Let's take a look:
+
+```{ojs}
+NOT = c => a => b => c(b)(a)
+```
+
+```{ojs}
+NOT( AND(TRUE)(TRUE) ) === FALSE
+```
+
+To extend this idea of a wrapper, we can leave the input order the same, and get a ternary operator (`IF`) out of it (just as a shorthand), of the form `IF(condition)(value if true)(value if false)` like so:
+
+```{ojs}
+IF = c => a => b => c(a)(b)
+```
+
+```{ojs}
+IF( AND(TRUE)(FALSE) )(TRUE)(FALSE) === FALSE
+```
+
+Now the incredible part -- using these, we can now create all the rest of the core logic gates:
+
+```{ojs}
+NAND = c => d => NOT( AND(c)(d) )
+```
+
+```{ojs}
+NOR = c => d => NOT( OR(c)(d) )
+```
+
+```{ojs}
+XOR = c => d => c( NOT(d) )(d)
+```
+
+```{ojs}
+XNOR = c => d => c(d)( NOT(d) )
+```
+
+And finally, with all these logic gates in hand, let's extend the fledgling truth table from earlier to test all of these out. To do so, let's build a helper function to let us parse out the values (since everything is a function, we need some real strings to populate the table).
+
+```{ojs}
+lambda_to_js = (bool) => bool("TRUE")("FALSE")
+```
+
+And now we can map across all permutations of our logic gates:
+
+```{ojs}
+part_1_truth_table = {
+  const output = [];
+  
+  [TRUE, FALSE].forEach(a => {    
+    [TRUE, FALSE].forEach(b => {
+      output.push({
+        a: lambda_to_js(a),
+        b: lambda_to_js(b),
+        and: lambda_to_js( AND(a)(b) ),
+        or: lambda_to_js( OR(a)(b) ),
+        nand: lambda_to_js( NAND(a)(b) ),
+        nor: lambda_to_js( NOR(a)(b) ),
+        xor: lambda_to_js( XOR(a)(b) ),
+        xnor: lambda_to_js( XNOR(a)(b) )
+      })
+    })
+  })
+
+  return output
+}
+
+```
+
+```{ojs}
+Inputs.table(part_1_truth_table)
+```
+
+------------------------------------------------------------------------
+
+Great! We have created a full lambda calculus implementation of some logic gates! Now, this may seem trivial, but consider what is happening under the hood - we are using only functions to represent both values and operations.
+
+As you'll see next time, this can spiral out of control very quickly once we take a look at representing numbers and more complex operations.
+
+-CH

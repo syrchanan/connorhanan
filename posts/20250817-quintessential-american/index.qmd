@@ -1,0 +1,64 @@
+---
+title: "The Quintessential American"
+subtitle: "The Man With No Name vs James Bond"
+date: "2025-08-17"
+format: 
+  html: 
+    code-line-numbers: false
+# image: "./ElmerEllsworthphoto01.jpg"
+categories:
+  - Analysis
+  - College
+draft: false
+---
+
+While I've been working on some new posts, I decided to take a break and clean out one of my hard drives. Lo and behold, I stumbled across some of my old college papers!
+
+Mostly as a way to ensure I don't lose them, I thought I might share a select few here, beginning with one I wrote in a *James Bond* class. Just as the eponymous character has become known as the quintessential British figure, we were tasked with determining who is the American equivalent.
+
+
+## The Quintessential American
+
+Characters in the media often adhere to certain predefined roles, allowing audiences to understand the character much quicker. These “stock” characteristics do not have to only be limited to the character’s actions; rather, they can also speak to matters of identity. The perfect example of this is James Bond, who is quintessentially British[^1]. He is suave, upper-class, has command of every situation – essentially, he is everything that the stereotypical Briton has come to represent. 
+
+[^1]: Baron C.  (2009).  Doctor No:  bonding Britishness to racial sovereignty.  In C. Lindler (ed.).  The James Bond Phenomenon, A Critical Reader.  Manchester: Manchester University Press.
+
+However, this phenomenon extends beyond the overly British Bond – there are counterparts for many other cultures all over the world. “The Man With No Name”, from the Dollars Trilogy, can be considered stereotypically American as a character, specifically in The Good, The Bad, and The Ugly. 
+	
+The Man With No Name, or “Blondie” (as Tuco, the Ugly, calls him), is defined almost entirely by core tenets of the American stereotype[^2]. Popularly, among the world’s various forms of media, Americans have commonly been depicted as arrogant and over-zealous. 
+
+[^2]: Gorham, B.  (2019).  “The Social Psychology of Stereotypes and Bias:  Implications for Media Audiences”  In Lind, R.A. (Ed.) Race/Gender/Media.  Considering Diversity Across Audiences, Content and Producers.  Boston:  Allyn & Bacon.
+
+These stereotypes are activated by a few different aspects of Blondie’s environment and character[^3]. First and foremost, the film is set in New Mexico around the middle of the American Civil War, a time at which this area was still very much a frontier. 
+
+[^3]: Gorham, B.  (2019).  “The Social Psychology of Stereotypes and Bias:  Implications for Media Audiences”  In Lind, R.A. (Ed.) Race/Gender/Media.  Considering Diversity Across Audiences, Content and Producers.  Boston:  Allyn & Bacon.
+
+The harsh lands and unforgiving climates set the stage perfectly for Blondie to eventually triumph over them, giving the impression that he will triumph over anything that comes his way. This goes hand in hand with Blondie’s quiet, self-assured nature – they both perpetuate an arrogance that goes unmatched amongst the other characters of the film. These traits of Blondie’s act as primers, triggering the audience to recall the well-established schema[^4] of the “arrogant American” identity. 
+
+[^4]: Gorham, B.  (2019).  “The Social Psychology of Stereotypes and Bias:  Implications for Media Audiences”  In Lind, R.A. (Ed.) Race/Gender/Media.  Considering Diversity Across Audiences, Content and Producers.  Boston:  Allyn & Bacon.
+
+Another quintessentially American trait is to believe in one’s own goodness, no matter the methods employed. Historically, the United States has employed, well, less than honest methods to gain and keep power on the world stage. 
+
+As such, it has become a part of the national identity – so long as America comes out on top, most of the steps in between can be overlooked. Accordingly, Blondie’s actions adhere to this mantra of doing good with less than scrupulous means. 
+
+Throughout the film, he is an anti-hero, willing to lie, cheat, gamble, kill and whatever else is necessary to get ahead. However, in the enigma code[^5] that is the film’s title, he is the titular “Good” character, which implies that he has morals to some extent, and at the very least, is the best of the rest of the characters. The audience, watching The Man With No Name act contrary to his given descriptor, is exposed to example after example of the ends justifying the means in stereotypical American fashion.
+
+[^5]: De Reeper, M.  (2013).  How to analyze movies #2:  Signs, codes and conventions.  From Film Inquiry (website).  Available at https://www.filminquiry.com/analyse-movies-signs/
+
+Though the previously mentioned schema tends to support the interpretation of negative traits in Blondie, there are some good ones as well. Pax Americana is the idea that as soon as the United States gained hemispheric economic and militaristic dominance after World War II, an era of peace followed in its trail. 
+
+In the early parts of the film, Blondie struggles to gain the upper hand against Tuco, right up until he learns where the gold is. This knowledge, combined with Blondie being constantly armed after this inflection point, is very reminiscent of Pax Americana. Whether the audience can define it or not, they have been primed through repeated exposure to these ideas[^6], so even the subtlest surfacing of them will bring to mind American identity. 
+
+[^6]: Gorham, B.  (2019).  “The Social Psychology of Stereotypes and Bias:  Implications for Media Audiences”  In Lind, R.A. (Ed.) Race/Gender/Media.  Considering Diversity Across Audiences, Content and Producers.  Boston:  Allyn & Bacon.
+
+Perhaps, this is indeed the most critical part of implicit association: the viewer does not have to explicitly recall precise definitions and try to apply them to the situation. All that is needed is enough of a pattern for the brain to recognize it, and the rest falls in to place[^7]. 
+
+[^7]: Gorham, B.  (2019).  “The Social Psychology of Stereotypes and Bias:  Implications for Media Audiences”  In Lind, R.A. (Ed.) Race/Gender/Media.  Considering Diversity Across Audiences, Content and Producers.  Boston:  Allyn & Bacon.
+
+The Man With No Name’s arrogance, antithetical nature and similarities to Pax Americana all bring forth views of American identity in the minds of the audience. As media consumers, we have developed a common schema of what the American identity consists of; however, realizing the connection from a character on screen to implicit associations is another story.
+
+------------------------------------------------------------------------
+
+I had a rather fun time writing this one, as it meant I got to rewatch a classic!
+
+-CH
