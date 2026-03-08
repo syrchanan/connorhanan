@@ -114,10 +114,11 @@ if [ ! -s "$tmpdir/new.keys" ]; then
 fi
 
 echo "New keys found: $(wc -l < "$tmpdir/new.keys")"
-echo "Creating new post at $filename"
 
 # create new quarto doc with frontmatter for post
 filename="posts/auto/$(date -I)-discogs.qmd"
+
+echo "Creating new post at $filename"
 
 cat > "$filename" << QMD_HEAD
 ---
