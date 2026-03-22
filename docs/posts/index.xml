@@ -10,7 +10,34 @@
 <atom:link href="https://connorhanan.com/posts/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.7.29</generator>
-<lastBuildDate>Tue, 17 Mar 2026 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 21 Mar 2026 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Recently Read</title>
+  <link>https://connorhanan.com/posts/auto/2026-03-21-goodreads.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1624658259l/58425375._SX98_.jpg" class="img-fluid" width="150"></p>
+<section id="moral-aspects-of-city-life-a-series-of-lectures" class="level2">
+<h2 class="anchored" data-anchor-id="moral-aspects-of-city-life-a-series-of-lectures">Moral Aspects of City Life: A Series of Lectures</h2>
+<p><strong>E.H. Chapin</strong></p>
+<p>Rating: ★★★★☆</p>
+<p><br></p>
+<hr>
+<p><em>This post was automatically generated from <a href="https://www.goodreads.com/review/list/98547221-connor-hanan?shelf=read">my Goodreads shelf</a>.</em></p>
+<p>-CH</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Automated Updates</category>
+  <category>Books</category>
+  <guid>https://connorhanan.com/posts/auto/2026-03-21-goodreads.html</guid>
+  <pubDate>Sat, 21 Mar 2026 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>New Records</title>
   <link>https://connorhanan.com/posts/auto/2026-03-17-discogs.html</link>
@@ -17288,37 +17315,6 @@ font-style: inherit;">pull</span>(total)</span></code></pre></div>
   <category>R</category>
   <guid>https://connorhanan.com/posts/20241201-advent-of-code/</guid>
   <pubDate>Sun, 01 Dec 2024 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>What’s Next?</title>
-  <link>https://connorhanan.com/posts/20241115-whats-next/</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="im-back" class="level3">
-<h3 class="anchored" data-anchor-id="im-back">I’m Back!</h3>
-<p>It’s been a long while since I’ve posted, as lots has happened over the last couple of months.</p>
-<p>Most notably, I’ve moved to NYC from Carlsbad, CA (goodbye, beaches!), and settled in quite nicely. The city is fantastic, and I am enjoying catching up with friends in the area!</p>
-</section>
-<section id="whats-next" class="level3">
-<h3 class="anchored" data-anchor-id="whats-next">What’s next?</h3>
-<p>Over the next little while, I plan to post every so often, with a wide variety of topics, from anything Civil War to Computer/Data Science to anything else that comes up.</p>
-<p>Primarily, I plan to enter into the <a href="https://adventofcode.com/">Advent of Code</a> again this year, using various languages to really test my skills. Obviously, R is my first and greatest, and Python to a lesser extent – but over the last few months, I’ve been picking up ObservableJS. I primarily plan to use OJS for D3 and Plot visualizations, which of course necessitates learning the language in a greater sense as well.</p>
-<p>Since Quarto has functionality to support R, Python, and OJS cells – all interoperably, I might add – who knows what will happen this year! I may flip around depending on the problem; for example, tasks dealing with navigating maps lends itself to a tibble structure, whereas set and lists are far easier to manage in Python and/or OJS.</p>
-<hr>
-<p>As we go along, the topics will jump around, but that is the exciting part! I also do not plan on having any sort of schedule, so the posts will come just as sporadically as ever – how fun!</p>
-<p>-CH</p>
-
-
-</section>
-
- ]]></description>
-  <category>Update</category>
-  <category>Advent of Code</category>
-  <guid>https://connorhanan.com/posts/20241115-whats-next/</guid>
-  <pubDate>Fri, 15 Nov 2024 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

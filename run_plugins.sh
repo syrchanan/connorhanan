@@ -17,3 +17,5 @@ fi
 
 # Run plugins
 ./plugins/discogs.sh syrchanan db
+
+./plugins/goodreads.sh "$GOODREADS_WIDGET" db
