@@ -1,0 +1,115 @@
+---
+title: "Recently Read, Automated"
+subtitle: "The Goodreads Plugin, or: What to Do When There's No API"
+date: "2026-03-28"
+format:
+  html:
+    code-line-numbers: true
+categories:
+  - Automation
+  - Books
+draft: true
+---
+
+In the [last post](../drafts/discogs-automation-walkthrough.qmd) I walked through the Discogs plugin that auto-generates my *New Records* posts. The Goodreads equivalent follows the same general shape — fetch data, diff against a local DB, write a Quarto post — but the data acquisition is a bit more creative, because Goodreads doesn't have a public API.
+
+## The Widget Workaround
+
+Goodreads does still offer embeddable shelf widgets, which are served as a JavaScript file containing an HTML string assigned to a variable. It's not pretty, but it's something to grab onto:
+
+```bash
+curl -sS "$GOODREADS_WIDGET" -o "$tmpdir/widget.js"
+```
+
+The widget URL encodes your shelf preferences as query parameters — number of books, sort order, which fields to show, &c. The script uses a default URL pointed at my `read` shelf, but it can be overridden via the first argument or a `GOODREADS_WIDGET` environment variable.
+
+## Extracting the HTML
+
+The JS file looks roughly like:
+
+```js
+var widget_code = '<div>...escaped HTML...</div>'
+```
+
+So the first step is stripping the JS wrapper and unescaping the four escape patterns Goodreads uses (`\n`, `\/`, `\"`, `\'`):
+
+```bash
+head -1 "$tmpdir/widget.js" \
+  | sed "s/^[[:space:]]*var widget_code = '//; s/'[[:space:]]*$//" \
+  | sed 's/\\n/\n/g' \
+  | sed "s/\\\\\"/\"/g" \
+  | sed "s/\\\\'/'/g" \
+  | sed 's|\\\/|/|g' \
+  > "$tmpdir/widget.html"
+```
+
+The whole widget is on one line, so `head -1` pulls the entire thing. From there it's a chain of `sed` substitutions until we have readable HTML.
+
+## Parsing the Book Blocks
+
+Each book in the widget HTML is wrapped in a `gr_custom_each_container` div. `csplit` splits the HTML into individual files on that pattern:
+
+```bash
+csplit -sz -f "$tmpdir/book_" "$tmpdir/widget.html" '/gr_custom_each_container/' '{*}'
+```
+
+Then we loop over those files and extract fields with `grep`:
+
+```bash
+full_title=$(grep -oP '<a title="\K[^"]+' "$block" | head -1)
+title=$(grep -A2 'gr_custom_title' "$block" | grep -oP '>\K[^<]+(?=</a>)' | head -1)
+author=$(grep -A2 'gr_custom_author' "$block" | grep -oP '>\K[^<]+(?=</a>)' | head -1)
+img=$(grep 'gr_custom_book_container' -A5 "$block" | grep -oP 'src="\K[^"]+' | head -1)
+rating=$(grep -o 'gr_red_star_active' "$block" | wc -l)
+```
+
+The rating is derived by counting active star images rather than reading a numeric value — a little roundabout, but it works. Each book gets written out as a line of NDJSON with `jq -nc`.
+
+## Finding What's New
+
+The comparison logic here is slightly different from the Discogs plugin. Since the widget doesn't guarantee a strict ordering by date added, the script can't just stop at the first match. Instead, it checks every fetched key against the full local DB:
+
+```bash
+while IFS= read -r key; do
+  if ! grep -qFx "$key" "$l_keys"; then
+    echo "$key" >> "$tmpdir/new.keys"
+  fi
+done < "$f_keys"
+```
+
+The composite key is author + title joined with `||` — no date field is available from the widget, so that's the best identifier we have.
+
+## Building the Post
+
+One piece the Goodreads plugin has that Discogs doesn't is a small helper to render a numeric rating as a Unicode star string:
+
+```bash
+stars() {
+  local r=$1 s=""
+  for ((i=1; i<=5; i++)); do
+    [ "$i" -le "$r" ] && s+="★" || s+="☆"
+  done
+  echo "$s"
+}
+```
+
+The rest of the post-building follows the same pattern as Discogs — frontmatter, then a block per book with cover image, title, author, and stars:
+
+```bash
+echo "![]($img){width=150px}"
+echo "## $title"
+echo "**${author}**"
+echo "Rating: $star_display"
+```
+
+New books get prepended to the local NDJSON database, and that's that.
+
+## The Tradeoffs
+
+Scraping a widget is obviously less reliable than a real API — Goodreads could change the widget format at any time and break parsing. But given that the alternative is no automation at all, a fragile solution beats a manual one.
+
+The widget also caps out at 100 books per request, which is fine for catching recent additions but means it can't do a full historical backfill. For that, the local DB just needs to be seeded manually once.
+
+------------------------------------------------------------------------
+
+-CH

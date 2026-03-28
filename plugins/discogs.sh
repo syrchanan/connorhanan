@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Usage: ./discogs.sh <username> [outdir]
-
 set -euo pipefail
 
 # set vars and defaults

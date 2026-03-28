@@ -6,6 +6,7 @@ image: ./hardy-hanging.jpg
 categories:
   - Music
   - History
+  - featured
 ---
 
 ![](./hardy-hanging.jpg){fig-alt="John Hardy on the gallows in WV, circa 1894." fig-align="center"}  

@@ -1,4 +1,14 @@
 /* css styles */
+
+/* Hide the featured category badge on listing cards */
+.listing-category[data-value="featured"] {
+  display: none;
+}
+
+/* Align categories sidebar with the first row of featured cards */
+#quarto-margin-sidebar {
+  padding-top: 3.5rem;
+}
 .navbar-dark {
   background-color: #007ab2;
 }
@@ -19,6 +29,28 @@
 
 a {
   color: #007ab2;
+}
+
+:root {
+  --bs-link-color: #007ab2;
+  --bs-link-hover-color: #007ab2;
+}
+
+#quarto-margin-sidebar,
+#quarto-sidebar {
+  --bs-nav-link-color: #007ab2;
+  --bs-nav-link-hover-color: #007ab2;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active,
+.sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+  color: #007ab2 !important;
+  border-left-color: #007ab2 !important;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a:hover,
+.sidebar nav[role=doc-toc] ul>li>ul>li>a:hover {
+  color: #007ab2 !important;
 }
 
 .pagination {
