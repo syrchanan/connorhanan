@@ -33,7 +33,11 @@ font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div>
 <li>A Discogs username (in this case, <code>syrchanan</code>).</li>
 <li>An output directory (in this case, <code>db</code>).</li>
 </ol>
-<p>It also looks for two optional environment variables: - <code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment. - <code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</p>
+<p>It also looks for two optional environment variables:</p>
+<ul>
+<li><code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment.</li>
+<li><code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</li>
+</ul>
 </section>
 <section id="fetching-the-collection" class="level2">
 <h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>

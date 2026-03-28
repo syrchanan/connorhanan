@@ -564,7 +564,7 @@
     "href": "posts/20260328-discogs-plugin/index.html#setup",
     "title": "New Records, Automated",
     "section": "Setup",
-    "text": "Setup\nThe whole process lives in plugins/discogs.sh, a Bash script invoked by my top-level (and very creatively named) plugin manager publish.sh, which loads environment variables and fires each plugin in sequence:\n./discogs.sh syrchanan db\nThe script accepts two positional arguments:\n\nA Discogs username (in this case, syrchanan).\nAn output directory (in this case, db).\n\nIt also looks for two optional environment variables: - DISCOGS_API_TOKEN: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment. - PAGELIM: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates)."
+    "text": "Setup\nThe whole process lives in plugins/discogs.sh, a Bash script invoked by my top-level (and very creatively named) plugin manager publish.sh, which loads environment variables and fires each plugin in sequence:\n./discogs.sh syrchanan db\nThe script accepts two positional arguments:\n\nA Discogs username (in this case, syrchanan).\nAn output directory (in this case, db).\n\nIt also looks for two optional environment variables:\n\nDISCOGS_API_TOKEN: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment.\nPAGELIM: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates)."
   },
   {
     "objectID": "posts/20260328-discogs-plugin/index.html#fetching-the-collection",
