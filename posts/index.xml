@@ -10,7 +10,347 @@
 <atom:link href="https://connorhanan.com/posts/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.7.29</generator>
-<lastBuildDate>Sat, 21 Mar 2026 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 28 Mar 2026 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>New Records, Automated</title>
+  <link>https://connorhanan.com/posts/20260328-discogs-plugin/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Lately, there have been quite a few posts titled <em>Automated Updates</em>. I’ve been playing around with some bash, so those are the result of custom scripts that I am calling my blog website “plugins”.</p>
+<p>They are generated, entirely automatically, as part of my publishing workflow – of course aside from updating my ever-expanding <a href="https://www.discogs.com/user/syrchanan/collection">Discogs collection</a>.</p>
+<p>I thought it would be fun to walk through the process…</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>The whole process lives in <code>plugins/discogs.sh</code>, a Bash script invoked by my top-level (and very creatively named) plugin manager <code>publish.sh</code>, which loads environment variables and fires each plugin in sequence:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div>
+<p>The script accepts two positional arguments:</p>
+<ol type="1">
+<li>A Discogs username (in this case, <code>syrchanan</code>).</li>
+<li>An output directory (in this case, <code>db</code>).</li>
+</ol>
+<p>It also looks for two optional environment variables: - <code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment. - <code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</p>
+</section>
+<section id="fetching-the-collection" class="level2">
+<h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>
+<p>The <a href="https://www.discogs.com/developers/#">Discogs API</a> exposes a user’s collection at <code>/users/{username}/collection/folders/0/releases</code>, sorted by date added descending.</p>
+<p>The script iterates through the pages (up to <code>$PAGELIM</code>), writing each release as a compact JSON object to a temporary NDJSON<sup>1</sup> file:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">jq</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.releases[]? as $r | $r.basic_information as $b | {</span></span>
+<span id="cb2-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  added:    $r.date_added,</span></span>
+<span id="cb2-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  title:    $b.title,</span></span>
+<span id="cb2-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  year:     (try ($b.year|tonumber) catch null),</span></span>
+<span id="cb2-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  formats:  $b.formats[0],</span></span>
+<span id="cb2-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  labels:   $b.labels[0],</span></span>
+<span id="cb2-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  artists:  $b.artists[0],</span></span>
+<span id="cb2-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  genres:   $b.genres,</span></span>
+<span id="cb2-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  styles:   $b.styles,</span></span>
+<span id="cb2-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  img:      $b.cover_image</span></span>
+<span id="cb2-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">}'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$resp</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$outfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<p>This results in a file with one line per release, such that each line is a cleaned up JSON object with the fields I care about. Since the API returns your collection sorted by date descending, the newest releases are at the top of the file – a feature that becomes important for the next step.</p>
+</section>
+<section id="looking-for-new-records" class="level2">
+<h2 class="anchored" data-anchor-id="looking-for-new-records">Looking for New Records</h2>
+<p>The local “database” is also just an NDJSON file on disk, which contains every release that has already been posted<sup>2</sup>. Also, rather than comparing full objects, I build a composite key for each release, comprised of the date added, artist name, and title — joined with <code>||</code>:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">jq</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-r</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[(.added // ""), ((.artists.name) // ""), (.title // "")]</span></span>
+<span id="cb3-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  | map(gsub("\\n"; " ") | gsub("\\r"; ""))</span></span>
+<span id="cb3-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  | join("||")'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fetched</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sort</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ur</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$f_keys</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<p>Both the fetched collection and the local DB get this same format. Next, the script walks through the fetched keys from newest to oldest, writing any that don’t match the most recent local key into a <code>new.keys</code> file. It stops at the first match, which is a little fragile, but still works because everything is sorted by date descending.</p>
+<p>If <code>new.keys</code> is empty, the script exits cleanly with no output.</p>
+</section>
+<section id="building-the-automated-post" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-automated-post">Building the Automated Post</h2>
+<p>For each new record in our newly minted <code>new.keys</code> file, we pull the full object back out of the fetched data, extracts the fields, and append a markdown block to a new Quarto document:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">filename</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"posts/auto/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">date</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-discogs.qmd"</span></span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$filename</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt; QMD_HEAD</span></span>
+<span id="cb4-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">title: "New Records"</span></span>
+<span id="cb4-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">date: </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">date</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb4-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">categories:</span></span>
+<span id="cb4-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - Automated Updates</span></span>
+<span id="cb4-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - Music</span></span>
+<span id="cb4-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">draft: false</span></span>
+<span id="cb4-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-12"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">QMD_HEAD</span></span></code></pre></div>
+<p>Each record then gets a cover image, an H2 markdown (<code>##</code>) heading, and a markdown table with the label, year, catalog number, format, and genre:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"![](</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$img</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">){width=300px}"</span></span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"## </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$title</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"**</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$artists</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">**"</span></span>
+<span id="cb5-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"| Label  | </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$label</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> |"</span></span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"| Year   | </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$year</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  |"</span></span>
+<span id="cb5-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ...&amp;c &amp;c</span></span></code></pre></div>
+</section>
+<section id="updating-the-local-db" class="level2">
+<h2 class="anchored" data-anchor-id="updating-the-local-db">Updating the Local DB</h2>
+<p>Once the post is written, the new releases get prepended to the local NDJSON database so we don’t double count any records the next time the script runs:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/updated_db.ndjson"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$local</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/combined.ndjson"</span></span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mv</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/combined.ndjson"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$local</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+</section>
+<section id="wrapping-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
+<p>The whole thing runs pretty quick, and produces a clean <code>.qmd</code> file; it requires nothing beyond <code>bash</code>, <code>curl</code>, and <code>jq</code>. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).</p>
+<p>I have a similar plugin for Goodreads that follows the same pattern — a post for another day.</p>
+<hr>
+<p>-CH</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>NDJSON (Newline-Delimited JSON) - I chose this format because it makes it far easier to diff my local “database” with <code>jq</code> and <code>sort</code>.↩︎</p></li>
+<li id="fn2"><p>One optimization I’ve been considering is to clean up the local DB to remove all but the latest record posted, that way I can do a simpler <code>grep</code> to find where the break point is. Or, you, know, use a real sqlite DB. But I was lazy.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Automation</category>
+  <category>Music</category>
+  <guid>https://connorhanan.com/posts/20260328-discogs-plugin/</guid>
+  <pubDate>Sat, 28 Mar 2026 04:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Recently Read</title>
+  <link>https://connorhanan.com/posts/auto/2026-03-28-goodreads.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1518344922l/38292111._SX98_.jpg" class="img-fluid" width="150"></p>
+<section id="dollars-and-democracy" class="level2">
+<h2 class="anchored" data-anchor-id="dollars-and-democracy">Dollars and Democracy</h2>
+<p><em>Dollars and Democracy (Classic Reprint)</em></p>
+<p><strong>Philip Burne-Jones</strong></p>
+<p>Rating: ★★★★★</p>
+<p><br></p>
+<p><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1702557732l/203790675._SX98_.jpg" class="img-fluid" width="150"></p>
+</section>
+<section id="the-war-in-the-united-states-report-to-the-swiss-military-department-preceded-by-a-discourse-to-the-federal-military-society-assembled-at-berne-aug.-18-1862" class="level2">
+<h2 class="anchored" data-anchor-id="the-war-in-the-united-states-report-to-the-swiss-military-department-preceded-by-a-discourse-to-the-federal-military-society-assembled-at-berne-aug.-18-1862">The war in the United States: Report to the Swiss Military Department : Preceded by a Discourse to the Federal Military Society Assembled at Berne, Aug.&nbsp;18, 1862</h2>
+<p><strong>Ferdinand Lecomte</strong></p>
+<p>Rating: ★★★★★</p>
+<p><br></p>
+<hr>
+<p><em>This post was automatically generated from <a href="https://www.goodreads.com/review/list/98547221-connor-hanan?shelf=read">my Goodreads shelf</a>.</em></p>
+<p>-CH</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Automated Updates</category>
+  <category>Books</category>
+  <guid>https://connorhanan.com/posts/auto/2026-03-28-goodreads.html</guid>
+  <pubDate>Sat, 28 Mar 2026 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Recently Read</title>
   <link>https://connorhanan.com/posts/auto/2026-03-21-goodreads.html</link>
@@ -5614,6 +5954,7 @@ On his dying bed at the close of day.</p>
 </ol>
 </section></div> ]]></description>
   <category>Music</category>
+  <category>featured</category>
   <category>History</category>
   <category>Analysis</category>
   <guid>https://connorhanan.com/posts/20250802-bury-me-not/</guid>
@@ -16362,959 +16703,6 @@ font-style: inherit;">0</span>)</span>
   <category>OJS</category>
   <guid>https://connorhanan.com/posts/20241203-advent-of-code/</guid>
   <pubDate>Tue, 03 Dec 2024 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>2024 Day 2: Red-Nosed Reports</title>
-  <link>https://connorhanan.com/posts/20241202-advent-of-code/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Time for some <a href="https://adventofcode.com/2024/day/2">day 2</a> action!</p>
-<section id="part-1" class="level3">
-<h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">check_validity <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">function</span>(vec) {</span>
-<span id="cb1-2">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># check if vec == sort(vec) or rev(sort(vec)), we know it is asc or desc</span></span>
-<span id="cb1-3">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> ( <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">identical</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>(vec), vec) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&amp;&amp;</span> <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">identical</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rev</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>(vec)), vec) ) {</span>
-<span id="cb1-4">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">return</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb1-5">    }</span>
-<span id="cb1-6">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># if it is, subtract each from the value that comes before it</span></span>
-<span id="cb1-7">    diffs <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> vec[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">length</span>(vec)<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>] <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">lead</span>(vec)[<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">is.na</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">lead</span>(vec))]</span>
-<span id="cb1-8">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># check all diffs are ints -3 &lt;= x &lt;= 3, where x != 0</span></span>
-<span id="cb1-9">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> ( <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">all</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">abs</span>(diffs) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%in%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>)) ) {</span>
-<span id="cb1-10">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">return</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb1-11">    } <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> {</span>
-<span id="cb1-12">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">return</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb1-13">    }</span>
-<span id="cb1-14">}</span></code></pre></div>
-</div>
-<p>Since we are repeating the same operation across each input row, let’s create a function to map across each row:</p>
-<ul>
-<li><p>First, we need to check that all sequences are either ascending or descending – and we accomplish that by using <code>sort()</code> and <code>rev()</code>. If the input vector doesn’t match the sorted or reverse sorted vector, then we know it is out of order and can skip it. However, if it matches one of them, then we can proceed.</p></li>
-<li><p>The next step is to subtract each number from the one that precedes it, which we accomplish with <code>lead()</code>. It could also be done coming from the other side with <code>lag()</code>, just preference to come at it from this side. Once we have all of our diffs (and have ditched the NAs from the <code>lead()</code> shift), we can take the absolute value of each and check that they are all either 1, 2, or 3.</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">raw <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">n'</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_trim</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">s+"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-6">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># map our function across each input row</span></span>
-<span id="cb2-7">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">check_validity</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.numeric</span>(.x))) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-8">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sum</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 326</code></pre>
-</div>
-</div>
-<p>Now that our function is complete, all we have to do for this part is clean up the input, split on each row, and map our function across each item in the list! Since we encoded the function output as 1’s and 0’s, we can easily sum to get the count of passing rows.</p>
-<p>⭐</p>
-</section>
-<section id="part-2" class="level3">
-<h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">build_shift_list <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">function</span>(vec) {</span>
-<span id="cb4-2"></span>
-<span id="cb4-3">  all_variations <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(vec)</span>
-<span id="cb4-4"></span>
-<span id="cb4-5">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># for each step subset a different portion</span></span>
-<span id="cb4-6">  <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> (shift <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">length</span>(vec)) {    </span>
-<span id="cb4-7">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">append</span>(</span>
-<span id="cb4-8">      all_variations, </span>
-<span id="cb4-9">      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># head counts from the front, tail counts from the back</span></span>
-<span id="cb4-10">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>( <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>( <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span>(vec, shift<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">-1</span>), <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tail</span>(vec, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">length</span>(vec)<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>shift) ) )</span>
-<span id="cb4-11">    ) <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">-&gt;</span> all_variations</span>
-<span id="cb4-12">  }</span>
-<span id="cb4-13">  </span>
-<span id="cb4-14">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">return</span>(all_variations)</span>
-<span id="cb4-15"></span>
-<span id="cb4-16">}</span></code></pre></div>
-</div>
-<p>In part two, we have to consider each variation of the input sequence created by deleting each number from that sequence. This calls for another function, which is pretty straightforward – we first count the length of the row, and then iterate through the row, removing each number at a time (and not forgetting to include the original vector in the return list).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">raw <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">n'</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_trim</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">s+'</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-6">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># map across each to build a list of options within the outer list</span></span>
-<span id="cb5-7">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">build_shift_list</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.numeric</span>(.x))) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-8">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># at depth 2 (list of lists), run function from before</span></span>
-<span id="cb5-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map_depth</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">.depth =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, check_validity) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-10">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># summarise each sublist -- if any are 1, then count all as 1</span></span>
-<span id="cb5-11">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ifelse</span>( <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">any</span>(.x <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>), <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> )) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-12">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-13">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sum</span>()</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 381</code></pre>
-</div>
-</div>
-<p>Now that that is sorted, we can do almost the exact same as for Part 1; however, we need two new lines to:</p>
-<ul>
-<li><p>Get our shifted lists, which will create a hierarchy of lists</p>
-<ul>
-<li>ex: <code>[ [1, 2, 3], [2, 3], [1, 3], [1, 2] ]</code></li>
-</ul></li>
-<li><p>Map our first function across those sublists (which are depth 2 on our traversal tree)</p></li>
-</ul>
-<p>Easy enough!</p>
-<p>⭐</p>
-<hr>
-<p>Perhaps we mix up the language for tomorrow?</p>
-<p>-CH</p>
-
-
-</section>
-
- ]]></description>
-  <category>Advent of Code</category>
-  <category>R</category>
-  <guid>https://connorhanan.com/posts/20241202-advent-of-code/</guid>
-  <pubDate>Mon, 02 Dec 2024 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>2024 Day 1: Historian Hysteria</title>
-  <link>https://connorhanan.com/posts/20241201-advent-of-code/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Let’s get started with <a href="https://adventofcode.com/2024/day/1">day 1</a>!</p>
-<p>Today, after reading the problem, I feel like OJS will be easiest to handle all of these lists, so without further ado, let’s begin:</p>
-<section id="part-1" class="level3">
-<h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="1032" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1031;"><span id="cb1-1032">{</span>
-<span id="cb1-1033">  <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">const</span> parsed <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> raw<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>)</span>
-<span id="cb1-1034">      <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> {</span>
-<span id="cb1-1035">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> d<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">trimStart</span>()</span>
-<span id="cb1-1036">                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">replace</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\s+</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'|'</span>)</span>
-<span id="cb1-1037">                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'|'</span>)</span>
-<span id="cb1-1038">                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span>d)</span>
-<span id="cb1-1039">      })</span>
-<span id="cb1-1040"></span>
-<span id="cb1-1041">  <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> parsed<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>((d<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> me) <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> {</span>
-<span id="cb1-1042">      <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">const</span> diff <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> me<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(elem <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> elem[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>])<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>()[i] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> </span>
-<span id="cb1-1043">                   me<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(elem <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> elem[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>])<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>()[i]</span>
-<span id="cb1-1044">      <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> diff <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">?</span> diff <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">:</span> diff</span>
-<span id="cb1-1045">    })<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">reduce</span>((nxt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> acc) <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> nxt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> acc<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb1-1046">}</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-1" data-nodetype="expression">
-
-</div>
-</div>
-</div>
-<p>First we need to parse out the input. I split on each newline, and used some regex to replace all the extra whitespace between the numbers with a delimeter, making splitting it into arrays quite simple.</p>
-<p>However, we need to map across the arrays and find the paired difference between the elements - after sorting - which I chose to do in one step using the <code>this</code> property of arrays when mapping.</p>
-<p>A simple conditional brings us home to our first star of the year!</p>
-<p>Just for fun, let’s do the same in R:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">raw <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">n"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-3">  .[[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]] <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(str_squish) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_split</span>(.x, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">" "</span>)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb2-6">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_flatten</span>() <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">-&gt;</span> parsed</span>
-<span id="cb2-7"></span>
-<span id="cb2-8">parsed <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.numeric</span>(.x[[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]])) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-10">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-11">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-12">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tibble</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">part_1 =</span> .) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-13">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">bind_cols</span>({</span>
-<span id="cb2-14">    parsed <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-15">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.numeric</span>(.x[[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>]])) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-16">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-17">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-18">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tibble</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">part_2 =</span> .)</span>
-<span id="cb2-19">  }) <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">-&gt;</span> clean_data</span>
-<span id="cb2-20"></span>
-<span id="cb2-21">clean_data <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-22">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">diff =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">abs</span>(part_2 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> part_1)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-23">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">summarise</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">total =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sum</span>(diff)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb2-24">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">pull</span>(total)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2164381</code></pre>
-</div>
-</div>
-<p>Similar strategy as the OJS - parse the input and map across each set separately. However, this time, we’ll be taking advantage of the dataframe system in R, doing our calculations across columns, since the two lists are the same lengths.</p>
-<p>⭐</p>
-</section>
-<section id="part-2" class="level3">
-<h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
-<p>So for this part, we are tasked with counting the appearances of the first number list in the second, then multiplying across:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="1097" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1096;"><span id="cb4-1097">{</span>
-<span id="cb4-1098">  <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">const</span> parsed <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> raw<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>)</span>
-<span id="cb4-1099">      <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> {</span>
-<span id="cb4-1100">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> d<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">trimStart</span>()</span>
-<span id="cb4-1101">                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">replace</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\s+</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'|'</span>)</span>
-<span id="cb4-1102">                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">split</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'|'</span>)</span>
-<span id="cb4-1103">                <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span>d)</span>
-<span id="cb4-1104">      })</span>
-<span id="cb4-1105">  </span>
-<span id="cb4-1106">  <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">const</span> part_1 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> parsed<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> d[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>])</span>
-<span id="cb4-1107">  <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">const</span> part_2 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> parsed<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> d[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>])</span>
-<span id="cb4-1108">  </span>
-<span id="cb4-1109">  <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> part_1<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">reduce</span>((acc<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> nxt) <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> {</span>
-<span id="cb4-1110">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> acc <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> nxt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> ( part_2<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(elem <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">=&gt;</span> elem <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">===</span> nxt)<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">length</span> )</span>
-<span id="cb4-1111">  }<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb4-1112">}</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-2" data-nodetype="expression">
-
-</div>
-</div>
-</div>
-<p>Not too bad of a solution, just copied/pasted the parsing from above, and actually split it into two arrays now instead of doing it all at once. That way, a basic accumulation across the first array (which we are treating as the ‘keys’ in this case), nets us our answer. Another way to do it would be create an object from list #2, with each number as a key and each count as a value, which would eliminate the repeating lookups.</p>
-<p>And again in R:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">parsed <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.numeric</span>(.x[[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]])) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tibble</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">part_1 =</span> .) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-6">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">left_join</span>({</span>
-<span id="cb5-7">    parsed <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-8">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">map</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.numeric</span>(.x[[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>]])) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-9">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list_c</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-10">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-11">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tibble</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">part_2 =</span> .) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-12">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">count</span>(part_2)</span>
-<span id="cb5-13">  }, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">join_by</span>(part_1 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> part_2)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-14"></span>
-<span id="cb5-15">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">prod =</span> part_1 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> n) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-16">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">summarise</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">total =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sum</span>(prod, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">na.rm =</span> T)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> </span>
-<span id="cb5-17">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">pull</span>(total)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 20719933</code></pre>
-</div>
-</div>
-<p>Easy enough – just need to join the groups together into a dataframe rather than binding columns straight across. This way, the summarised totals will dupe themselves as needed per number.</p>
-<p>⭐</p>
-<hr>
-<p>Not too hard for day 1…</p>
-<p>-CH</p>
-
-
-</section>
-
- ]]></description>
-  <category>Advent of Code</category>
-  <category>OJS</category>
-  <category>R</category>
-  <guid>https://connorhanan.com/posts/20241201-advent-of-code/</guid>
-  <pubDate>Sun, 01 Dec 2024 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

@@ -2,13 +2,17 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/20250802-bury-me-not/index.html",
+      "/posts/20230917-baker-zouave/index.html",
+      "/posts/20221024-john-hardy-vs-henry/index.html",
+      "/posts/20260328-discogs-plugin/index.html",
+      "/posts/auto/2026-03-28-goodreads.html",
       "/posts/auto/2026-03-21-goodreads.html",
       "/posts/auto/2026-03-17-discogs.html",
       "/posts/auto/2026-03-08-discogs.html",
       "/posts/auto/2026-02-27-discogs.html",
       "/posts/20260220-discogs-ojs-random/index.html",
       "/posts/20250817-quintessential-american/index.html",
-      "/posts/20250802-bury-me-not/index.html",
       "/posts/20250711-advent-of-code/index.html",
       "/posts/20250710-advent-of-code/index.html",
       "/posts/20250629-seinfeld-relationships/index.html",
@@ -23,11 +27,9 @@
       "/posts/20241202-advent-of-code/index.html",
       "/posts/20241201-advent-of-code/index.html",
       "/posts/20241115-whats-next/index.html",
-      "/posts/20230917-baker-zouave/index.html",
       "/posts/20230910-california-burritos/index.html",
       "/posts/20230408-trump-arraignment-ny/index.html",
-      "/posts/20221211-ga-runoff/index.html",
-      "/posts/20221024-john-hardy-vs-henry/index.html"
+      "/posts/20221211-ga-runoff/index.html"
     ]
   }
 ]

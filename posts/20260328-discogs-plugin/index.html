@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-10-24">
+<meta name="dcterms.date" content="2026-03-28">
 
-<title>John Hardy vs.&nbsp;John Henry – connorhanan</title>
+<title>New Records, Automated – connorhanan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -149,12 +184,11 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">John Hardy vs.&nbsp;John Henry</h1>
-<p class="subtitle lead">Disentangling the Ballads</p>
+<h1 class="title">New Records, Automated</h1>
+<p class="subtitle lead">A Custom Bash Plugin To Keep My Discogs Posts Spinning</p>
   <div class="quarto-categories">
+    <div class="quarto-category">Automation</div>
     <div class="quarto-category">Music</div>
-    <div class="quarto-category">History</div>
-    <div class="quarto-category">featured</div>
   </div>
   </div>
 
@@ -166,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 24, 2022</p>
+      <p class="date">March 28, 2026</p>
     </div>
   </div>
   
@@ -178,60 +212,81 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./hardy-hanging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="John Hardy on the gallows in WV, circa 1894."></p>
-</figure>
-</div>
-<section id="the-ballads" class="level3">
-<h3 class="anchored" data-anchor-id="the-ballads">The Ballads</h3>
-<p>In folk music, these two fabled characters are often intertwined. Both ballads, they tell the stories of their respective heroes - one, a railroad worker hanged for murder; the other, a steel-driving man who died working on the railroad.</p>
-<p>Initially, it must be said, that both men do share two initial similarities: they both worked on or for a railroad and their names are almost identical. Additionally, they both lived and died around the same period, in the same part of the country - coincidence?</p>
+<p>Lately, there have been quite a few posts titled <em>Automated Updates</em>. I’ve been playing around with some bash, so those are the result of custom scripts that I am calling my blog website “plugins”.</p>
+<p>They are generated, entirely automatically, as part of my publishing workflow – of course aside from updating my ever-expanding <a href="https://www.discogs.com/user/syrchanan/collection">Discogs collection</a>.</p>
+<p>I thought it would be fun to walk through the process…</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>The whole process lives in <code>plugins/discogs.sh</code>, a Bash script invoked by my top-level (and very creatively named) plugin manager <code>publish.sh</code>, which loads environment variables and fires each plugin in sequence:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">./discogs.sh</span> syrchanan db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script accepts two positional arguments:</p>
+<ol type="1">
+<li>A Discogs username (in this case, <code>syrchanan</code>).</li>
+<li>An output directory (in this case, <code>db</code>).</li>
+</ol>
+<p>It also looks for two optional environment variables: - <code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment. - <code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</p>
 </section>
-<section id="meet-john-hardy" class="level3">
-<h3 class="anchored" data-anchor-id="meet-john-hardy">Meet John Hardy</h3>
-<p>John Hardy, on his own, is an interesting character. Now, right off the bat, there are two main John Hardys to know about:</p>
-<blockquote class="blockquote">
-<p>The first, was employed as a steel-driller in southern West Virginia in 1872, killed a man after a gambling incident near the Virginia state line, and was hung right around the same area</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>The second, was working as a coal miner in southern West Virginia in 1893, killed a man after a game of craps (over a total of 75 cents - $25 in 2022), and was executed by hanging near the Virginia state line</p>
-</blockquote>
-<p>As you can see there are many striking likenesses between the two versions of John Hardy. Indeed, they are remarkably similar, even more so when you consider that some accounts describe them both as African American men over six feet tall.</p>
-<p>Given everything above, the biggest difference between the two Hardys is the timeline. The second John Hardy would have to be twenty-ish years older than the former John Hardy. This discrepancy can be fairly easily accounted for when considering the interviews Cox conducted for his essay. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>You may be wondering - if he is supposed to have died in 1872, how can the same John Hardy die in 1894? Well, this is where the stories become extremely tangled. It was suggested that one of these two John Hardys was actually a white man - however, as seen in the excerpt below, it wouldn’t make much sense:</p>
-<blockquote class="blockquote">
-<p>“Probability indicates that these two stories are about the same man. For a white man contemporary with the steel-driller to possess the same name and attributes as he, to operate in the early part of his career in the same region, to drift later to the same locality, to commit the same crime, and to pay the same penalty, is not believable.” <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-</blockquote>
-<p>As can plainly be seen, these John Hardys are more likely than not to be the same person - they share not only a name, but also a common description, crime, and penalty (all in the same locale around roughly the same time).</p>
+<section id="fetching-the-collection" class="level2">
+<h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>
+<p>The <a href="https://www.discogs.com/developers/#">Discogs API</a> exposes a user’s collection at <code>/users/{username}/collection/folders/0/releases</code>, sorted by date added descending.</p>
+<p>The script iterates through the pages (up to <code>$PAGELIM</code>), writing each release as a compact JSON object to a temporary NDJSON<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> file:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">jq</span> <span class="at">-c</span> <span class="st">'.releases[]? as $r | $r.basic_information as $b | {</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="st">  added:    $r.date_added,</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="st">  title:    $b.title,</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  year:     (try ($b.year|tonumber) catch null),</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  formats:  $b.formats[0],</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="st">  labels:   $b.labels[0],</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="st">  artists:  $b.artists[0],</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="st">  genres:   $b.genres,</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="st">  styles:   $b.styles,</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="st">  img:      $b.cover_image</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="st">}'</span> <span class="st">"</span><span class="va">$resp</span><span class="st">"</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$outfile</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This results in a file with one line per release, such that each line is a cleaned up JSON object with the fields I care about. Since the API returns your collection sorted by date descending, the newest releases are at the top of the file – a feature that becomes important for the next step.</p>
 </section>
-<section id="enter-john-henry" class="level3">
-<h3 class="anchored" data-anchor-id="enter-john-henry">Enter John Henry</h3>
-<p>John Henry is known far and wide to be a steel-drilling man who died via over-exertion after challenging a steam-drill. <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> However, that does overlap with some accounts of John Hardy - specifically, the 1872 John Hardy from above.</p>
-<p>This John Hardy was also reported to have died in a steel-drilling challenge. While working for the Langhorn Company, a steam drill was brought in to be used to help build the C. &amp; O. railroad. Hardy was known to be the best steel-driller around, so he challenged the steam driller to see who could drill more steel. As the story goes in many of the ballads, as the challenge was very close - though John Hardy eventually lost, laying down to die next to his hammer.</p>
-<p>These two stories are remarkably similar - not only were they both steel-drillers, but both challenged a steam-drill, and both worked in the same locale on the same railroad.</p>
-<p>I know, you are probably thinking: “But wait! You said John Hardy died from fighting over gambling, not from working on the railroad!”</p>
-<p>Correct, and there are a few reasons why that is. First, it may just be a case of oral transmission (akin to a game of telephone, if you will):</p>
-<blockquote class="blockquote">
-<p>“The change of name to John Henry, and the victory into a defeat, is not significant, and is easily accounted for by oral transmission. The same process of reasoning as applied heretofore identifies John Henry with John Hardy, who could not have died at the end of a drilling-contest. Most likely the ballad celebrating the prowess of John Hardy gradually, in its earlier making, enhanced that prowess, and, by the natural tendency to a tragic ending, finally sang of his defeat and death.” <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-</blockquote>
-<p>Secondly, several accounts of primary sources back up that they could be the same person:</p>
-<blockquote class="blockquote">
-<p>‘Upon inquiry by Cox, ex-Gov.&nbsp;McCorkle writes, “You are mistaken when you say John Hardy died from the drilling-contest.”’ <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
-</blockquote>
-<p>Lastly, the drilling contest may not have even happened! This telling of a man whose worth and identity are measured only by his strength, which is then challenged by the advent of steam power, is a story that has endured for over a century. <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> It’s tragic, it’s compelling - in short, it’s everything that is needed for a ballad.</p>
-<p>When Cox sent a letter to the Ingersoll-Rand Company (the authority on drills), he received the following reply:</p>
-<blockquote class="blockquote">
-<p>“…it is rather improbable that steam rock-drills were used in the building of the C&amp;O Railroad…” <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-</blockquote>
+<section id="looking-for-new-records" class="level2">
+<h2 class="anchored" data-anchor-id="looking-for-new-records">Looking for New Records</h2>
+<p>The local “database” is also just an NDJSON file on disk, which contains every release that has already been posted<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Also, rather than comparing full objects, I build a composite key for each release, comprised of the date added, artist name, and title — joined with <code>||</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">jq</span> <span class="at">-r</span> <span class="st">'[(.added // ""), ((.artists.name) // ""), (.title // "")]</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  | map(gsub("\\n"; " ") | gsub("\\r"; ""))</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  | join("||")'</span> <span class="st">"</span><span class="va">$fetched</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-ur</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$f_keys</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both the fetched collection and the local DB get this same format. Next, the script walks through the fetched keys from newest to oldest, writing any that don’t match the most recent local key into a <code>new.keys</code> file. It stops at the first match, which is a little fragile, but still works because everything is sorted by date descending.</p>
+<p>If <code>new.keys</code> is empty, the script exits cleanly with no output.</p>
 </section>
-<section id="so-who-is-who" class="level3">
-<h3 class="anchored" data-anchor-id="so-who-is-who">So… Who is Who?</h3>
-<p>In short, we do not really know for certain. It is popularly believed that they are two separate people - John Henry the steel-driller and John Hardy the murderous gambler. However, there is much confusion that still exists around this, especially since there are many different versions of the ballads. The early versions of the ballads themselves mix the lyrics and stanzas around, so it really is hard to be sure.</p>
-<p>As for me, I like to think that they are the same person.</p>
+<section id="building-the-automated-post" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-automated-post">Building the Automated Post</h2>
+<p>For each new record in our newly minted <code>new.keys</code> file, we pull the full object back out of the fetched data, extracts the fields, and append a markdown block to a new Quarto document:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">filename</span><span class="op">=</span><span class="st">"posts/auto/</span><span class="va">$(</span><span class="fu">date</span> <span class="at">-I</span><span class="va">)</span><span class="st">-discogs.qmd"</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">cat</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$filename</span><span class="st">"</span> <span class="op">&lt;&lt; QMD_HEAD</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">---</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="st">title: "New Records"</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="st">date: </span><span class="va">$(</span><span class="fu">date</span> <span class="at">-I</span><span class="va">)</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="st">categories:</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  - Automated Updates</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="st">  - Music</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="st">draft: false</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="st">---</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="op">QMD_HEAD</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each record then gets a cover image, an H2 markdown (<code>##</code>) heading, and a markdown table with the label, year, catalog number, format, and genre:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="bu">echo</span> <span class="st">"![](</span><span class="va">$img</span><span class="st">){width=300px}"</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">echo</span> <span class="st">"## </span><span class="va">$title</span><span class="st">"</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="bu">echo</span> <span class="st">"**</span><span class="va">$artists</span><span class="st">**"</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">echo</span> <span class="st">"| Label  | </span><span class="va">$label</span><span class="st"> |"</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">echo</span> <span class="st">"| Year   | </span><span class="va">$year</span><span class="st">  |"</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># ...&amp;c &amp;c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="updating-the-local-db" class="level2">
+<h2 class="anchored" data-anchor-id="updating-the-local-db">Updating the Local DB</h2>
+<p>Once the post is written, the new releases get prepended to the local NDJSON database so we don’t double count any records the next time the script runs:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">cat</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/updated_db.ndjson"</span> <span class="st">"</span><span class="va">$local</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/combined.ndjson"</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">mv</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/combined.ndjson"</span> <span class="st">"</span><span class="va">$local</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="wrapping-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
+<p>The whole thing runs pretty quick, and produces a clean <code>.qmd</code> file; it requires nothing beyond <code>bash</code>, <code>curl</code>, and <code>jq</code>. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).</p>
+<p>I have a similar plugin for Goodreads that follows the same pattern — a post for another day.</p>
+<hr>
 <p>-CH</p>
-<p><br></p>
-<p>Click <a href="https://open.spotify.com/playlist/69RJFqDEP3B4oUwfGQq3j5?si=6a1ed24e35e646db" style="color: #1DB954;">here</a> to listen to different versions of the ballads!</p>
 
 
 </section>
@@ -240,13 +295,8 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p><a href="https://en.m.wikisource.org/wiki/John_Hardy">“John Hardy” (1919) by John Harrington Cox</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a href="https://en.m.wikisource.org/wiki/John_Hardy">“John Hardy” (1919) by John Harrington Cox</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><a href="https://www.loc.gov/item/ihas.200196572/">“John Henry” (Library of Congress)</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p><a href="https://en.m.wikisource.org/wiki/John_Hardy">“John Hardy” (1919) by John Harrington Cox</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p><a href="https://en.m.wikisource.org/wiki/John_Hardy">“John Hardy” (1919) by John Harrington Cox</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p><a href="https://www.loc.gov/item/ihas.200196572/">“John Henry” (Library of Congress)</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p><a href="https://en.m.wikisource.org/wiki/John_Hardy">“John Hardy” (1919) by John Harrington Cox</a>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>NDJSON (Newline-Delimited JSON) - I chose this format because it makes it far easier to diff my local “database” with <code>jq</code> and <code>sort</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>One optimization I’ve been considering is to clean up the local DB to remove all but the latest record posted, that way I can do a simpler <code>grep</code> to find where the break point is. Or, you, know, use a real sqlite DB. But I was lazy.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
