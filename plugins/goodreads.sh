@@ -103,13 +103,12 @@ jq -r '[(.author // ""), (.title // "")] | join("||")' "$local" > "$l_keys"
 
 echo "Comparing fetched books with local DB..."
 
+# loop through files to standardize line endings and trim whitespace, then find new keys
 # loop through fetched keys in order, keeping only those not in local DB
-: > "$tmpdir/new.keys"
-while IFS= read -r key; do
-  if ! grep -qFx "$key" "$l_keys"; then
-    echo "$key" >> "$tmpdir/new.keys"
-  fi
-done < "$f_keys"
+for f in "$l_keys" "$f_keys"; do
+  sed 's/\r$//; s/[[:space:]]\+$//' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+done
+grep -Fvxf "$l_keys" "$f_keys" > "$tmpdir/new.keys"
 
 if [ ! -s "$tmpdir/new.keys" ]; then
   echo "No new books found."

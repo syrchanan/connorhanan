@@ -31,6 +31,7 @@ The script accepts two positional arguments:
 2. An output directory (in this case, `db`).
 
 It also looks for two optional environment variables:
+
 - `DISCOGS_API_TOKEN`: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment.
 - `PAGELIM`: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).
 
@@ -113,12 +114,10 @@ cat "$tmpdir/updated_db.ndjson" "$local" > "$tmpdir/combined.ndjson"
 mv "$tmpdir/combined.ndjson" "$local"
 ```
 
-## Wrapping Up
+------------------------------------------------------------------------
 
 The whole thing runs pretty quick, and produces a clean `.qmd` file; it requires nothing beyond `bash`, `curl`, and `jq`. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).
 
 I have a similar plugin for Goodreads that follows the same pattern — a post for another day.
-
-------------------------------------------------------------------------
 
 -CH

@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-03-28">
+<meta name="dcterms.date" content="2026-03-29">
 
-<title>New Records, Automated – connorhanan</title>
+<title>Recently Read, Automated – connorhanan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,11 +184,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">New Records, Automated</h1>
-<p class="subtitle lead">A Custom Bash Plugin To Keep My Discogs Posts Spinning</p>
+<h1 class="title">Recently Read, Automated</h1>
+<p class="subtitle lead">A Custom Bash Plugin To Keep My Goodreads Posts Flipping</p>
   <div class="quarto-categories">
     <div class="quarto-category">Automation</div>
-    <div class="quarto-category">Music</div>
+    <div class="quarto-category">Books</div>
   </div>
   </div>
 
@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 28, 2026</p>
+      <p class="date">March 29, 2026</p>
     </div>
   </div>
   
@@ -212,94 +212,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Lately, there have been quite a few posts titled <em>Automated Updates</em>. I’ve been playing around with some bash, so those are the result of custom scripts that I am calling my blog website “plugins”.</p>
-<p>They are generated, entirely automatically, as part of my publishing workflow – of course aside from updating my ever-expanding <a href="https://www.discogs.com/user/syrchanan/collection">Discogs collection</a>.</p>
-<p>I thought it would be fun to walk through the process…</p>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>The whole process lives in <code>plugins/discogs.sh</code>, a Bash script invoked by my top-level (and very creatively named) plugin manager <code>publish.sh</code>, which loads environment variables and fires each plugin in sequence:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">./discogs.sh</span> syrchanan db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The script accepts two positional arguments:</p>
-<ol type="1">
-<li>A Discogs username (in this case, <code>syrchanan</code>).</li>
-<li>An output directory (in this case, <code>db</code>).</li>
-</ol>
-<p>It also looks for two optional environment variables:</p>
-<ul>
-<li><code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment.</li>
-<li><code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</li>
-</ul>
+<p>In the <a href="../../posts/20260328-discogs-plugin/index.html">last post</a>, I showed off my Discogs plugin that auto-generates my <em>New Records</em> posts. The Goodreads equivalent follows the same general pattern: fetch data, diff against a local hacky NDJSON-based DB, write a Quarto post; however, the data fetching is a bit more creative, since Goodreads doesn’t have a public API (anymore!).</p>
+<section id="widgets-and-scraping" class="level2">
+<h2 class="anchored" data-anchor-id="widgets-and-scraping">Widgets and Scraping</h2>
+<p>Goodreads does still offer embeddable shelf widgets, which are served as a JavaScript file containing an HTML string assigned to a variable.</p>
+<p>It’s not the prettiest thing in the world, but it’s something to fetch and work with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">curl</span> <span class="at">-sS</span> <span class="st">"</span><span class="va">$GOODREADS_WIDGET</span><span class="st">"</span> <span class="at">-o</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/widget.js"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The widget URL encodes your shelf preferences as query parameters (number of books, sort order, which fields to show, &amp;c).</p>
+<p>This script uses a default URL pointed at my <code>read</code> shelf, but it can be overridden via the first argument or a <code>GOODREADS_WIDGET</code> environment variable, which means you could generate posts for other shelves like <code>to-be-read</code>, or the like.</p>
 </section>
-<section id="fetching-the-collection" class="level2">
-<h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>
-<p>The <a href="https://www.discogs.com/developers/#">Discogs API</a> exposes a user’s collection at <code>/users/{username}/collection/folders/0/releases</code>, sorted by date added descending.</p>
-<p>The script iterates through the pages (up to <code>$PAGELIM</code>), writing each release as a compact JSON object to a temporary NDJSON<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> file:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">jq</span> <span class="at">-c</span> <span class="st">'.releases[]? as $r | $r.basic_information as $b | {</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="st">  added:    $r.date_added,</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="st">  title:    $b.title,</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  year:     (try ($b.year|tonumber) catch null),</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  formats:  $b.formats[0],</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="st">  labels:   $b.labels[0],</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="st">  artists:  $b.artists[0],</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="st">  genres:   $b.genres,</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="st">  styles:   $b.styles,</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="st">  img:      $b.cover_image</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="st">}'</span> <span class="st">"</span><span class="va">$resp</span><span class="st">"</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$outfile</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This results in a file with one line per release, such that each line is a cleaned up JSON object with the fields I care about. Since the API returns your collection sorted by date descending, the newest releases are at the top of the file – a feature that becomes important for the next step.</p>
+<section id="extracting-the-html" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-the-html">Extracting the HTML</h2>
+<p>The JS file looks roughly like:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">var</span> widget_code <span class="op">=</span> <span class="st">'&lt;div&gt;...escaped HTML...&lt;/div&gt;'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>First, we need to strip the JS wrapper and “unescape” the four escape patterns Goodreads uses (<code>\n</code>, <code>\/</code>, <code>\"</code>, <code>\'</code>). I had never used <code>sed</code> all that much, but it’s pretty powerful with a touch of regex:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span> <span class="at">-1</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/widget.js"</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">"s/^[[:space:]]*var widget_code = '//; s/'[[:space:]]*$//"</span> <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/\\n/\n/g'</span> <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">"s/</span><span class="dt">\\\\\"</span><span class="st">/</span><span class="dt">\"</span><span class="st">/g"</span> <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">"s/</span><span class="dt">\\\\</span><span class="st">'/'/g"</span> <span class="dt">\</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s|\\\/|/|g'</span> <span class="dt">\</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="op">&gt;</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/widget.html"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The whole widget is on one line, so the shorthand <code>head -1</code> pulls the entire thing. Once that line is in stdout, it’s fairly straightforward to pipe <code>sed</code> substitutions until we have readable HTML.</p>
 </section>
-<section id="looking-for-new-records" class="level2">
-<h2 class="anchored" data-anchor-id="looking-for-new-records">Looking for New Records</h2>
-<p>The local “database” is also just an NDJSON file on disk, which contains every release that has already been posted<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Also, rather than comparing full objects, I build a composite key for each release, comprised of the date added, artist name, and title — joined with <code>||</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">jq</span> <span class="at">-r</span> <span class="st">'[(.added // ""), ((.artists.name) // ""), (.title // "")]</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  | map(gsub("\\n"; " ") | gsub("\\r"; ""))</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  | join("||")'</span> <span class="st">"</span><span class="va">$fetched</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-ur</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$f_keys</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Both the fetched collection and the local DB get this same format. Next, the script walks through the fetched keys from newest to oldest, writing any that don’t match the most recent local key into a <code>new.keys</code> file. It stops at the first match, which is a little fragile, but still works because everything is sorted by date descending.</p>
-<p>If <code>new.keys</code> is empty, the script exits cleanly with no output.</p>
+<section id="parsing-the-books" class="level2">
+<h2 class="anchored" data-anchor-id="parsing-the-books">Parsing the Books</h2>
+<p>Each book in the widget HTML is wrapped in a <code>gr_custom_each_container</code> div. <code>csplit</code> splits the HTML into individual files on that pattern:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">csplit</span> <span class="at">-sz</span> <span class="at">-f</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/book_"</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/widget.html"</span> <span class="st">'/gr_custom_each_container/'</span> <span class="st">'{*}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we loop over those files and extract the pieces we need with <code>grep</code> and fancy regex:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="va">full_title</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-oP</span> <span class="st">'&lt;a title="\K[^"]+'</span> <span class="st">"</span><span class="va">$block</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span><span class="va">)</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="va">title</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-A2</span> <span class="st">'gr_custom_title'</span> <span class="st">"</span><span class="va">$block</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-oP</span> <span class="st">'&gt;\K[^&lt;]+(?=&lt;/a&gt;)'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span><span class="va">)</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="va">author</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-A2</span> <span class="st">'gr_custom_author'</span> <span class="st">"</span><span class="va">$block</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-oP</span> <span class="st">'&gt;\K[^&lt;]+(?=&lt;/a&gt;)'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span><span class="va">)</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="va">img</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="st">'gr_custom_book_container'</span> <span class="at">-A5</span> <span class="st">"</span><span class="va">$block</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-oP</span> <span class="st">'src="\K[^"]+'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span><span class="va">)</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="va">rating</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-o</span> <span class="st">'gr_red_star_active'</span> <span class="st">"</span><span class="va">$block</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The rating is derived by counting active star images rather than reading a numeric value; granted, it’s a little roundabout and brittle, but it works.</p>
+<p>Each book gets written out as a line of NDJSON with <code>jq -nc</code>.</p>
 </section>
-<section id="building-the-automated-post" class="level2">
-<h2 class="anchored" data-anchor-id="building-the-automated-post">Building the Automated Post</h2>
-<p>For each new record in our newly minted <code>new.keys</code> file, we pull the full object back out of the fetched data, extracts the fields, and append a markdown block to a new Quarto document:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">filename</span><span class="op">=</span><span class="st">"posts/auto/</span><span class="va">$(</span><span class="fu">date</span> <span class="at">-I</span><span class="va">)</span><span class="st">-discogs.qmd"</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">cat</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$filename</span><span class="st">"</span> <span class="op">&lt;&lt; QMD_HEAD</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="st">---</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="st">title: "New Records"</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="st">date: </span><span class="va">$(</span><span class="fu">date</span> <span class="at">-I</span><span class="va">)</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="st">categories:</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  - Automated Updates</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="st">  - Music</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="st">draft: false</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="st">---</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="op">QMD_HEAD</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Each record then gets a cover image, an H2 markdown (<code>##</code>) heading, and a markdown table with the label, year, catalog number, format, and genre:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="bu">echo</span> <span class="st">"![](</span><span class="va">$img</span><span class="st">){width=300px}"</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">echo</span> <span class="st">"## </span><span class="va">$title</span><span class="st">"</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="bu">echo</span> <span class="st">"**</span><span class="va">$artists</span><span class="st">**"</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">echo</span> <span class="st">"| Label  | </span><span class="va">$label</span><span class="st"> |"</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">echo</span> <span class="st">"| Year   | </span><span class="va">$year</span><span class="st">  |"</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># ...&amp;c &amp;c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="finding-whats-new" class="level2">
+<h2 class="anchored" data-anchor-id="finding-whats-new">Finding What’s New</h2>
+<p>The comparison logic here is slightly different from the Discogs plugin. There is no date field explicitly, but the data is returned by date descending, so we can rely on the order of the keys to determine what’s new. We first build a composite key for each book in both the fetched collection and the local DB, which is just the author and title joined with <code>||</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="cf">for</span> f <span class="kw">in</span> <span class="st">"</span><span class="va">$l_keys</span><span class="st">"</span> <span class="st">"</span><span class="va">$f_keys</span><span class="st">"</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">sed</span> <span class="st">'s/\r$//; s/[[:space:]]\+$//'</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$f</span><span class="st">.tmp"</span> <span class="kw">&amp;&amp;</span> <span class="fu">mv</span> <span class="st">"</span><span class="va">$f</span><span class="st">.tmp"</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="cf">done</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="fu">grep</span> <span class="at">-Fvxf</span> <span class="st">"</span><span class="va">$l_keys</span><span class="st">"</span> <span class="st">"</span><span class="va">$f_keys</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/new.keys"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we trim any trailing whitespace and standardize line endings to avoid false mismatches, which allows us to do a simple <code>grep</code> to find the new keys based on line mismatches:</p>
 </section>
-<section id="updating-the-local-db" class="level2">
-<h2 class="anchored" data-anchor-id="updating-the-local-db">Updating the Local DB</h2>
-<p>Once the post is written, the new releases get prepended to the local NDJSON database so we don’t double count any records the next time the script runs:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">cat</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/updated_db.ndjson"</span> <span class="st">"</span><span class="va">$local</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/combined.ndjson"</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">mv</span> <span class="st">"</span><span class="va">$tmpdir</span><span class="st">/combined.ndjson"</span> <span class="st">"</span><span class="va">$local</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="building-the-post" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-post">Building the Post</h2>
+<p>One piece the Goodreads plugin has that Discogs doesn’t is a small helper to render a numeric rating as a Unicode star string:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">stars()</span> <span class="kw">{</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="bu">local</span> <span class="va">r</span><span class="op">=</span><span class="va">$1</span> <span class="va">s</span><span class="op">=</span><span class="st">""</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="cf">for</span> <span class="kw">((</span><span class="va">i</span><span class="op">=</span><span class="dv">1</span><span class="kw">;</span> <span class="va">i</span><span class="op">&lt;=</span><span class="dv">5</span><span class="kw">;</span> <span class="va">i</span><span class="op">++</span><span class="kw">));</span> <span class="cf">do</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="bu">[</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span> <span class="ot">-le</span> <span class="st">"</span><span class="va">$r</span><span class="st">"</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="va">s</span><span class="op">+=</span><span class="st">"★"</span> <span class="kw">||</span> <span class="va">s</span><span class="op">+=</span><span class="st">"☆"</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="cf">done</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="bu">echo</span> <span class="st">"</span><span class="va">$s</span><span class="st">"</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The rest of the post-building follows the same pattern as my Discogs plugin (frontmatter, then a block per book with cover image, title, author, and stars):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">echo</span> <span class="st">"![](</span><span class="va">$img</span><span class="st">){width=150px}"</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="bu">echo</span> <span class="st">"## </span><span class="va">$title</span><span class="st">"</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="bu">echo</span> <span class="st">"**</span><span class="va">${author}</span><span class="st">**"</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="bu">echo</span> <span class="st">"Rating: </span><span class="va">$star_display</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>New books get prepended to the local NDJSON database, and off we go!</p>
 <hr>
-<p>The whole thing runs pretty quick, and produces a clean <code>.qmd</code> file; it requires nothing beyond <code>bash</code>, <code>curl</code>, and <code>jq</code>. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).</p>
-<p>I have a similar plugin for Goodreads that follows the same pattern — a post for another day.</p>
+<p>Scraping a widget is obviously less reliable than a real API; however, the alternative is a manual solution which isn’t nearly as fun.</p>
 <p>-CH</p>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>NDJSON (Newline-Delimited JSON) - I chose this format because it makes it far easier to diff my local “database” with <code>jq</code> and <code>sort</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>One optimization I’ve been considering is to clean up the local DB to remove all but the latest record posted, that way I can do a simpler <code>grep</code> to find where the break point is. Or, you, know, use a real sqlite DB. But I was lazy.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
