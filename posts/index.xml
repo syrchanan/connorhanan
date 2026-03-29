@@ -10,313 +10,7 @@
 <atom:link href="https://connorhanan.com/posts/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.7.29</generator>
-<lastBuildDate>Sat, 28 Mar 2026 04:00:00 GMT</lastBuildDate>
-<item>
-  <title>New Records, Automated</title>
-  <link>https://connorhanan.com/posts/20260328-discogs-plugin/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Lately, there have been quite a few posts titled <em>Automated Updates</em>. I’ve been playing around with some bash, so those are the result of custom scripts that I am calling my blog website “plugins”.</p>
-<p>They are generated, entirely automatically, as part of my publishing workflow – of course aside from updating my ever-expanding <a href="https://www.discogs.com/user/syrchanan/collection">Discogs collection</a>.</p>
-<p>I thought it would be fun to walk through the process…</p>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>The whole process lives in <code>plugins/discogs.sh</code>, a Bash script invoked by my top-level (and very creatively named) plugin manager <code>publish.sh</code>, which loads environment variables and fires each plugin in sequence:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div>
-<p>The script accepts two positional arguments:</p>
-<ol type="1">
-<li>A Discogs username (in this case, <code>syrchanan</code>).</li>
-<li>An output directory (in this case, <code>db</code>).</li>
-</ol>
-<p>It also looks for two optional environment variables:</p>
-<ul>
-<li><code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment.</li>
-<li><code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</li>
-</ul>
-</section>
-<section id="fetching-the-collection" class="level2">
-<h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>
-<p>The <a href="https://www.discogs.com/developers/#">Discogs API</a> exposes a user’s collection at <code>/users/{username}/collection/folders/0/releases</code>, sorted by date added descending.</p>
-<p>The script iterates through the pages (up to <code>$PAGELIM</code>), writing each release as a compact JSON object to a temporary NDJSON<sup>1</sup> file:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">jq</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'.releases[]? as $r | $r.basic_information as $b | {</span></span>
-<span id="cb2-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  added:    $r.date_added,</span></span>
-<span id="cb2-3"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  title:    $b.title,</span></span>
-<span id="cb2-4"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  year:     (try ($b.year|tonumber) catch null),</span></span>
-<span id="cb2-5"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  formats:  $b.formats[0],</span></span>
-<span id="cb2-6"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  labels:   $b.labels[0],</span></span>
-<span id="cb2-7"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  artists:  $b.artists[0],</span></span>
-<span id="cb2-8"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  genres:   $b.genres,</span></span>
-<span id="cb2-9"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  styles:   $b.styles,</span></span>
-<span id="cb2-10"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  img:      $b.cover_image</span></span>
-<span id="cb2-11"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$resp</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$outfile</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
-<p>This results in a file with one line per release, such that each line is a cleaned up JSON object with the fields I care about. Since the API returns your collection sorted by date descending, the newest releases are at the top of the file – a feature that becomes important for the next step.</p>
-</section>
-<section id="looking-for-new-records" class="level2">
-<h2 class="anchored" data-anchor-id="looking-for-new-records">Looking for New Records</h2>
-<p>The local “database” is also just an NDJSON file on disk, which contains every release that has already been posted<sup>2</sup>. Also, rather than comparing full objects, I build a composite key for each release, comprised of the date added, artist name, and title — joined with <code>||</code>:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">jq</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-r</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'[(.added // ""), ((.artists.name) // ""), (.title // "")]</span></span>
-<span id="cb3-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  | map(gsub("\\n"; " ") | gsub("\\r"; ""))</span></span>
-<span id="cb3-3"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  | join("||")'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fetched</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-ur</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$f_keys</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
-<p>Both the fetched collection and the local DB get this same format. Next, the script walks through the fetched keys from newest to oldest, writing any that don’t match the most recent local key into a <code>new.keys</code> file. It stops at the first match, which is a little fragile, but still works because everything is sorted by date descending.</p>
-<p>If <code>new.keys</code> is empty, the script exits cleanly with no output.</p>
-</section>
-<section id="building-the-automated-post" class="level2">
-<h2 class="anchored" data-anchor-id="building-the-automated-post">Building the Automated Post</h2>
-<p>For each new record in our newly minted <code>new.keys</code> file, we pull the full object back out of the fetched data, extracts the fields, and append a markdown block to a new Quarto document:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">filename</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"posts/auto/</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">date</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-I</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">-discogs.qmd"</span></span>
-<span id="cb4-2"></span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$filename</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;&lt; QMD_HEAD</span></span>
-<span id="cb4-4"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">---</span></span>
-<span id="cb4-5"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">title: "New Records"</span></span>
-<span id="cb4-6"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">date: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">date</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-I</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb4-7"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">categories:</span></span>
-<span id="cb4-8"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  - Automated Updates</span></span>
-<span id="cb4-9"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  - Music</span></span>
-<span id="cb4-10"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">draft: false</span></span>
-<span id="cb4-11"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">---</span></span>
-<span id="cb4-12"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">QMD_HEAD</span></span></code></pre></div>
-<p>Each record then gets a cover image, an H2 markdown (<code>##</code>) heading, and a markdown table with the label, year, catalog number, format, and genre:</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"![](</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$img</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">){width=300px}"</span></span>
-<span id="cb5-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"## </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$title</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb5-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"**</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$artists</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">**"</span></span>
-<span id="cb5-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"| Label  | </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$label</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> |"</span></span>
-<span id="cb5-5"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"| Year   | </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$year</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  |"</span></span>
-<span id="cb5-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ...&amp;c &amp;c</span></span></code></pre></div>
-</section>
-<section id="updating-the-local-db" class="level2">
-<h2 class="anchored" data-anchor-id="updating-the-local-db">Updating the Local DB</h2>
-<p>Once the post is written, the new releases get prepended to the local NDJSON database so we don’t double count any records the next time the script runs:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/updated_db.ndjson"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$local</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/combined.ndjson"</span></span>
-<span id="cb6-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mv</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/combined.ndjson"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$local</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
-<hr>
-<p>The whole thing runs pretty quick, and produces a clean <code>.qmd</code> file; it requires nothing beyond <code>bash</code>, <code>curl</code>, and <code>jq</code>. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).</p>
-<p>I have a similar plugin for Goodreads that follows the same pattern — a post for another day.</p>
-<p>-CH</p>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>NDJSON (Newline-Delimited JSON) - I chose this format because it makes it far easier to diff my local “database” with <code>jq</code> and <code>sort</code>.↩︎</p></li>
-<li id="fn2"><p>One optimization I’ve been considering is to clean up the local DB to remove all but the latest record posted, that way I can do a simpler <code>grep</code> to find where the break point is. Or, you, know, use a real sqlite DB. But I was lazy.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Automation</category>
-  <category>Music</category>
-  <guid>https://connorhanan.com/posts/20260328-discogs-plugin/</guid>
-  <pubDate>Sat, 28 Mar 2026 04:00:00 GMT</pubDate>
-</item>
+<lastBuildDate>Sun, 29 Mar 2026 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Recently Read, Automated</title>
   <link>https://connorhanan.com/posts/20260329-goodreads-plugin/</link>
@@ -904,6 +598,312 @@ font-style: inherit;">"</span></span></code></pre></div>
   <category>Automation</category>
   <category>Books</category>
   <guid>https://connorhanan.com/posts/20260329-goodreads-plugin/</guid>
+  <pubDate>Sun, 29 Mar 2026 04:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>New Records, Automated</title>
+  <link>https://connorhanan.com/posts/20260328-discogs-plugin/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Lately, there have been quite a few posts titled <em>Automated Updates</em>. I’ve been playing around with some bash, so those are the result of custom scripts that I am calling my blog website “plugins”.</p>
+<p>They are generated, entirely automatically, as part of my publishing workflow – of course aside from updating my ever-expanding <a href="https://www.discogs.com/user/syrchanan/collection">Discogs collection</a>.</p>
+<p>I thought it would be fun to walk through the process…</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>The whole process lives in <code>plugins/discogs.sh</code>, a Bash script invoked by my top-level (and very creatively named) plugin manager <code>publish.sh</code>, which loads environment variables and fires each plugin in sequence:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div>
+<p>The script accepts two positional arguments:</p>
+<ol type="1">
+<li>A Discogs username (in this case, <code>syrchanan</code>).</li>
+<li>An output directory (in this case, <code>db</code>).</li>
+</ol>
+<p>It also looks for two optional environment variables:</p>
+<ul>
+<li><code>DISCOGS_API_TOKEN</code>: A personal API token for the Discogs API, which allows for higher rate limits than the free usage allotment.</li>
+<li><code>PAGELIM</code>: A limit on how many pages of collection data to fetch (each page contains 100 records, the default of 1 should be plenty for sporadic updates).</li>
+</ul>
+</section>
+<section id="fetching-the-collection" class="level2">
+<h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>
+<p>The <a href="https://www.discogs.com/developers/#">Discogs API</a> exposes a user’s collection at <code>/users/{username}/collection/folders/0/releases</code>, sorted by date added descending.</p>
+<p>The script iterates through the pages (up to <code>$PAGELIM</code>), writing each release as a compact JSON object to a temporary NDJSON<sup>1</sup> file:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">jq</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.releases[]? as $r | $r.basic_information as $b | {</span></span>
+<span id="cb2-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  added:    $r.date_added,</span></span>
+<span id="cb2-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  title:    $b.title,</span></span>
+<span id="cb2-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  year:     (try ($b.year|tonumber) catch null),</span></span>
+<span id="cb2-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  formats:  $b.formats[0],</span></span>
+<span id="cb2-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  labels:   $b.labels[0],</span></span>
+<span id="cb2-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  artists:  $b.artists[0],</span></span>
+<span id="cb2-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  genres:   $b.genres,</span></span>
+<span id="cb2-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  styles:   $b.styles,</span></span>
+<span id="cb2-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  img:      $b.cover_image</span></span>
+<span id="cb2-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">}'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$resp</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$outfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<p>This results in a file with one line per release, such that each line is a cleaned up JSON object with the fields I care about. Since the API returns your collection sorted by date descending, the newest releases are at the top of the file – a feature that becomes important for the next step.</p>
+</section>
+<section id="looking-for-new-records" class="level2">
+<h2 class="anchored" data-anchor-id="looking-for-new-records">Looking for New Records</h2>
+<p>The local “database” is also just an NDJSON file on disk, which contains every release that has already been posted<sup>2</sup>. Also, rather than comparing full objects, I build a composite key for each release, comprised of the date added, artist name, and title — joined with <code>||</code>:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">jq</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-r</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[(.added // ""), ((.artists.name) // ""), (.title // "")]</span></span>
+<span id="cb3-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  | map(gsub("\\n"; " ") | gsub("\\r"; ""))</span></span>
+<span id="cb3-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  | join("||")'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fetched</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sort</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ur</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$f_keys</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<p>Both the fetched collection and the local DB get this same format. Next, the script walks through the fetched keys from newest to oldest, writing any that don’t match the most recent local key into a <code>new.keys</code> file. It stops at the first match, which is a little fragile, but still works because everything is sorted by date descending.</p>
+<p>If <code>new.keys</code> is empty, the script exits cleanly with no output.</p>
+</section>
+<section id="building-the-automated-post" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-automated-post">Building the Automated Post</h2>
+<p>For each new record in our newly minted <code>new.keys</code> file, we pull the full object back out of the fetched data, extracts the fields, and append a markdown block to a new Quarto document:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">filename</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"posts/auto/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">date</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-discogs.qmd"</span></span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$filename</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;&lt; QMD_HEAD</span></span>
+<span id="cb4-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">title: "New Records"</span></span>
+<span id="cb4-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">date: </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">date</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb4-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">categories:</span></span>
+<span id="cb4-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - Automated Updates</span></span>
+<span id="cb4-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  - Music</span></span>
+<span id="cb4-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">draft: false</span></span>
+<span id="cb4-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb4-12"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">QMD_HEAD</span></span></code></pre></div>
+<p>Each record then gets a cover image, an H2 markdown (<code>##</code>) heading, and a markdown table with the label, year, catalog number, format, and genre:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"![](</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$img</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">){width=300px}"</span></span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"## </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$title</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"**</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$artists</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">**"</span></span>
+<span id="cb5-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"| Label  | </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$label</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> |"</span></span>
+<span id="cb5-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"| Year   | </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$year</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  |"</span></span>
+<span id="cb5-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ...&amp;c &amp;c</span></span></code></pre></div>
+</section>
+<section id="updating-the-local-db" class="level2">
+<h2 class="anchored" data-anchor-id="updating-the-local-db">Updating the Local DB</h2>
+<p>Once the post is written, the new releases get prepended to the local NDJSON database so we don’t double count any records the next time the script runs:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/updated_db.ndjson"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$local</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/combined.ndjson"</span></span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mv</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/combined.ndjson"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$local</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<hr>
+<p>The whole thing runs pretty quick, and produces a clean <code>.qmd</code> file; it requires nothing beyond <code>bash</code>, <code>curl</code>, and <code>jq</code>. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).</p>
+<p>I have a similar plugin for Goodreads that follows the same pattern — a post for another day.</p>
+<p>-CH</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>NDJSON (Newline-Delimited JSON) - I chose this format because it makes it far easier to diff my local “database” with <code>jq</code> and <code>sort</code>.↩︎</p></li>
+<li id="fn2"><p>One optimization I’ve been considering is to clean up the local DB to remove all but the latest record posted, that way I can do a simpler <code>grep</code> to find where the break point is. Or, you, know, use a real sqlite DB. But I was lazy.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Automation</category>
+  <category>Music</category>
+  <guid>https://connorhanan.com/posts/20260328-discogs-plugin/</guid>
   <pubDate>Sat, 28 Mar 2026 04:00:00 GMT</pubDate>
 </item>
 <item>
