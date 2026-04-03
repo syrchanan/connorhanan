@@ -1,0 +1,138 @@
+# Exploring Lambda Calculus (Part 2)
+
+Mucking Around with Pre-Turing Computer Programming
+
+OJS
+
+Published
+
+May 20, 2025
+
+## Recap
+
+Last time, we left off with our first truth table exploring all the logic gate test permutations. If you missed it, [catch up here](../../posts/20250430-lambda-calculus/index.llms.md) before moving on to this post’s topic: math and simple calculation. [^1]
+
+## Church Numerals
+
+Now that we have basic operations and logic gates, we need to advance past 1’s and 0’s to be able to represent more complex numerals. The difficulty here is going to be representing numerals with functions, for a few reasons:
+
+1.  There are an infinite number of numerals to represent
+2.  How can we combine the numerals using different functions, without defining the numerals themselves?
+
+We are going to explore Church Numerals, which define a numeral *N* by encapsulating a function *N* times. This is pretty cool, as we are then no longer representing the numeral *N* as a “count”; instead, it becomes more of a “timer”. Let’s take a look:
+
+``` numberSource
+N0 = f => a => a // apply f 0 times
+```
+
+``` numberSource
+N1 = f => a => f(a) // apply f 1 time
+```
+
+``` numberSource
+N2 = f => a => f(f(a)) // apply f 2 times
+```
+
+``` numberSource
+N3 = f => a => f(f(f(a))) // apply f 3 times
+```
+
+``` numberSource
+N4 = f => a => f(f(f(f(a)))) // apply f 4 times
+```
+
+… and so on. However, the absolute *last* thing I want to do is sit here and write more functions to define every number ever. So, let’s call it good here, and use this (admittedly) short list to test our operations with.
+
+## Mathematical Operations
+
+Similar to the idea of a “wrapper” function from last post (see `NOT()`), we need to define functions that will wrap around numbers to perform operations on them.
+
+The first of these is the most simple, the successor function `SUCC()`. A fancy name for a basic operation, all this does is increment the number by 1. All it really is going to do is add another layer of wrapping around the number – that way, when we count the layers by “time”, our count, and therefore value, will have increased by 1.
+
+``` numberSource
+SUCC = n => f => x => f(n(f)(x))
+```
+
+In the above, `f => x => f(n(f)(x))` creates our new number. To break it down further, *n* is the amount of times we are wrapping *f* around *x*, which means on its own, `n(f)(x)` is equal to *n*, the input number.
+
+The crucial part of this function is the wrapper *f()* – as that is the piece which adds another “layer” to our number function, thereby incrementing its “count” by 1. If we substitute out the *n* discussed above for *N* (our numeral), this simplifies down to `N => f(N)`, where the incrementation is far easier to spot.
+
+Now, we can move towards addition using the same principles. Instead of wrapping the “number” with one additional function call (successor), we need to wrap it with a variable number of functions:
+
+``` numberSource
+PLUS = m => n => f => x => m(f)(n(f)(x))
+```
+
+In the above, we achieve this by using the same “inner” variable for both functions, *x*. Accordingly, we want to apply *f* to *x* for each nested “number” function (*m* and *n*). Thus, we are applying *f* to *x* for *m* + *n* times, and following the same pattern of counting nested levels, we end up with our sum.
+
+This principle is very extensible to multiplication – rather than operating on the same variable *x*, we want the “number” functions to operate on each other:
+
+``` numberSource
+MULT = m => n => f => m(n(f))
+```
+
+Rather than increasing the variable *x* first *m* times, then *n* times, we need to (increase the variable *f* *n* times) *m* times.
+
+A more verbose way to write `MULT()` would be to add the *x* variable back in:
+
+`MULT = m => n => f => x => m(n(f))(x)`
+
+In this form, it is easier to see that instead of both *m* and *n* operating on *f(x)*, we are instead having *m* operate on *n*, which is in turn operating on *f(x)*.
+
+Exponentiation takes this idea farther, and instead of using *f(x)* as the base we are incrementing, we want to increase the base, *b*, itself by *e* (exponent) amount of times.
+
+``` numberSource
+POW = b => e => e(b)
+```
+
+Just like in `MULT()`, there is a more verbose way to show this:
+
+`POW = b => e => f => x => e(b)(f)(x)`
+
+Here, it’s less clean, but much clearer that *e* and *b* operate independently of *f(x)*, and only once calculated, adds *e(b)* wrappers around *f(x)*. Also, note that we are using *f(x)* here as the base, which is equal to 1 – if we had only *x* instead, we would end up with an incorrect amount of wrappers.
+
+With these basic arithmetic functions, let’s test our shiny new operation functions on a (drumroll please…) new truth table with our short list of numbers!
+
+As we did last time, we’ll need to create a helper function to convert the lambda functions to actual numerals…
+
+``` numberSource
+lambda_to_int = (int) => {
+  return int(x => x + 1)(0)
+}
+```
+
+… letting us build our table!
+
+``` numberSource
+part_2_math_table = {
+  const output = [];
+  
+  [N0, N1, N2, N3, N4].forEach(a => {    
+    output.push({
+      n: lambda_to_int(a),
+      succ: lambda_to_int( SUCC(a) ),
+      plus: lambda_to_int( PLUS(a)(a) ),
+      mult: lambda_to_int( MULT(a)(a) ),
+      pow: lambda_to_int( POW(a)(a) )
+    })
+  })
+
+  return output
+}
+```
+
+``` numberSource
+Inputs.table(part_2_math_table)
+```
+
+------------------------------------------------------------------------
+
+Woohoo! We’ve got some basic operations working now. However, you might have noticed that these operations are strictly incrementing our value.
+
+Next time, we’ll take a look at how to reverse the direction with subtraction, and the underlying data structures that that will require.
+
+-CH
+
+## Footnotes
+
+[^1]: Inspired by [Eric Wastl’s](http://hexatlas.com/entries/7) and [Stuart Patience’s](https://www.driverlesscrocodile.com/tools-and-techniques/lambda-calculus-for-people-a-step-behind-me-2-boolean-logic/) posts.

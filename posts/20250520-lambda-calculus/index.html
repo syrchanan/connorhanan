@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>Exploring Lambda Calculus (Part 2) – connorhanan</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -72,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-36055dde38e1c66a85944b0e21486264.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d390f6b1bb233dafbd59a397b5af9ca7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -226,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>We are going to explore Church Numerals, which define a numeral <em>N</em> by encapsulating a function <em>N</em> times. This is pretty cool, as we are then no longer representing the numeral <em>N</em> as a “count”; instead, it becomes more of a “timer”. Let’s take a look:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="32" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 31;"><span id="cb1-32"><a href="#cb1-32"></a>N0 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> a <span class="co">// apply f 0 times</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="32" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 31;"><span id="cb1-32"><a href="#cb1-32"></a>N0 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> a <span class="co">// apply f 0 times</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -234,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="36" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 35;"><span id="cb2-36"><a href="#cb2-36"></a>N1 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(a) <span class="co">// apply f 1 time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="36" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 35;"><span id="cb2-36"><a href="#cb2-36"></a>N1 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(a) <span class="co">// apply f 1 time</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -242,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="40" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb3-40"><a href="#cb3-40"></a>N2 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">f</span>(a)) <span class="co">// apply f 2 times</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="40" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb3-40"><a href="#cb3-40"></a>N2 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">f</span>(a)) <span class="co">// apply f 2 times</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -250,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="44" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 43;"><span id="cb4-44"><a href="#cb4-44"></a>N3 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">f</span>(<span class="fu">f</span>(a))) <span class="co">// apply f 3 times</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="44" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 43;"><span id="cb4-44"><a href="#cb4-44"></a>N3 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">f</span>(<span class="fu">f</span>(a))) <span class="co">// apply f 3 times</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -258,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="48" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 47;"><span id="cb5-48"><a href="#cb5-48"></a>N4 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">f</span>(<span class="fu">f</span>(<span class="fu">f</span>(a)))) <span class="co">// apply f 4 times</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="48" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 47;"><span id="cb5-48"><a href="#cb5-48"></a>N4 <span class="op">=</span> f <span class="kw">=&gt;</span> a <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">f</span>(<span class="fu">f</span>(<span class="fu">f</span>(a)))) <span class="co">// apply f 4 times</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -272,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Similar to the idea of a “wrapper” function from last post (see <code>NOT()</code>), we need to define functions that will wrap around numbers to perform operations on them.</p>
 <p>The first of these is the most simple, the successor function <code>SUCC()</code>. A fancy name for a basic operation, all this does is increment the number by 1. All it really is going to do is add another layer of wrapping around the number – that way, when we count the layers by “time”, our count, and therefore value, will have increased by 1.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="60" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 59;"><span id="cb6-60"><a href="#cb6-60"></a>SUCC <span class="op">=</span> n <span class="kw">=&gt;</span> f <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">n</span>(f)(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="60" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 59;"><span id="cb6-60"><a href="#cb6-60"></a>SUCC <span class="op">=</span> n <span class="kw">=&gt;</span> f <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> <span class="fu">f</span>(<span class="fu">n</span>(f)(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -283,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The crucial part of this function is the wrapper <em>f()</em> – as that is the piece which adds another “layer” to our number function, thereby incrementing its “count” by 1. If we substitute out the <em>n</em> discussed above for <em>N</em> (our numeral), this simplifies down to <code>N =&gt; f(N)</code>, where the incrementation is far easier to spot.</p>
 <p>Now, we can move towards addition using the same principles. Instead of wrapping the “number” with one additional function call (successor), we need to wrap it with a variable number of functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-startfrom="70" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 69;"><span id="cb7-70"><a href="#cb7-70"></a>PLUS <span class="op">=</span> m <span class="kw">=&gt;</span> n <span class="kw">=&gt;</span> f <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> <span class="fu">m</span>(f)(<span class="fu">n</span>(f)(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-startfrom="70" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 69;"><span id="cb7-70"><a href="#cb7-70"></a>PLUS <span class="op">=</span> m <span class="kw">=&gt;</span> n <span class="kw">=&gt;</span> f <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> <span class="fu">m</span>(f)(<span class="fu">n</span>(f)(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
 
@@ -293,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the above, we achieve this by using the same “inner” variable for both functions, <em>x</em>. Accordingly, we want to apply <em>f</em> to <em>x</em> for each nested “number” function (<em>m</em> and <em>n</em>). Thus, we are applying <em>f</em> to <em>x</em> for <em>m</em> + <em>n</em> times, and following the same pattern of counting nested levels, we end up with our sum.</p>
 <p>This principle is very extensible to multiplication – rather than operating on the same variable <em>x</em>, we want the “number” functions to operate on each other:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-startfrom="78" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb8-78"><a href="#cb8-78"></a>MULT <span class="op">=</span> m <span class="kw">=&gt;</span> n <span class="kw">=&gt;</span> f <span class="kw">=&gt;</span> <span class="fu">m</span>(<span class="fu">n</span>(f))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-startfrom="78" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb8-78"><a href="#cb8-78"></a>MULT <span class="op">=</span> m <span class="kw">=&gt;</span> n <span class="kw">=&gt;</span> f <span class="kw">=&gt;</span> <span class="fu">m</span>(<span class="fu">n</span>(f))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
 
@@ -306,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this form, it is easier to see that instead of both <em>m</em> and <em>n</em> operating on <em>f(x)</em>, we are instead having <em>m</em> operate on <em>n</em>, which is in turn operating on <em>f(x)</em>.</p>
 <p>Exponentiation takes this idea farther, and instead of using <em>f(x)</em> as the base we are incrementing, we want to increase the base, <em>b</em>, itself by <em>e</em> (exponent) amount of times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-startfrom="92" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb9-92"><a href="#cb9-92"></a>POW <span class="op">=</span> b <span class="kw">=&gt;</span> e <span class="kw">=&gt;</span> <span class="fu">e</span>(b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-startfrom="92" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb9-92"><a href="#cb9-92"></a>POW <span class="op">=</span> b <span class="kw">=&gt;</span> e <span class="kw">=&gt;</span> <span class="fu">e</span>(b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="declaration">
 
@@ -319,9 +322,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>With these basic arithmetic functions, let’s test our shiny new operation functions on a (drumroll please…) new truth table with our short list of numbers!</p>
 <p>As we did last time, we’ll need to create a helper function to convert the lambda functions to actual numerals…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-startfrom="106" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 105;"><span id="cb10-106"><a href="#cb10-106"></a>lambda_to_int <span class="op">=</span> (int) <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-startfrom="106" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 105;"><span id="cb10-106"><a href="#cb10-106"></a>lambda_to_int <span class="op">=</span> (int) <span class="kw">=&gt;</span> {</span>
 <span id="cb10-107"><a href="#cb10-107"></a>  <span class="cf">return</span> <span class="fu">int</span>(x <span class="kw">=&gt;</span> x <span class="op">+</span> <span class="dv">1</span>)(<span class="dv">0</span>)</span>
-<span id="cb10-108"><a href="#cb10-108"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-108"><a href="#cb10-108"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="declaration">
 
@@ -330,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>… letting us build our table!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-startfrom="114" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 113;"><span id="cb11-114"><a href="#cb11-114"></a>part_2_math_table <span class="op">=</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-startfrom="114" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 113;"><span id="cb11-114"><a href="#cb11-114"></a>part_2_math_table <span class="op">=</span> {</span>
 <span id="cb11-115"><a href="#cb11-115"></a>  <span class="kw">const</span> output <span class="op">=</span> []<span class="op">;</span></span>
 <span id="cb11-116"><a href="#cb11-116"></a>  </span>
 <span id="cb11-117"><a href="#cb11-117"></a>  [N0<span class="op">,</span> N1<span class="op">,</span> N2<span class="op">,</span> N3<span class="op">,</span> N4]<span class="op">.</span><span class="fu">forEach</span>(a <span class="kw">=&gt;</span> {    </span>
@@ -344,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-125"><a href="#cb11-125"></a>  })</span>
 <span id="cb11-126"><a href="#cb11-126"></a></span>
 <span id="cb11-127"><a href="#cb11-127"></a>  <span class="cf">return</span> output</span>
-<span id="cb11-128"><a href="#cb11-128"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-128"><a href="#cb11-128"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="declaration">
 
@@ -352,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-startfrom="132" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb12-132"><a href="#cb12-132"></a>Inputs<span class="op">.</span><span class="fu">table</span>(part_2_math_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-startfrom="132" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb12-132"><a href="#cb12-132"></a>Inputs<span class="op">.</span><span class="fu">table</span>(part_2_math_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-12" data-nodetype="expression">
 
@@ -436,13 +439,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

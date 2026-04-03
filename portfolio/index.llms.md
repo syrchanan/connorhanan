@@ -1,0 +1,31 @@
+## Automated Television Ratings
+
+A side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.
+
+[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/automated_television_ratings/)
+
+## Data Mining Sem Project
+
+This project was twofold in aim: determine which insurance indicator has the largest effect on the policy charges, as well as finding which model best reflects our data. In the analysis, models of numerous variations were used, including: KNN, SVM, Decision Trees, Neural Nets, eXtreme Gradient Boosting, and Naive Bayes. Overall, the project was a deep dive into all things machine learning, from data cleaning and preparation to executing the models and checking their accuracy.
+
+[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/data_mining_sem_project/)
+
+## Data Viz Sem Project
+
+An early foray into the world of R and the Tidyverse, this project explores the competitive differences between Formula 1 teams who build thier own engines versus those who buy them from manufacturers. Though it is fairly basic analysis in nature, this project offered lots of practice in manipulating and plotting data using the tidyverse.
+
+[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/data_viz_sem_project/)
+
+## Event Cvg Tern Plot
+
+Created as a foray into NLP, this project utilizes the GDELT closed captioning data of cable news channels to analyze usage patterns across networks. This iteration of the project was created to analyze coverage of the Georgia Senate runoff elections in December of 2022; however, it is built in such a way that it can be used for any event - all you need is a date and a keyword to filter around.
+
+For further information about this project, and to see the results, please find it in the [blog post I wrote](https://www.blog.connorhanan.com).
+
+[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/event_cvg_tern_plot/)
+
+## Data Analysis Sem Project
+
+Created as a final project for class, this analysis dives into the electric vehicle rebates offered by New York State. Specifically, it uses the apriori algorithm to conduct association rules mining on the information to determine which vehicles were the most popular for consumers to claim the maximum rebate with. Python’s pandas, sklearn, and mlxtend libraries featured quite prominently throughout this analysis.
+
+[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/python_projects/data_analysis_sem_project/)

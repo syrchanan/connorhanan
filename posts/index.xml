@@ -9,7 +9,7 @@
 <link>https://connorhanan.com/posts/</link>
 <atom:link href="https://connorhanan.com/posts/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.7.29</generator>
+<generator>quarto-1.9.36</generator>
 <lastBuildDate>Sun, 29 Mar 2026 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Recently Read, Automated</title>
@@ -24,7 +24,7 @@
 <h2 class="anchored" data-anchor-id="widgets-and-scraping">Widgets and Scraping</h2>
 <p>Goodreads does still offer embeddable shelf widgets, which are served as a JavaScript file containing an HTML string assigned to a variable.</p>
 <p>It’s not the prettiest thing in the world, but it’s something to fetch and work with:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">curl</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -42,23 +42,23 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">/widget.js"</span></span></code></pre></div>
+font-style: inherit;">/widget.js"</span></span></code></pre></div></div>
 <p>The widget URL encodes your shelf preferences as query parameters (number of books, sort order, which fields to show, &amp;c).</p>
 <p>This script uses a default URL pointed at my <code>read</code> shelf, but it can be overridden via the first argument or a <code>GOODREADS_WIDGET</code> environment variable, which means you could generate posts for other shelves like <code>to-be-read</code>, or the like.</p>
 </section>
 <section id="extracting-the-html" class="level2">
 <h2 class="anchored" data-anchor-id="extracting-the-html">Extracting the HTML</h2>
 <p>The JS file looks roughly like:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">var</span> widget_code <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'&lt;div&gt;...escaped HTML...&lt;/div&gt;'</span></span></code></pre></div>
+font-style: inherit;">'&lt;div&gt;...escaped HTML...&lt;/div&gt;'</span></span></code></pre></div></div>
 <p>First, we need to strip the JS wrapper and “unescape” the four escape patterns Goodreads uses (<code>\n</code>, <code>\/</code>, <code>\"</code>, <code>\'</code>). I had never used <code>sed</code> all that much, but it’s pretty powerful with a touch of regex:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -141,13 +141,13 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">/widget.html"</span></span></code></pre></div>
+font-style: inherit;">/widget.html"</span></span></code></pre></div></div>
 <p>The whole widget is on one line, so the shorthand <code>head -1</code> pulls the entire thing. Once that line is in stdout, it’s fairly straightforward to pipe <code>sed</code> substitutions until we have readable HTML.</p>
 </section>
 <section id="parsing-the-books" class="level2">
 <h2 class="anchored" data-anchor-id="parsing-the-books">Parsing the Books</h2>
 <p>Each book in the widget HTML is wrapped in a <code>gr_custom_each_container</code> div. <code>csplit</code> splits the HTML into individual files on that pattern:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">csplit</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -169,9 +169,9 @@ font-style: inherit;">/widget.html"</span> <span class="st" style="color: #20794
 background-color: null;
 font-style: inherit;">'/gr_custom_each_container/'</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'{*}'</span></span></code></pre></div>
+font-style: inherit;">'{*}'</span></span></code></pre></div></div>
 <p>Then we loop over those files and extract the pieces we need with <code>grep</code> and fancy regex:</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="va" style="color: #111111;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">full_title</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -337,14 +337,14 @@ font-style: inherit;">wc</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-l</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div>
+font-style: inherit;">)</span></span></code></pre></div></div>
 <p>The rating is derived by counting active star images rather than reading a numeric value; granted, it’s a little roundabout and brittle, but it works.</p>
 <p>Each book gets written out as a line of NDJSON with <code>jq -nc</code>.</p>
 </section>
 <section id="finding-whats-new" class="level2">
 <h2 class="anchored" data-anchor-id="finding-whats-new">Finding What’s New</h2>
 <p>The comparison logic here is slightly different from the Discogs plugin. There is no date field explicitly, but the data is returned by date descending, so we can rely on the order of the keys to determine what’s new. We first build a composite key for each book in both the fetched collection and the local DB, which is just the author and title joined with <code>||</code>.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="cf" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
@@ -433,13 +433,13 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$tmpdir</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">/new.keys"</span></span></code></pre></div>
+font-style: inherit;">/new.keys"</span></span></code></pre></div></div>
 <p>Then we trim any trailing whitespace and standardize line endings to avoid false mismatches, which allows us to do a simple <code>grep</code> to find the new keys based on line mismatches:</p>
 </section>
 <section id="building-the-post" class="level2">
 <h2 class="anchored" data-anchor-id="building-the-post">Building the Post</h2>
 <p>One piece the Goodreads plugin has that Discogs doesn’t is a small helper to render a numeric rating as a Unicode star string:</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">stars()</span> <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -548,9 +548,9 @@ font-style: inherit;">"</span></span>
 <span id="cb7-7"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">}</span></span></code></pre></div>
+font-style: inherit;">}</span></span></code></pre></div></div>
 <p>The rest of the post-building follows the same pattern as my Discogs plugin (frontmatter, then a block per book with cover image, title, author, and stars):</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="bu" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -585,7 +585,7 @@ font-style: inherit;">"Rating: </span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$star_display</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
+font-style: inherit;">"</span></span></code></pre></div></div>
 <p>New books get prepended to the local NDJSON database, and off we go!</p>
 <hr>
 <p>Scraping a widget is obviously less reliable than a real API; however, the alternative is a manual solution which isn’t nearly as fun.</p>
@@ -614,9 +614,9 @@ font-style: inherit;">"</span></span></code></pre></div>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>The whole process lives in <code>plugins/discogs.sh</code>, a Bash script invoked by my top-level (and very creatively named) plugin manager <code>publish.sh</code>, which loads environment variables and fires each plugin in sequence:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div>
+font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div></div>
 <p>The script accepts two positional arguments:</p>
 <ol type="1">
 <li>A Discogs username (in this case, <code>syrchanan</code>).</li>
@@ -632,7 +632,7 @@ font-style: inherit;">./discogs.sh</span> syrchanan db</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="fetching-the-collection">Fetching the Collection</h2>
 <p>The <a href="https://www.discogs.com/developers/#">Discogs API</a> exposes a user’s collection at <code>/users/{username}/collection/folders/0/releases</code>, sorted by date added descending.</p>
 <p>The script iterates through the pages (up to <code>$PAGELIM</code>), writing each release as a compact JSON object to a temporary NDJSON<sup>1</sup> file:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">jq</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -682,13 +682,13 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$outfile</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
+font-style: inherit;">"</span></span></code></pre></div></div>
 <p>This results in a file with one line per release, such that each line is a cleaned up JSON object with the fields I care about. Since the API returns your collection sorted by date descending, the newest releases are at the top of the file – a feature that becomes important for the next step.</p>
 </section>
 <section id="looking-for-new-records" class="level2">
 <h2 class="anchored" data-anchor-id="looking-for-new-records">Looking for New Records</h2>
 <p>The local “database” is also just an NDJSON file on disk, which contains every release that has already been posted<sup>2</sup>. Also, rather than comparing full objects, I build a composite key for each release, comprised of the date added, artist name, and title — joined with <code>||</code>:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">jq</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -721,14 +721,14 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$f_keys</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
+font-style: inherit;">"</span></span></code></pre></div></div>
 <p>Both the fetched collection and the local DB get this same format. Next, the script walks through the fetched keys from newest to oldest, writing any that don’t match the most recent local key into a <code>new.keys</code> file. It stops at the first match, which is a little fragile, but still works because everything is sorted by date descending.</p>
 <p>If <code>new.keys</code> is empty, the script exits cleanly with no output.</p>
 </section>
 <section id="building-the-automated-post" class="level2">
 <h2 class="anchored" data-anchor-id="building-the-automated-post">Building the Automated Post</h2>
 <p>For each new record in our newly minted <code>new.keys</code> file, we pull the full object back out of the fetched data, extracts the fields, and append a markdown block to a new Quarto document:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="va" style="color: #111111;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">filename</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -793,9 +793,9 @@ background-color: null;
 font-style: inherit;">---</span></span>
 <span id="cb4-12"><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">QMD_HEAD</span></span></code></pre></div>
+font-style: inherit;">QMD_HEAD</span></span></code></pre></div></div>
 <p>Each record then gets a cover image, an H2 markdown (<code>##</code>) heading, and a markdown table with the label, year, catalog number, format, and genre:</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="bu" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -842,12 +842,12 @@ background-color: null;
 font-style: inherit;">  |"</span></span>
 <span id="cb5-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># ...&amp;c &amp;c</span></span></code></pre></div>
+font-style: inherit;"># ...&amp;c &amp;c</span></span></code></pre></div></div>
 </section>
 <section id="updating-the-local-db" class="level2">
 <h2 class="anchored" data-anchor-id="updating-the-local-db">Updating the Local DB</h2>
 <p>Once the post is written, the new releases get prepended to the local NDJSON database so we don’t double count any records the next time the script runs:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -884,7 +884,7 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$local</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
+font-style: inherit;">"</span></span></code></pre></div></div>
 <hr>
 <p>The whole thing runs pretty quick, and produces a clean <code>.qmd</code> file; it requires nothing beyond <code>bash</code>, <code>curl</code>, and <code>jq</code>. From there, Quarto renders it into the site like any other post (with a special tag so you all can ignore them if you want).</p>
 <p>I have a similar plugin for Goodreads that follows the same pattern — a post for another day.</p>
@@ -2001,7 +2001,7 @@ font-style: inherit;">"</span></span></code></pre></div>
 <p>Enter username below (case-sensitive) to get started.*</p>
 <p>*Please note it may take up to a minute to load your collection depending on size.</p>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="28" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 27;"><span id="cb1-28">viewof username <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="28" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 27;"><span id="cb1-28">viewof username <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2085,7 +2085,7 @@ font-style: inherit;">false</span> }</span>
 background-color: null;
 font-style: inherit;">md</span><span class="vs" style="color: #20794D;
 background-color: null;
-font-style: inherit;">`## Filters`</span></span></code></pre></div>
+font-style: inherit;">`## Filters`</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -2100,7 +2100,7 @@ font-style: inherit;">`## Filters`</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="40" data-source-offset="-292" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb2-40">viewof filters <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="40" data-source-offset="-292" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb2-40">viewof filters <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2291,7 +2291,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">true</span></span>
 <span id="cb2-59">  }</span>
-<span id="cb2-60">)</span></code></pre></div>
+<span id="cb2-60">)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-3" data-nodetype="declaration">
@@ -2301,7 +2301,7 @@ font-style: inherit;">true</span></span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="65" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 64;"><span id="cb3-65">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="65" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 64;"><span id="cb3-65">{</span>
 <span id="cb3-66"></span>
 <span id="cb3-67">  <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2755,7 +2755,7 @@ font-style: inherit;">&lt;/style&gt;</span></span>
 <span id="cb3-131"><span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`</span></span>
-<span id="cb3-132">}</span></code></pre></div>
+<span id="cb3-132">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="expression">
 
@@ -2763,7 +2763,7 @@ font-style: inherit;">`</span></span>
 </div>
 </div>
 <div class="cell hidden">
-<div class="sourceCode cell-code hidden" id="cb4" data-startfrom="139" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb4-139"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="139" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb4-139"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
@@ -5692,7 +5692,7 @@ background-color: null;
 font-style: inherit;">}</span></span>
 <span id="cb4-498"><span class="vs" style="color: #20794D;
 background-color: null;
-font-style: inherit;">`</span></span></code></pre></div>
+font-style: inherit;">`</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display hidden">
 <div>
 <div id="ojs-cell-3-1" data-nodetype="declaration">
@@ -5744,7 +5744,7 @@ font-style: inherit;">`</span></span></code></pre></div>
 </div>
 </div>
 <div class="cell hidden">
-<div class="sourceCode cell-code hidden" id="cb5" data-startfrom="503" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb5-503">sleep <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="503" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb5-503">sleep <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (ms) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -5761,7 +5761,7 @@ font-style: inherit;">=&gt;</span> <span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">setTimeout</span>(resolve<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">,</span> ms))</span></code></pre></div>
+font-style: inherit;">,</span> ms))</span></code></pre></div></div>
 <div class="cell-output cell-output-display hidden">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -5769,7 +5769,7 @@ font-style: inherit;">,</span> ms))</span></code></pre></div>
 </div>
 </div>
 <div class="cell hidden">
-<div class="sourceCode cell-code hidden" id="cb6" data-startfrom="509" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 508;"><span id="cb6-509">getRandomItem <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="509" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 508;"><span id="cb6-509">getRandomItem <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (arr) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -5792,7 +5792,7 @@ font-style: inherit;">*</span> arr<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">length</span>)]</span></code></pre></div>
+font-style: inherit;">length</span>)]</span></code></pre></div></div>
 <div class="cell-output cell-output-display hidden">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -5800,11 +5800,11 @@ font-style: inherit;">length</span>)]</span></code></pre></div>
 </div>
 </div>
 <div class="cell hidden">
-<div class="sourceCode cell-code hidden" id="cb7" data-startfrom="515" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 514;"><span id="cb7-515">pageLim <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="515" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 514;"><span id="cb7-515">pageLim <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">30</span></span></code></pre></div>
+font-style: inherit;">30</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display hidden">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -5812,7 +5812,7 @@ font-style: inherit;">30</span></span></code></pre></div>
 </div>
 </div>
 <div class="cell hidden">
-<div class="sourceCode cell-code hidden" id="cb8" data-startfrom="521" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 520;"><span id="cb8-521">cleanCollection <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="521" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 520;"><span id="cb8-521">cleanCollection <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb8-522">  </span>
@@ -6203,7 +6203,7 @@ background-color: null;
 font-style: inherit;">cover_image</span></span>
 <span id="cb8-566">    }</span>
 <span id="cb8-567">  })</span>
-<span id="cb8-568">}</span></code></pre></div>
+<span id="cb8-568">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display hidden">
 <div id="ojs-cell-7" data-nodetype="declaration">
 
@@ -6563,7 +6563,7 @@ On his dying bed at the close of day.</p>
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>To begin, we need a function that will let us partition our disk based on the rules of the problem. In the input, numbers alternate between being a file or being free space, so we need to split up which are which with an odd/even split:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="44" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 43;"><span id="cb1-44"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="44" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 43;"><span id="cb1-44"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
@@ -6689,7 +6689,7 @@ font-style: inherit;">'.'</span>)</span>
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> disk</span>
-<span id="cb1-59">}</span></code></pre></div>
+<span id="cb1-59">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -6699,7 +6699,7 @@ font-style: inherit;">return</span> disk</span>
 <p>Now that we are actually able to build out what the disk looks like, it gets a whole lot easier to solve, especially if we work backwards. Working forwards, we would keep expanding the string, and our indices would be off; however, by working backwards, we can insert whatever we want and still keep track of where we are in the string.</p>
 <p>With that in mind, it’s really not difficult – we just map through the empty spaces, and fill with whatever needs to go there!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="69" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 68;"><span id="cb2-69">part_1 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="69" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 68;"><span id="cb2-69">part_1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb2-70"></span>
@@ -6858,7 +6858,7 @@ background-color: null;
 font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span>
-<span id="cb2-103">}</span></code></pre></div>
+<span id="cb2-103">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -6866,7 +6866,7 @@ font-style: inherit;">0</span>)</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="110" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 109;"><span id="cb3-110">part_1</span></code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="110" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 109;"><span id="cb3-110">part_1</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="expression">
 
@@ -6880,7 +6880,7 @@ font-style: inherit;">0</span>)</span>
 <p>In part 2, we can no longer move one file (character in our string) at a time – we have to move whole blocks at once. While this may seem daunting, it’s fairly similar to what we did before, but instead of iterating through characters, we are now going to iterate through blocks.</p>
 <p>To make this easier, let’s first parse the input a little more than before, and create an object with the blocks, and empty arrays as our spacers. That way, as we iterate through, we can dump the blocks into available spacers all by manipulating our arrays.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="122" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 121;"><span id="cb4-122">part_2 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="122" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 121;"><span id="cb4-122">part_2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb4-123">  <span class="kw" style="color: #003B4F;
@@ -7300,7 +7300,7 @@ background-color: null;
 font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span>
-<span id="cb4-176">}</span></code></pre></div>
+<span id="cb4-176">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -7308,7 +7308,7 @@ font-style: inherit;">0</span>)</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb5" data-startfrom="183" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 182;"><span id="cb5-183">part_2</span></code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="183" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 182;"><span id="cb5-183">part_2</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
 
@@ -7341,7 +7341,7 @@ font-style: inherit;">0</span>)</span>
 <p>With further ado, let’s get started with <a href="https://adventofcode.com/2024/day/8">day 8</a>!</p>
 <p>First, let’s parse the input – this is fairly standard fare for Advent of Code. Grid parsing is probably one of the most common problem setups, so it’s nothing a little regex can’t fix. However, based on the problem (matching antennae based on matching character sets), I chose to use a <code>Map</code> object type. It could have easily been done with regular objects, but why not try something new?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="105" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb1-105">input <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="105" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb1-105">input <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb1-106">  <span class="co" style="color: #5E5E5E;
@@ -7504,7 +7504,7 @@ font-style: inherit;">grid</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">:</span> parsed</span>
 <span id="cb1-128">  }</span>
-<span id="cb1-129">}</span></code></pre></div>
+<span id="cb1-129">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -7515,7 +7515,7 @@ font-style: inherit;">:</span> parsed</span>
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>In part 1, we need to find all the possible antinode locations, which are derived from pairs of matching antennae sets. To do so, we’ll need to create a little bit of infrastructure below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="139" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb2-139"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="139" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb2-139"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
@@ -7619,7 +7619,7 @@ background-color: null;
 font-style: inherit;">,</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">...</span>other]</span>
-<span id="cb2-153">}</span></code></pre></div>
+<span id="cb2-153">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -7629,7 +7629,7 @@ font-style: inherit;">...</span>other]</span>
 <p>Above, we created a function to create all pairwise matches from an array. Using this, we can find all the locations of antinodes, since the new ones must be on the same plane as the existing antennae.</p>
 <p>Once we have our pairs, then we actually have to find the possible locations. Luckily for us, this is quite simple, since we can use the good ol’ slope formula to calculate the possible positions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="163" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 162;"><span id="cb3-163"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="163" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 162;"><span id="cb3-163"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
@@ -7710,7 +7710,7 @@ font-style: inherit;">*</span>slope[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>] ]</span>
 <span id="cb3-170">    ]</span>
-<span id="cb3-171">  }</span></code></pre></div>
+<span id="cb3-171">  }</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -7724,7 +7724,7 @@ font-style: inherit;">1</span>] ]</span>
 <li>Count all unique antinode locations</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="183" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 182;"><span id="cb4-183">part_1 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="183" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 182;"><span id="cb4-183">part_1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb4-184"></span>
@@ -7911,7 +7911,7 @@ font-style: inherit;">.</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">size</span></span>
 <span id="cb4-215"></span>
-<span id="cb4-216">}</span></code></pre></div>
+<span id="cb4-216">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -7919,7 +7919,7 @@ font-style: inherit;">size</span></span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb5" data-startfrom="223" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 222;"><span id="cb5-223">part_1</span></code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="223" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 222;"><span id="cb5-223">part_1</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
 
@@ -7933,7 +7933,7 @@ font-style: inherit;">size</span></span>
 <p>In part 2, the difference is that antinodes may be more than 1-step away from existing antennae. This makes it fairly easy, since we can just extend our functions from before to look at a longer range!</p>
 <p>With a quick tweak to <code>n</code> in our <code>find_antinodes()</code> function (by using number of rows we can be sure that we will exceed the bounds for each antennae set in both directions), we can easily cross this day off our list!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="237" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 236;"><span id="cb6-237">part_2 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="237" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 236;"><span id="cb6-237">part_2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb6-238">  <span class="kw" style="color: #003B4F;
@@ -8222,7 +8222,7 @@ background-color: null;
 font-style: inherit;">.</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">size</span></span>
-<span id="cb6-270">}</span></code></pre></div>
+<span id="cb6-270">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -8230,7 +8230,7 @@ font-style: inherit;">size</span></span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb7" data-startfrom="277" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 276;"><span id="cb7-277">part_2</span></code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="277" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 276;"><span id="cb7-277">part_2</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="expression">
 
@@ -8267,7 +8267,7 @@ font-style: inherit;">size</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interactivity
+<span class="screen-reader-only">Tip</span>Interactivity
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -8278,7 +8278,7 @@ Interactivity
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="29" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 28;"><span id="cb1-29">relationship_chart <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="29" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 28;"><span id="cb1-29">relationship_chart <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb1-30">  <span class="kw" style="color: #003B4F;
@@ -9582,7 +9582,7 @@ font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">node</span>()</span>
 <span id="cb1-151"></span>
-<span id="cb1-152">}</span></code></pre></div>
+<span id="cb1-152">}</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
@@ -9594,7 +9594,7 @@ font-style: inherit;">node</span>()</span>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="159" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 158;"><span id="cb2-159">viewof characters <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="159" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 158;"><span id="cb2-159">viewof characters <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> Inputs<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -9629,7 +9629,7 @@ font-style: inherit;">html</span><span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`&lt;b&gt;Main Characters&lt;/b&gt;`</span></span>
 <span id="cb2-163">  }</span>
-<span id="cb2-164">)</span></code></pre></div>
+<span id="cb2-164">)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
@@ -9640,7 +9640,7 @@ font-style: inherit;">`&lt;b&gt;Main Characters&lt;/b&gt;`</span></span>
 <div class="cell">
 <details class="code-fold hidden">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="169" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 168;"><span id="cb3-169">viewof types <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="169" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 168;"><span id="cb3-169">viewof types <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> Inputs<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -9753,7 +9753,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`</span></span>
-<span id="cb3-174">})</span></code></pre></div>
+<span id="cb3-174">})</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
@@ -9778,7 +9778,7 @@ font-style: inherit;">`</span></span>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code" id="cb4" data-startfrom="200" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 199;"><span id="cb4-200"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="200" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 199;"><span id="cb4-200"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// Read in data and parse</span></span>
 <span id="cb4-201">relationships <span class="op" style="color: #5E5E5E;
@@ -9939,7 +9939,7 @@ font-style: inherit;">links</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">:</span> raw</span>
 <span id="cb4-211">  }</span>
-<span id="cb4-212">}</span></code></pre></div>
+<span id="cb4-212">}</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
@@ -9950,7 +9950,7 @@ font-style: inherit;">:</span> raw</span>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code" id="cb5" data-startfrom="216" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 215;"><span id="cb5-216"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="216" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 215;"><span id="cb5-216"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// Build lookup for values</span></span>
 <span id="cb5-217">lookups <span class="op" style="color: #5E5E5E;
@@ -10066,7 +10066,7 @@ background-color: null;
 font-style: inherit;">,</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Cosmo Kramer"</span>]</span>
-<span id="cb5-226">})</span></code></pre></div>
+<span id="cb5-226">})</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
@@ -10077,7 +10077,7 @@ font-style: inherit;">"Cosmo Kramer"</span>]</span>
 <div class="cell" data-eval="false">
 <details class="code-fold">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code" id="cb6" data-startfrom="231" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 230;"><span id="cb6-231"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="231" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 230;"><span id="cb6-231"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// Create character selection</span></span>
 <span id="cb6-232">viewof characters <span class="op" style="color: #5E5E5E;
@@ -10115,7 +10115,7 @@ font-style: inherit;">html</span><span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`&lt;b&gt;Main Characters&lt;/b&gt;`</span></span>
 <span id="cb6-236">  }</span>
-<span id="cb6-237">)</span></code></pre></div>
+<span id="cb6-237">)</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
@@ -10126,7 +10126,7 @@ font-style: inherit;">`&lt;b&gt;Main Characters&lt;/b&gt;`</span></span>
 <div class="cell" data-eval="false">
 <details class="code-fold">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code" id="cb7" data-startfrom="242" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 241;"><span id="cb7-242"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-startfrom="242" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 241;"><span id="cb7-242"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// Create relationship type selection</span></span>
 <span id="cb7-243">viewof types <span class="op" style="color: #5E5E5E;
@@ -10242,7 +10242,7 @@ background-color: null;
 font-style: inherit;">}</span><span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">`</span></span>
-<span id="cb7-248">})</span></code></pre></div>
+<span id="cb7-248">})</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
@@ -10253,7 +10253,7 @@ font-style: inherit;">`</span></span>
 <div class="cell" data-eval="false">
 <details class="code-fold">
 <summary>Show the Code</summary>
-<div class="sourceCode cell-code" id="cb8" data-startfrom="253" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb8-253"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-startfrom="253" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb8-253"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// Build D3 chart</span></span>
 <span id="cb8-254">relationship_chart <span class="op" style="color: #5E5E5E;
@@ -11560,7 +11560,7 @@ font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">node</span>()</span>
 <span id="cb8-376"></span>
-<span id="cb8-377">}</span></code></pre></div>
+<span id="cb8-377">}</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
@@ -11594,7 +11594,7 @@ font-style: inherit;">node</span>()</span>
 
 
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="19" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 18;"><span id="cb1-19">TRUE <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="19" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 18;"><span id="cb1-19">TRUE <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -11772,7 +11772,7 @@ background-color: null;
 font-style: inherit;">1</span>)(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span>
-<span id="cb1-33">}</span></code></pre></div>
+<span id="cb1-33">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -11876,7 +11876,7 @@ font-style: inherit;">0</span>)</span>
 <p>Our outer function will wrap the arguments, doing nothing with them. Then, when we need a value, we pass an successor function to the stored value, finally executing on it, and retrieving the real value. Straightforward? Not in the least.</p>
 <p>Let’s make some functions, then walk through them on the other side:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="52" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 51;"><span id="cb2-52">BUILD_3TUPLE <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="52" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 51;"><span id="cb2-52">BUILD_3TUPLE <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -11892,7 +11892,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">f</span>(a)(b)(c)</span></code></pre></div>
+font-style: inherit;">f</span>(a)(b)(c)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -11900,7 +11900,7 @@ font-style: inherit;">f</span>(a)(b)(c)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="56" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 55;"><span id="cb3-56">GET_A <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="56" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 55;"><span id="cb3-56">GET_A <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> t <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -11916,7 +11916,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> a)</span></code></pre></div>
+font-style: inherit;">=&gt;</span> a)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -11924,7 +11924,7 @@ font-style: inherit;">=&gt;</span> a)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="60" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 59;"><span id="cb4-60">GET_B <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="60" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 59;"><span id="cb4-60">GET_B <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> t <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -11940,7 +11940,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> b)</span></code></pre></div>
+font-style: inherit;">=&gt;</span> b)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -11948,7 +11948,7 @@ font-style: inherit;">=&gt;</span> b)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="64" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 63;"><span id="cb5-64">GET_C <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="64" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 63;"><span id="cb5-64">GET_C <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> t <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -11964,7 +11964,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> c)</span></code></pre></div>
+font-style: inherit;">=&gt;</span> c)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -11975,7 +11975,7 @@ font-style: inherit;">=&gt;</span> c)</span></code></pre></div>
 <p>Once we do need them, it’s time to call our accessor functions! These <code>GET_*</code> functions all do the same thing: retrieve the positional value by using <em>t</em> to unwrap the tuple, and only return the position we need.</p>
 <p>Let’s try an example, where we want to extract the middle value from the tuple (0, 1, 2).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="74" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 73;"><span id="cb6-74">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="74" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 73;"><span id="cb6-74">{</span>
 <span id="cb6-75">  <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -11998,7 +11998,7 @@ font-weight: bold;
 font-style: inherit;">return</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">lambda_to_int</span>( b_val )</span>
-<span id="cb6-78">}</span></code></pre></div>
+<span id="cb6-78">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
 
@@ -12009,7 +12009,7 @@ font-style: inherit;">lambda_to_int</span>( b_val )</span>
 <p>Incrementing something is easy with functions; if you recall, we just wrap another layer around the outside. However, to get the predecessor, you would have to unwrap a layer of the nested functions, which we have no great way of doing.</p>
 <p>Instead, we’ll have to keep values “in memory”. Let’s start by defining a 2-tuple (PAIR), and the needed accessors:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-startfrom="88" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 87;"><span id="cb7-88">PAIR <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-startfrom="88" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 87;"><span id="cb7-88">PAIR <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12022,7 +12022,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">f</span>(a)(b)</span></code></pre></div>
+font-style: inherit;">f</span>(a)(b)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
 
@@ -12030,7 +12030,7 @@ font-style: inherit;">f</span>(a)(b)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-startfrom="92" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb8-92">FIRST <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-startfrom="92" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb8-92">FIRST <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> t <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12043,7 +12043,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> a)</span></code></pre></div>
+font-style: inherit;">=&gt;</span> a)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
 
@@ -12051,7 +12051,7 @@ font-style: inherit;">=&gt;</span> a)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-startfrom="96" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 95;"><span id="cb9-96">SECOND <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-startfrom="96" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 95;"><span id="cb9-96">SECOND <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> t <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12064,7 +12064,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> b)</span></code></pre></div>
+font-style: inherit;">=&gt;</span> b)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="declaration">
 
@@ -12074,7 +12074,7 @@ font-style: inherit;">=&gt;</span> b)</span></code></pre></div>
 <p>With this in hand, we can create a function known as <em>shift-and-increment</em> (or <em>phi</em>), which takes a pair of numbers and returns a new pair of the second number and its increment: <code>(a, b) =&gt; (b, b+1)</code>.</p>
 <p>There can be many uses for this (looking at you, linked lists), but for now, we will use the concept to achieve our decrement function. The <em>phi</em> of a pair will always contain it’s predecessor, so we can back our way into coming up with the previous number:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-startfrom="104" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 103;"><span id="cb10-104">PHI <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-startfrom="104" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 103;"><span id="cb10-104">PHI <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> p <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12087,7 +12087,7 @@ font-style: inherit;">SECOND</span>(p) )( <span class="fu" style="color: #4758AB
 background-color: null;
 font-style: inherit;">SUCC</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">SECOND</span>(p) ) )</span></code></pre></div>
+font-style: inherit;">SECOND</span>(p) ) )</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="declaration">
 
@@ -12096,7 +12096,7 @@ font-style: inherit;">SECOND</span>(p) ) )</span></code></pre></div>
 </div>
 <p>Above, we are forming a <code>PAIR</code> based on <em>p</em> (prior pair). This means that we want the second element of <em>p</em> to become the first of <em>PHI</em>: (<code>SECOND(p)</code>), and the increment/successor of the second element of <em>p</em> as the second element of <em>PHI</em>: (<code>SUCC(SECOND(p))</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-startfrom="110" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 109;"><span id="cb11-110">PRED <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-startfrom="110" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 109;"><span id="cb11-110">PRED <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> n <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12107,7 +12107,7 @@ font-style: inherit;">FIRST</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">n</span>(PHI)( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">PAIR</span>(N0)(N0) ) )</span></code></pre></div>
+font-style: inherit;">PAIR</span>(N0)(N0) ) )</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="declaration">
 
@@ -12115,7 +12115,7 @@ font-style: inherit;">PAIR</span>(N0)(N0) ) )</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-startfrom="114" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 113;"><span id="cb12-114">SUB <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-startfrom="114" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 113;"><span id="cb12-114">SUB <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> m <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12125,7 +12125,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">n</span>(PRED)(m)</span></code></pre></div>
+font-style: inherit;">n</span>(PRED)(m)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-12" data-nodetype="declaration">
 
@@ -12137,7 +12137,7 @@ font-style: inherit;">n</span>(PRED)(m)</span></code></pre></div>
 <p><code>SUB</code> takes this farther by adding framework around <code>PRED</code>. Specifically, we are applying <code>PRED</code> <em>n</em> times to <em>m</em>. In other words, starting at <em>m</em>, we are then subtracting 1 from it <em>n</em> times. I will note this is not an efficient implementation whatsoever – for each step, we have to count up from 0 to get the prior number. It works fine here since our numbers are low, but if you imagine doing 1000-999, or something even more drastic, you can imagine how long it would take.</p>
 <p>Using this idea, we can use a neat trick of the number functions themselves to check whether the number is 0 or not. Remember, a number is just the number of nested functions are in a stack - so 0 is represented by no functions in the stack. This is helpful because we can now check how many functions are called: any number of times &gt; 1 means it is not equal to 0, no calls means it is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-startfrom="126" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 125;"><span id="cb13-126">ISZERO <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-startfrom="126" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 125;"><span id="cb13-126">ISZERO <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> n <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12147,7 +12147,7 @@ background-color: null;
 font-style: inherit;">n</span>(x <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> FALSE)(TRUE)</span></code></pre></div>
+font-style: inherit;">=&gt;</span> FALSE)(TRUE)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-13" data-nodetype="declaration">
 
@@ -12156,7 +12156,7 @@ font-style: inherit;">=&gt;</span> FALSE)(TRUE)</span></code></pre></div>
 </div>
 <p>Similarly, we can take advantage of a feature of subtraction to find if a value is less than or equal to another. Technically, since none of our numbers are signed (how would you even add a sign based on nested functions???), we can just check if the result of subtracting the terms is 0. It’s ambiguous, yes (0 could mean the value is negative or 0), but in this case, we can use that “feature” to determine our inequality:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-startfrom="132" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb14-132">LEQ <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-startfrom="132" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb14-132">LEQ <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> m <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12168,7 +12168,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ISZERO</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">SUB</span>(m)(n) )</span></code></pre></div>
+font-style: inherit;">SUB</span>(m)(n) )</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-14" data-nodetype="declaration">
 
@@ -12177,7 +12177,7 @@ font-style: inherit;">SUB</span>(m)(n) )</span></code></pre></div>
 </div>
 <p>With these brand new operations in hand, let’s update our truth table from last post with our newest functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-startfrom="138" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 137;"><span id="cb15-138">part_3_math_table <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-startfrom="138" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 137;"><span id="cb15-138">part_3_math_table <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb15-139">  <span class="kw" style="color: #003B4F;
@@ -12312,7 +12312,7 @@ font-style: inherit;">LEQ</span>(a)(N2) )</span>
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> output</span>
-<span id="cb15-156">}</span></code></pre></div>
+<span id="cb15-156">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-15" data-nodetype="declaration">
 
@@ -12320,11 +12320,11 @@ font-style: inherit;">return</span> output</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-startfrom="160" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 159;"><span id="cb16-160">Inputs<span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-startfrom="160" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 159;"><span id="cb16-160">Inputs<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">table</span>(part_3_math_table)</span></code></pre></div>
+font-style: inherit;">table</span>(part_3_math_table)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-16" data-nodetype="expression">
 
@@ -12371,7 +12371,7 @@ font-style: inherit;">table</span>(part_3_math_table)</span></code></pre></div>
 </ol>
 <p>We are going to explore Church Numerals, which define a numeral <em>N</em> by encapsulating a function <em>N</em> times. This is pretty cool, as we are then no longer representing the numeral <em>N</em> as a “count”; instead, it becomes more of a “timer”. Let’s take a look:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="32" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 31;"><span id="cb1-32">N0 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="32" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 31;"><span id="cb1-32">N0 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12381,7 +12381,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> a <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">// apply f 0 times</span></span></code></pre></div>
+font-style: inherit;">// apply f 0 times</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -12389,7 +12389,7 @@ font-style: inherit;">// apply f 0 times</span></span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="36" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 35;"><span id="cb2-36">N1 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="36" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 35;"><span id="cb2-36">N1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12401,7 +12401,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">f</span>(a) <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">// apply f 1 time</span></span></code></pre></div>
+font-style: inherit;">// apply f 1 time</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -12409,7 +12409,7 @@ font-style: inherit;">// apply f 1 time</span></span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="40" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb3-40">N2 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="40" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 39;"><span id="cb3-40">N2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12423,7 +12423,7 @@ font-style: inherit;">f</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">f</span>(a)) <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">// apply f 2 times</span></span></code></pre></div>
+font-style: inherit;">// apply f 2 times</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -12431,7 +12431,7 @@ font-style: inherit;">// apply f 2 times</span></span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="44" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 43;"><span id="cb4-44">N3 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="44" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 43;"><span id="cb4-44">N3 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12447,7 +12447,7 @@ font-style: inherit;">f</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">f</span>(a))) <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">// apply f 3 times</span></span></code></pre></div>
+font-style: inherit;">// apply f 3 times</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -12455,7 +12455,7 @@ font-style: inherit;">// apply f 3 times</span></span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="48" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 47;"><span id="cb5-48">N4 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="48" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 47;"><span id="cb5-48">N4 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12473,7 +12473,7 @@ font-style: inherit;">f</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">f</span>(a)))) <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">// apply f 4 times</span></span></code></pre></div>
+font-style: inherit;">// apply f 4 times</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -12487,7 +12487,7 @@ font-style: inherit;">// apply f 4 times</span></span></code></pre></div>
 <p>Similar to the idea of a “wrapper” function from last post (see <code>NOT()</code>), we need to define functions that will wrap around numbers to perform operations on them.</p>
 <p>The first of these is the most simple, the successor function <code>SUCC()</code>. A fancy name for a basic operation, all this does is increment the number by 1. All it really is going to do is add another layer of wrapping around the number – that way, when we count the layers by “time”, our count, and therefore value, will have increased by 1.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="60" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 59;"><span id="cb6-60">SUCC <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="60" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 59;"><span id="cb6-60">SUCC <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> n <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12502,7 +12502,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">f</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">n</span>(f)(x))</span></code></pre></div>
+font-style: inherit;">n</span>(f)(x))</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -12513,7 +12513,7 @@ font-style: inherit;">n</span>(f)(x))</span></code></pre></div>
 <p>The crucial part of this function is the wrapper <em>f()</em> – as that is the piece which adds another “layer” to our number function, thereby incrementing its “count” by 1. If we substitute out the <em>n</em> discussed above for <em>N</em> (our numeral), this simplifies down to <code>N =&gt; f(N)</code>, where the incrementation is far easier to spot.</p>
 <p>Now, we can move towards addition using the same principles. Instead of wrapping the “number” with one additional function call (successor), we need to wrap it with a variable number of functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-startfrom="70" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 69;"><span id="cb7-70">PLUS <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-startfrom="70" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 69;"><span id="cb7-70">PLUS <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> m <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12531,7 +12531,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">m</span>(f)(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">n</span>(f)(x))</span></code></pre></div>
+font-style: inherit;">n</span>(f)(x))</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
 
@@ -12541,7 +12541,7 @@ font-style: inherit;">n</span>(f)(x))</span></code></pre></div>
 <p>In the above, we achieve this by using the same “inner” variable for both functions, <em>x</em>. Accordingly, we want to apply <em>f</em> to <em>x</em> for each nested “number” function (<em>m</em> and <em>n</em>). Thus, we are applying <em>f</em> to <em>x</em> for <em>m</em> + <em>n</em> times, and following the same pattern of counting nested levels, we end up with our sum.</p>
 <p>This principle is very extensible to multiplication – rather than operating on the same variable <em>x</em>, we want the “number” functions to operate on each other:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-startfrom="78" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb8-78">MULT <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-startfrom="78" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb8-78">MULT <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> m <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12556,7 +12556,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">m</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">n</span>(f))</span></code></pre></div>
+font-style: inherit;">n</span>(f))</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
 
@@ -12569,7 +12569,7 @@ font-style: inherit;">n</span>(f))</span></code></pre></div>
 <p>In this form, it is easier to see that instead of both <em>m</em> and <em>n</em> operating on <em>f(x)</em>, we are instead having <em>m</em> operate on <em>n</em>, which is in turn operating on <em>f(x)</em>.</p>
 <p>Exponentiation takes this idea farther, and instead of using <em>f(x)</em> as the base we are incrementing, we want to increase the base, <em>b</em>, itself by <em>e</em> (exponent) amount of times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-startfrom="92" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb9-92">POW <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-startfrom="92" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 91;"><span id="cb9-92">POW <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12579,7 +12579,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">e</span>(b)</span></code></pre></div>
+font-style: inherit;">e</span>(b)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="declaration">
 
@@ -12592,7 +12592,7 @@ font-style: inherit;">e</span>(b)</span></code></pre></div>
 <p>With these basic arithmetic functions, let’s test our shiny new operation functions on a (drumroll please…) new truth table with our short list of numbers!</p>
 <p>As we did last time, we’ll need to create a helper function to convert the lambda functions to actual numerals…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-startfrom="106" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 105;"><span id="cb10-106">lambda_to_int <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-startfrom="106" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 105;"><span id="cb10-106">lambda_to_int <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (int) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12613,7 +12613,7 @@ background-color: null;
 font-style: inherit;">1</span>)(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span>
-<span id="cb10-108">}</span></code></pre></div>
+<span id="cb10-108">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="declaration">
 
@@ -12622,7 +12622,7 @@ font-style: inherit;">0</span>)</span>
 </div>
 <p>… letting us build our table!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-startfrom="114" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 113;"><span id="cb11-114">part_2_math_table <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-startfrom="114" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 113;"><span id="cb11-114">part_2_math_table <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb11-115">  <span class="kw" style="color: #003B4F;
@@ -12713,7 +12713,7 @@ font-style: inherit;">POW</span>(a)(a) )</span>
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> output</span>
-<span id="cb11-128">}</span></code></pre></div>
+<span id="cb11-128">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="declaration">
 
@@ -12721,11 +12721,11 @@ font-style: inherit;">return</span> output</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-startfrom="132" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb12-132">Inputs<span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-startfrom="132" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 131;"><span id="cb12-132">Inputs<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">table</span>(part_2_math_table)</span></code></pre></div>
+font-style: inherit;">table</span>(part_2_math_table)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-12" data-nodetype="expression">
 
@@ -12772,12 +12772,12 @@ font-style: inherit;">table</span>(part_2_math_table)</span></code></pre></div>
 <section id="basics" class="level2">
 <h2 class="anchored" data-anchor-id="basics">Basics</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="31" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 30;"><span id="cb1-31">IDENTITY <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="31" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 30;"><span id="cb1-31">IDENTITY <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> x <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> x</span></code></pre></div>
+font-style: inherit;">=&gt;</span> x</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -12788,7 +12788,7 @@ font-style: inherit;">=&gt;</span> x</span></code></pre></div>
 <p>This is the <em>identity</em> function, which returns exactly what the input is. Notice we are following all rules above: 1 argument &amp; statement, &amp;c</p>
 <p>Let’s extend that a little farther:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="41" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 40;"><span id="cb2-41">RETURN_FIRST <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="41" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 40;"><span id="cb2-41">RETURN_FIRST <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12796,7 +12796,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> a</span></code></pre></div>
+font-style: inherit;">=&gt;</span> a</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -12804,13 +12804,13 @@ font-style: inherit;">=&gt;</span> a</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="45" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 44;"><span id="cb3-45"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="45" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 44;"><span id="cb3-45"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">RETURN_FIRST</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>)(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="expression">
 
@@ -12818,7 +12818,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="49" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 48;"><span id="cb4-49">RETURN_SECOND <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="49" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 48;"><span id="cb4-49">RETURN_SECOND <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12826,7 +12826,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> b</span></code></pre></div>
+font-style: inherit;">=&gt;</span> b</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -12834,13 +12834,13 @@ font-style: inherit;">=&gt;</span> b</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="53" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 52;"><span id="cb5-53"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="53" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 52;"><span id="cb5-53"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">RETURN_SECOND</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>)(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
 
@@ -12852,7 +12852,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <section id="booleans-and-logic-gates" class="level2">
 <h2 class="anchored" data-anchor-id="booleans-and-logic-gates">Booleans and Logic Gates</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="61" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 60;"><span id="cb6-61">TRUE <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="61" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 60;"><span id="cb6-61">TRUE <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12860,7 +12860,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> a</span></code></pre></div>
+font-style: inherit;">=&gt;</span> a</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -12868,7 +12868,7 @@ font-style: inherit;">=&gt;</span> a</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-startfrom="65" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 64;"><span id="cb7-65">FALSE <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-startfrom="65" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 64;"><span id="cb7-65">FALSE <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> a <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12876,7 +12876,7 @@ font-weight: bold;
 font-style: inherit;">=&gt;</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
-font-style: inherit;">=&gt;</span> b</span></code></pre></div>
+font-style: inherit;">=&gt;</span> b</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="declaration">
 
@@ -12886,7 +12886,7 @@ font-style: inherit;">=&gt;</span> b</span></code></pre></div>
 <p>This may not seem like a lot, or more like a regurgitation of the sample switch return functions above, but this is critical to the base of our logic. The above are our replication of boolean states, which are identical to <code>RETURN_FIRST</code> and <code>RETURN_SECOND</code> – in fact, as we go on, it will be helpful to keep in mind that <code>TRUE</code> will always return the first argument, and <code>FALSE</code> the second.</p>
 <p>Naturally, these booleans can be combined together, creating <code>AND</code>/<code>OR</code> logic gates:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-startfrom="73" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 72;"><span id="cb8-73">AND <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-startfrom="73" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 72;"><span id="cb8-73">AND <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12896,7 +12896,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">c</span>(d)(c)</span></code></pre></div>
+font-style: inherit;">c</span>(d)(c)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-8" data-nodetype="declaration">
 
@@ -12904,7 +12904,7 @@ font-style: inherit;">c</span>(d)(c)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-startfrom="77" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 76;"><span id="cb9-77">OR <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-startfrom="77" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 76;"><span id="cb9-77">OR <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12914,7 +12914,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">c</span>(c)(d)</span></code></pre></div>
+font-style: inherit;">c</span>(c)(d)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-9" data-nodetype="declaration">
 
@@ -12944,11 +12944,11 @@ font-style: inherit;">c</span>(c)(d)</span></code></pre></div>
 </ul>
 <p>And just to confirm that this is working as expected:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-startfrom="105" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb10-105"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-startfrom="105" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 104;"><span id="cb10-105"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">AND</span>(TRUE)(FALSE) <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">===</span> FALSE</span></code></pre></div>
+font-style: inherit;">===</span> FALSE</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-10" data-nodetype="expression">
 
@@ -12956,11 +12956,11 @@ font-style: inherit;">===</span> FALSE</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-startfrom="109" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 108;"><span id="cb11-109"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-startfrom="109" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 108;"><span id="cb11-109"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">OR</span>(TRUE)(FALSE) <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">===</span> TRUE</span></code></pre></div>
+font-style: inherit;">===</span> TRUE</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-11" data-nodetype="expression">
 
@@ -12971,7 +12971,7 @@ font-style: inherit;">===</span> TRUE</span></code></pre></div>
 <p>In the function, consider <code>c</code> as the outer function (<code>AND</code>, <code>OR</code>, &amp;c.), so instead of calling <code>AND(a)(b)</code>, it acts as a wrapper around the logic gate and will flip the inputs, translating it into <code>AND(b)(a)</code>. If you refer back to the <code>AND()</code>/<code>OR()</code> tables above, you can pretty clearly see how this would negate all the results.</p>
 <p>Let’s take a look:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-startfrom="119" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 118;"><span id="cb12-119">NOT <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-startfrom="119" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 118;"><span id="cb12-119">NOT <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -12984,7 +12984,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">c</span>(b)(a)</span></code></pre></div>
+font-style: inherit;">c</span>(b)(a)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-12" data-nodetype="declaration">
 
@@ -12992,13 +12992,13 @@ font-style: inherit;">c</span>(b)(a)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-startfrom="123" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 122;"><span id="cb13-123"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-startfrom="123" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 122;"><span id="cb13-123"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">NOT</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">AND</span>(TRUE)(TRUE) ) <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">===</span> FALSE</span></code></pre></div>
+font-style: inherit;">===</span> FALSE</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-13" data-nodetype="expression">
 
@@ -13007,7 +13007,7 @@ font-style: inherit;">===</span> FALSE</span></code></pre></div>
 </div>
 <p>To extend this idea of a wrapper, we can leave the input order the same, and get a ternary operator (<code>IF</code>) out of it (just as a shorthand), of the form <code>IF(condition)(value if true)(value if false)</code> like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-startfrom="129" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 128;"><span id="cb14-129">IF <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-startfrom="129" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 128;"><span id="cb14-129">IF <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -13020,7 +13020,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">c</span>(a)(b)</span></code></pre></div>
+font-style: inherit;">c</span>(a)(b)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-14" data-nodetype="declaration">
 
@@ -13028,13 +13028,13 @@ font-style: inherit;">c</span>(a)(b)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-startfrom="133" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 132;"><span id="cb15-133"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-startfrom="133" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 132;"><span id="cb15-133"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">IF</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">AND</span>(TRUE)(FALSE) )(TRUE)(FALSE) <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">===</span> FALSE</span></code></pre></div>
+font-style: inherit;">===</span> FALSE</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-15" data-nodetype="expression">
 
@@ -13043,7 +13043,7 @@ font-style: inherit;">===</span> FALSE</span></code></pre></div>
 </div>
 <p>Now the incredible part – using these, we can now create all the rest of the core logic gates:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-startfrom="139" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb16-139">NAND <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-startfrom="139" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb16-139">NAND <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -13055,7 +13055,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">NOT</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">AND</span>(c)(d) )</span></code></pre></div>
+font-style: inherit;">AND</span>(c)(d) )</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-16" data-nodetype="declaration">
 
@@ -13063,7 +13063,7 @@ font-style: inherit;">AND</span>(c)(d) )</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-startfrom="143" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 142;"><span id="cb17-143">NOR <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-startfrom="143" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 142;"><span id="cb17-143">NOR <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -13075,7 +13075,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">NOT</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">OR</span>(c)(d) )</span></code></pre></div>
+font-style: inherit;">OR</span>(c)(d) )</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-17" data-nodetype="declaration">
 
@@ -13083,7 +13083,7 @@ font-style: inherit;">OR</span>(c)(d) )</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-startfrom="147" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 146;"><span id="cb18-147">XOR <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-startfrom="147" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 146;"><span id="cb18-147">XOR <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -13095,7 +13095,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">NOT</span>(d) )(d)</span></code></pre></div>
+font-style: inherit;">NOT</span>(d) )(d)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-18" data-nodetype="declaration">
 
@@ -13103,7 +13103,7 @@ font-style: inherit;">NOT</span>(d) )(d)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" data-startfrom="151" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 150;"><span id="cb19-151">XNOR <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-startfrom="151" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 150;"><span id="cb19-151">XNOR <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> c <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -13115,7 +13115,7 @@ font-style: inherit;">=&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>(d)( <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">NOT</span>(d) )</span></code></pre></div>
+font-style: inherit;">NOT</span>(d) )</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-19" data-nodetype="declaration">
 
@@ -13124,7 +13124,7 @@ font-style: inherit;">NOT</span>(d) )</span></code></pre></div>
 </div>
 <p>And finally, with all these logic gates in hand, let’s extend the fledgling truth table from earlier to test all of these out. To do so, let’s build a helper function to let us parse out the values (since everything is a function, we need some real strings to populate the table).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" data-startfrom="157" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 156;"><span id="cb20-157">lambda_to_js <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-startfrom="157" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 156;"><span id="cb20-157">lambda_to_js <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (bool) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -13135,7 +13135,7 @@ font-style: inherit;">bool</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"TRUE"</span>)(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"FALSE"</span>)</span></code></pre></div>
+font-style: inherit;">"FALSE"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-20" data-nodetype="declaration">
 
@@ -13144,7 +13144,7 @@ font-style: inherit;">"FALSE"</span>)</span></code></pre></div>
 </div>
 <p>And now we can map across all permutations of our logic gates:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" data-startfrom="163" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 162;"><span id="cb21-163">part_1_truth_table <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-startfrom="163" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 162;"><span id="cb21-163">part_1_truth_table <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb21-164">  <span class="kw" style="color: #003B4F;
@@ -13271,7 +13271,7 @@ font-style: inherit;">XNOR</span>(a)(b) )</span>
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> output</span>
-<span id="cb21-182">}</span></code></pre></div>
+<span id="cb21-182">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-21" data-nodetype="declaration">
 
@@ -13279,11 +13279,11 @@ font-style: inherit;">return</span> output</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" data-startfrom="187" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 186;"><span id="cb22-187">Inputs<span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-startfrom="187" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 186;"><span id="cb22-187">Inputs<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">table</span>(part_1_truth_table)</span></code></pre></div>
+font-style: inherit;">table</span>(part_1_truth_table)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-22" data-nodetype="expression">
 
@@ -13319,7 +13319,7 @@ font-style: inherit;">table</span>(part_1_truth_table)</span></code></pre></div>
 
 <p><a href="https://adventofcode.com/2024/day/7">Day 7</a>!</p>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="901" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 900;"><span id="cb1-901">input <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="901" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 900;"><span id="cb1-901">input <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb1-902">  <span class="kw" style="color: #003B4F;
@@ -13423,7 +13423,7 @@ background-color: null;
 font-style: inherit;">+</span>elem)</span>
 <span id="cb1-910">    }</span>
 <span id="cb1-911">  })</span>
-<span id="cb1-912">}</span></code></pre></div>
+<span id="cb1-912">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -13434,7 +13434,7 @@ font-style: inherit;">+</span>elem)</span>
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>In this puzzle, we are given a bunch of numbers, and have to figure out how to reach the result by different operations. Those pesky elves stole all the operators!</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="923" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 922;"><span id="cb2-923"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="923" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 922;"><span id="cb2-923"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// go backwards along input -- if mod div === 0 then it's multiply, else add</span></span>
 <span id="cb2-924">check_eq_step <span class="op" style="color: #5E5E5E;
@@ -13566,7 +13566,7 @@ font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>) ))</span>
 <span id="cb2-941">  )</span>
-<span id="cb2-942">}</span></code></pre></div>
+<span id="cb2-942">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -13576,7 +13576,7 @@ font-style: inherit;">1</span>) ))</span>
 <p>I first thought of trying to work through the equation recursively, left to right, but it quickly expanded into so many possible routes of combinations. After a while of tinkering, I landed on the above – working backwards through the equation. I realized that if the operation doesn’t cleanly work, then it’s invalid, and we can trim that route of options.</p>
 <p>This way, we can prune the options as we go, without having to calculate to the end of the equation. For example, if we know the result is 200, and we know the last number in the equation is 201, we know the calculation is impossible because (a) 200 / 201 is not an integer, and (b) 200 - 201 is negative. Therefore, with one check, we can toss the whole equation, instead of only realizing it at the end!</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="953" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 952;"><span id="cb3-953">input<span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="953" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 952;"><span id="cb3-953">input<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -13628,7 +13628,7 @@ font-style: inherit;">target</span></span>
 background-color: null;
 font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0</span>)</span></code></pre></div>
+font-style: inherit;">0</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="expression">
 
@@ -13642,7 +13642,7 @@ font-style: inherit;">0</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>In part 2, we now have to worry about string concatenation as a possible operator, instead of only multiplication and addition.</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="971" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 970;"><span id="cb4-971"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="971" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 970;"><span id="cb4-971"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// go backwards again, but add check for string end</span></span>
 <span id="cb4-972">check_eq_step_2 <span class="op" style="color: #5E5E5E;
@@ -13836,7 +13836,7 @@ font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>) ))</span>
 <span id="cb4-994">  )</span>
-<span id="cb4-995">}</span></code></pre></div>
+<span id="cb4-995">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -13845,7 +13845,7 @@ font-style: inherit;">1</span>) ))</span>
 </div>
 <p>However, this ends up being not too bad, as we can add an extra recursive step, and check the result and operator via slicing. For example, if the target is 156, and our operand is 6, then we have a match, since that would leave us with 15 (still working backwards here).</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="1004" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1003;"><span id="cb5-1004">input<span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="1004" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1003;"><span id="cb5-1004">input<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -13897,7 +13897,7 @@ font-style: inherit;">target</span></span>
 background-color: null;
 font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0</span>)</span></code></pre></div>
+font-style: inherit;">0</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
 
@@ -13932,7 +13932,7 @@ font-style: inherit;">0</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>Today, it feels like we are designing a videogame! I usually hide the input parsing, though I thought today’s was notable in that I found a better way to map out a grid using integer and mod division to calculate the starting position:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="174" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 173;"><span id="cb1-174">input <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="174" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 173;"><span id="cb1-174">input <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {</span>
 <span id="cb1-175">  <span class="kw" style="color: #003B4F;
@@ -14093,7 +14093,7 @@ font-style: inherit;">,</span> ncol]</span>
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> input</span>
-<span id="cb1-191">}</span></code></pre></div>
+<span id="cb1-191">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -14102,7 +14102,7 @@ font-style: inherit;">return</span> input</span>
 </div>
 <p>Now that that is sorted, let’s proceed to part 1…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="199" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb2-199">possible_moves <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="199" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb2-199">possible_moves <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [</span>
 <span id="cb2-200">  [<span class="op" style="color: #5E5E5E;
@@ -14151,7 +14151,7 @@ background-color: null;
 font-style: inherit;">1</span>] <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// left</span></span>
-<span id="cb2-204">]</span></code></pre></div>
+<span id="cb2-204">]</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -14160,7 +14160,7 @@ font-style: inherit;">// left</span></span>
 </div>
 <p>First, since we know we are navigating around a grid, let’s define movements in the four cardinal directions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="212" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb3-212">move_guard <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="212" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb3-212">move_guard <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (input<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -14336,7 +14336,7 @@ background-color: null;
 font-style: inherit;">1</span>]]</span>
 <span id="cb3-239">    </span>
 <span id="cb3-240">  }</span>
-<span id="cb3-241">}</span></code></pre></div>
+<span id="cb3-241">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -14347,7 +14347,7 @@ font-style: inherit;">1</span>]]</span>
 <p>This function traces the guard’s path by running through each step in a while loop. This way, we can set the condition to break on the guard leaving the bounds of our grid. Also, since we are keeping track of the direction using an integer, we can utilize it as an index with a little creative math.</p>
 <p>Though this function looks clean, it was not my first attempt. I originally thought that this would be a great use case for a recursive function – each call would move the guard a step forward, then call itself again (assuming it stayed in bounds). However, as soon as I scaled up to the full input, I exceeded the call stack, so I went back to the drawing board.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="253" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb4-253"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="253" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb4-253"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">new</span> <span class="bu" style="color: null;
@@ -14380,7 +14380,7 @@ font-style: inherit;">1</span>] ] )))<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">.</span><span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">size</span></span></code></pre></div>
+font-style: inherit;">size</span></span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="expression">
 
@@ -14396,7 +14396,7 @@ font-style: inherit;">size</span></span></code></pre></div>
 <p>Uh oh, more complex now… we have to check how many discrete locations we can add an extra obstacle to in the guard’s path to send him into an infinite loop. This was daunting to start with, because anything that has to deal with checking for infinite loops seems difficult to do without launching into an infinite loop yourself. For example, if you revisit a specific location, who’s to say that your next step will continue the loop?</p>
 <p>However, after some pondering, I realized that that is <strong>not</strong> the case here. We have very specific rules about movement, so we can say with certainty that if a position is repeated, and a guard is facing the same way as before, then a loop is happening. In fact, we can abstract it away farther, and only care about checking the turn points for overlaps, since those are the ‘decision points’ where a loop could be entered.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="272" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 271;"><span id="cb5-272">check_loop <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="272" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 271;"><span id="cb5-272">check_loop <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (input<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -14628,7 +14628,7 @@ font-weight: bold;
 font-style: inherit;">false</span></span>
 <span id="cb5-307">    }</span>
 <span id="cb5-308">  }</span>
-<span id="cb5-309">}</span></code></pre></div>
+<span id="cb5-309">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -14639,7 +14639,7 @@ font-style: inherit;">false</span></span>
 <p>Another change of note is we are now keeping a boolean flag <code>turn</code> to keep track of whether each move is a turn or not. This way, we can say that if the guard is turning, check if the position has been reached before; otherwise, continue as is onto the next step.</p>
 <p>If you look closely, you’ll also see the bit shifting mentioned above being used to collapse row, col, and dir down to one number.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="321" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb6-321">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="321" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb6-321">{</span>
 <span id="cb6-322">  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// get unique route positions</span></span>
@@ -14821,7 +14821,7 @@ background-color: null;
 font-style: inherit;">1</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">// duped the start position</span></span>
-<span id="cb6-347">}</span></code></pre></div>
+<span id="cb6-347">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
 
@@ -14857,7 +14857,7 @@ font-style: inherit;">// duped the start position</span></span>
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>Let’s jump in – today’s parts are both quite similar.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="1446" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1445;"><span id="cb1-1446">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="1446" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1445;"><span id="cb1-1446">{</span>
 <span id="cb1-1447">  <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -15179,7 +15179,7 @@ background-color: null;
 font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span>
-<span id="cb1-1478">}</span></code></pre></div>
+<span id="cb1-1478">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="expression">
 
@@ -15194,7 +15194,7 @@ font-style: inherit;">0</span>)</span>
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>Part 2 was one of the easiest by far – all we have to do is negate our comparator function results. This time, we only want to keep the ones that are out of order, sort them, then pull out the middle numbers and sum!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="1494" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1493;"><span id="cb2-1494">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="1494" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1493;"><span id="cb2-1494">{</span>
 <span id="cb2-1495">  <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -15524,7 +15524,7 @@ background-color: null;
 font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>)</span>
-<span id="cb2-1525">}</span></code></pre></div>
+<span id="cb2-1525">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="expression">
 
@@ -15559,7 +15559,7 @@ font-style: inherit;">0</span>)</span>
 <p>In the past, I have started by just brute forcing a grid traversal, checking all the neighbors as I go. However, I typically get burned by it, as part 2 ends up being more expensive of an operation than part 1. So, this time, I resolved to fins another method, and I landed on rotations!</p>
 <p>Instead of checking every direction from each letter, I check the whole grid as is (forward and back), then rotate and repeat – let’s begin:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="188" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 187;"><span id="cb1-188">rotate_grid_90 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="188" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 187;"><span id="cb1-188">rotate_grid_90 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (grid) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -15594,7 +15594,7 @@ background-color: null;
 font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">reverse</span>() )</span>
-<span id="cb1-191">}</span></code></pre></div>
+<span id="cb1-191">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -15604,7 +15604,7 @@ font-style: inherit;">reverse</span>() )</span>
 <p>In the above, this is the simplest of the rotations – we are taking each row and translating it into a column, and vice versa.</p>
 <p>Since we are checking forward and backward, it doesn’t matter too much about which direction we spin the 2D array. An issue I had for a while was that I was missing the <code>reverse()</code> call, which led to me reflecting the 2D array across the diagonal instead of rotating. I’m sure that there is a D3 method for some of this (maybe Arquero too?), but I wanted to do it from scratch.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="201" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 200;"><span id="cb2-201">rotate_grid_45 <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="201" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 200;"><span id="cb2-201">rotate_grid_45 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (grid) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -16066,7 +16066,7 @@ font-style: inherit;">map</span>(col <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> grid_vals[col]))</span>
-<span id="cb2-250">}</span></code></pre></div>
+<span id="cb2-250">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -16078,7 +16078,7 @@ font-style: inherit;">=&gt;</span> grid_vals[col]))</span>
 <p>Finally, the last step of our prepatory steps is to wrap all the indices into the correct positions (thus <code>all_positions</code>). Of note, this includes a calculation to increase the step of each index by the dimensions of the original 2D array – since the example is 3x3, the outer indices are <code>[0, 1, 2, 5, 8]</code>, which wraps the first row and last column. With how we are rotating, those become the first indices in each resulting array, as they lead all the diagonals of our 45 degree rotation.</p>
 <p>This means that each step is <code>width of array - 1 = 2</code> in our example. If you picture it, you can concatenate all the arrays into one long number line, and you want 1 less than a perfect row in order to create a diagonal. Lastly, we just map across the resulting indices and substitute our actual values back in.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="266" data-source-offset="-1" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 265;"><span id="cb3-266">check_rows <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="266" data-source-offset="-1" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 265;"><span id="cb3-266">check_rows <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (grid) <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -16382,7 +16382,7 @@ font-weight: bold;
 font-style: inherit;">return</span> up_diag <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> down_diag</span>
-<span id="cb3-297">}</span></code></pre></div>
+<span id="cb3-297">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-3-1" data-nodetype="declaration">
@@ -16407,7 +16407,7 @@ font-style: inherit;">+</span> down_diag</span>
 </div>
 <p>Finally, all we have to do is create helper functions for each direction – horizontal, vertical (rotated horizontal), and diagonal (rotated 45 horizontal). Each of them checks for both <code>XMAS</code> and <code>SAMX</code>, that way we can minimize rotations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="303" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 302;"><span id="cb4-303">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="303" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 302;"><span id="cb4-303">{</span>
 <span id="cb4-304">  <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -16458,7 +16458,7 @@ background-color: null;
 font-style: inherit;">check_diag</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rotate_grid_90</span>(grid))</span>
-<span id="cb4-307">}</span></code></pre></div>
+<span id="cb4-307">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="expression">
 
@@ -16472,7 +16472,7 @@ font-style: inherit;">rotate_grid_90</span>(grid))</span>
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>Unfortunately, I out-thought myself. Part 2 was far simpler than part 1 in this case, so I went back and created a new process to walk each cell (excluding the border):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="319" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 318;"><span id="cb5-319">walk_grid_no_border <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="319" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 318;"><span id="cb5-319">walk_grid_no_border <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (grid<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -16589,7 +16589,7 @@ font-style: inherit;">,</span> k)</span>
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> output_grid</span>
-<span id="cb5-332">}</span></code></pre></div>
+<span id="cb5-332">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -16598,7 +16598,7 @@ font-style: inherit;">return</span> output_grid</span>
 </div>
 <p>As mentioned, this walks each cell, and performs a lambda function on it, passed through as an argument. This way, if I need to walk a grid in the future, I should be able to reuse this one!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="338" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 337;"><span id="cb6-338">check_cell <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="338" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 337;"><span id="cb6-338">check_cell <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (grid<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -16716,7 +16716,7 @@ font-style: inherit;">every</span>(elem <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">=&gt;</span> elem)</span>
-<span id="cb6-350">}</span></code></pre></div>
+<span id="cb6-350">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="declaration">
 
@@ -16725,7 +16725,7 @@ font-style: inherit;">=&gt;</span> elem)</span>
 </div>
 <p>Again, fairly straightforward, for each cell, I want to check each adjacent diagonal to see if they qualify, using <code>A</code> as the pivot point. I also had to pass a shallow copy of the the grid in so that when I replace a cell value with the boolen answer, it won’t impact further checks in the next row(s).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-startfrom="356" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 355;"><span id="cb7-356">{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-startfrom="356" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 355;"><span id="cb7-356">{</span>
 <span id="cb7-357">  <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -16787,7 +16787,7 @@ background-color: null;
 font-style: inherit;">.</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">length</span></span>
-<span id="cb7-361">}</span></code></pre></div>
+<span id="cb7-361">}</span></code></pre></div></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-7" data-nodetype="expression">
 

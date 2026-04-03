@@ -1,0 +1,31 @@
+# What’s Next?
+
+Back for More
+
+Update
+
+Advent of Code
+
+Published
+
+November 15, 2024
+
+### I’m Back!
+
+It’s been a long while since I’ve posted, as lots has happened over the last couple of months.
+
+Most notably, I’ve moved to NYC from Carlsbad, CA (goodbye, beaches!), and settled in quite nicely. The city is fantastic, and I am enjoying catching up with friends in the area!
+
+### What’s next?
+
+Over the next little while, I plan to post every so often, with a wide variety of topics, from anything Civil War to Computer/Data Science to anything else that comes up.
+
+Primarily, I plan to enter into the [Advent of Code](https://adventofcode.com/) again this year, using various languages to really test my skills. Obviously, R is my first and greatest, and Python to a lesser extent – but over the last few months, I’ve been picking up ObservableJS. I primarily plan to use OJS for D3 and Plot visualizations, which of course necessitates learning the language in a greater sense as well.
+
+Since Quarto has functionality to support R, Python, and OJS cells – all interoperably, I might add – who knows what will happen this year! I may flip around depending on the problem; for example, tasks dealing with navigating maps lends itself to a tibble structure, whereas set and lists are far easier to manage in Python and/or OJS.
+
+------------------------------------------------------------------------
+
+As we go along, the topics will jump around, but that is the exciting part! I also do not plan on having any sort of schedule, so the posts will come just as sporadically as ever – how fun!
+
+-CH

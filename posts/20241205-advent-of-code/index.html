@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>2024 Day 5: Print Queue – connorhanan</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -72,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-36055dde38e1c66a85944b0e21486264.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d390f6b1bb233dafbd59a397b5af9ca7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -225,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>Let’s jump in – today’s parts are both quite similar.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="1446" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1445;"><span id="cb1-1446"><a href="#cb1-1446" aria-hidden="true" tabindex="-1"></a>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="1446" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1445;"><span id="cb1-1446"><a href="#cb1-1446" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb1-1447"><a href="#cb1-1447" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> raw<span class="op">.</span><span class="fu">split</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="fu">split</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb1-1448"><a href="#cb1-1448" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-1449"><a href="#cb1-1449" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pages <span class="op">=</span> {</span>
@@ -257,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-1475"><a href="#cb1-1475" aria-hidden="true" tabindex="-1"></a>    })</span>
 <span id="cb1-1476"><a href="#cb1-1476" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d[(d<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span>])</span>
 <span id="cb1-1477"><a href="#cb1-1477" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> nxt) <span class="kw">=&gt;</span> acc <span class="op">+</span> nxt<span class="op">,</span> <span class="dv">0</span>)</span>
-<span id="cb1-1478"><a href="#cb1-1478" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-1478"><a href="#cb1-1478" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="expression">
 
@@ -272,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>Part 2 was one of the easiest by far – all we have to do is negate our comparator function results. This time, we only want to keep the ones that are out of order, sort them, then pull out the middle numbers and sum!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="1494" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1493;"><span id="cb2-1494"><a href="#cb2-1494" aria-hidden="true" tabindex="-1"></a>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="1494" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1493;"><span id="cb2-1494"><a href="#cb2-1494" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb2-1495"><a href="#cb2-1495" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> raw<span class="op">.</span><span class="fu">split</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="fu">split</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb2-1496"><a href="#cb2-1496" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-1497"><a href="#cb2-1497" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pages <span class="op">=</span> {</span>
@@ -303,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-1522"><a href="#cb2-1522" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> <span class="fu">page_sort</span>(d<span class="op">,</span> pages<span class="op">.</span><span class="at">orders</span>))</span>
 <span id="cb2-1523"><a href="#cb2-1523" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d[(d<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span>])</span>
 <span id="cb2-1524"><a href="#cb2-1524" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> nxt) <span class="kw">=&gt;</span> acc <span class="op">+</span> nxt<span class="op">,</span> <span class="dv">0</span>)</span>
-<span id="cb2-1525"><a href="#cb2-1525" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-1525"><a href="#cb2-1525" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="expression">
 
@@ -380,13 +383,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -1,0 +1,91 @@
+# John Hardy vs. John Henry
+
+Disentangling the Ballads
+
+Music
+
+History
+
+featured
+
+Published
+
+October 24, 2022
+
+![John Hardy on the gallows in WV, circa 1894.](./hardy-hanging.jpg)
+
+### The Ballads
+
+In folk music, these two fabled characters are often intertwined. Both ballads, they tell the stories of their respective heroes - one, a railroad worker hanged for murder; the other, a steel-driving man who died working on the railroad.
+
+Initially, it must be said, that both men do share two initial similarities: they both worked on or for a railroad and their names are almost identical. Additionally, they both lived and died around the same period, in the same part of the country - coincidence?
+
+### Meet John Hardy
+
+John Hardy, on his own, is an interesting character. Now, right off the bat, there are two main John Hardys to know about:
+
+> The first, was employed as a steel-driller in southern West Virginia in 1872, killed a man after a gambling incident near the Virginia state line, and was hung right around the same area
+
+> The second, was working as a coal miner in southern West Virginia in 1893, killed a man after a game of craps (over a total of 75 cents - \$25 in 2022), and was executed by hanging near the Virginia state line
+
+As you can see there are many striking likenesses between the two versions of John Hardy. Indeed, they are remarkably similar, even more so when you consider that some accounts describe them both as African American men over six feet tall.
+
+Given everything above, the biggest difference between the two Hardys is the timeline. The second John Hardy would have to be twenty-ish years older than the former John Hardy. This discrepancy can be fairly easily accounted for when considering the interviews Cox conducted for his essay. [^1]
+
+You may be wondering - if he is supposed to have died in 1872, how can the same John Hardy die in 1894? Well, this is where the stories become extremely tangled. It was suggested that one of these two John Hardys was actually a white man - however, as seen in the excerpt below, it wouldn’t make much sense:
+
+> “Probability indicates that these two stories are about the same man. For a white man contemporary with the steel-driller to possess the same name and attributes as he, to operate in the early part of his career in the same region, to drift later to the same locality, to commit the same crime, and to pay the same penalty, is not believable.” [^2]
+
+As can plainly be seen, these John Hardys are more likely than not to be the same person - they share not only a name, but also a common description, crime, and penalty (all in the same locale around roughly the same time).
+
+### Enter John Henry
+
+John Henry is known far and wide to be a steel-drilling man who died via over-exertion after challenging a steam-drill. [^3] However, that does overlap with some accounts of John Hardy - specifically, the 1872 John Hardy from above.
+
+This John Hardy was also reported to have died in a steel-drilling challenge. While working for the Langhorn Company, a steam drill was brought in to be used to help build the C. & O. railroad. Hardy was known to be the best steel-driller around, so he challenged the steam driller to see who could drill more steel. As the story goes in many of the ballads, as the challenge was very close - though John Hardy eventually lost, laying down to die next to his hammer.
+
+These two stories are remarkably similar - not only were they both steel-drillers, but both challenged a steam-drill, and both worked in the same locale on the same railroad.
+
+I know, you are probably thinking: “But wait! You said John Hardy died from fighting over gambling, not from working on the railroad!”
+
+Correct, and there are a few reasons why that is. First, it may just be a case of oral transmission (akin to a game of telephone, if you will):
+
+> “The change of name to John Henry, and the victory into a defeat, is not significant, and is easily accounted for by oral transmission. The same process of reasoning as applied heretofore identifies John Henry with John Hardy, who could not have died at the end of a drilling-contest. Most likely the ballad celebrating the prowess of John Hardy gradually, in its earlier making, enhanced that prowess, and, by the natural tendency to a tragic ending, finally sang of his defeat and death.” [^4]
+
+Secondly, several accounts of primary sources back up that they could be the same person:
+
+> ‘Upon inquiry by Cox, ex-Gov. McCorkle writes, “You are mistaken when you say John Hardy died from the drilling-contest.”’ [^5]
+
+Lastly, the drilling contest may not have even happened! This telling of a man whose worth and identity are measured only by his strength, which is then challenged by the advent of steam power, is a story that has endured for over a century. [^6] It’s tragic, it’s compelling - in short, it’s everything that is needed for a ballad.
+
+When Cox sent a letter to the Ingersoll-Rand Company (the authority on drills), he received the following reply:
+
+> “…it is rather improbable that steam rock-drills were used in the building of the C&O Railroad…” [^7]
+
+### So… Who is Who?
+
+In short, we do not really know for certain. It is popularly believed that they are two separate people - John Henry the steel-driller and John Hardy the murderous gambler. However, there is much confusion that still exists around this, especially since there are many different versions of the ballads. The early versions of the ballads themselves mix the lyrics and stanzas around, so it really is hard to be sure.
+
+As for me, I like to think that they are the same person.
+
+-CH
+
+  
+
+Click [here](https://open.spotify.com/playlist/69RJFqDEP3B4oUwfGQq3j5?si=6a1ed24e35e646db) to listen to different versions of the ballads!
+
+## Footnotes
+
+[^1]: [“John Hardy” (1919) by John Harrington Cox](https://en.m.wikisource.org/wiki/John_Hardy).
+
+[^2]: [“John Hardy” (1919) by John Harrington Cox](https://en.m.wikisource.org/wiki/John_Hardy).
+
+[^3]: [“John Henry” (Library of Congress)](https://www.loc.gov/item/ihas.200196572/)
+
+[^4]: [“John Hardy” (1919) by John Harrington Cox](https://en.m.wikisource.org/wiki/John_Hardy).
+
+[^5]: [“John Hardy” (1919) by John Harrington Cox](https://en.m.wikisource.org/wiki/John_Hardy).
+
+[^6]: [“John Henry” (Library of Congress)](https://www.loc.gov/item/ihas.200196572/)
+
+[^7]: [“John Hardy” (1919) by John Harrington Cox](https://en.m.wikisource.org/wiki/John_Hardy).
