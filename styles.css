@@ -1,5 +1,49 @@
 /* css styles */
 
+/* Portfolio grid */
+.portfolio-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.portfolio-card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow 0.2s ease;
+  flex: 1 1 300px;
+  max-width: calc(50% - 0.75rem);
+}
+
+.portfolio-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 122, 178, 0.15);
+}
+
+.portfolio-card h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.portfolio-card p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.portfolio-card .btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
 /* Hide the featured category badge on listing cards */
 .listing-category[data-value="featured"] {
   display: none;
@@ -25,6 +69,29 @@
   background-color: #007ab2;
   color: #fff;
   border: 1px solid #007ab2;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn:active:focus {
+  background-color: #fff;
+  color: #007ab2;
+  border-color: #007ab2;
+}
+
+.about-link {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.about-link:hover,
+.about-link:focus,
+.about-link:active,
+.about-link:active:focus {
+  background-color: #fff !important;
+  color: #007ab2 !important;
+  border-color: #007ab2 !important;
 }
 
 a {

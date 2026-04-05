@@ -1,31 +1,29 @@
-## Automated Television Ratings
+## Advent of Code
 
-A side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.
+A collection of annual programming puzzles, solved using a mix of R, Julia, Python, ObservableJS, and more.
 
-[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/automated_television_ratings/)
+[View on GitHub](https://github.com/syrchanan/advent_of_code)
 
-## Data Mining Sem Project
+## Assorted Projects
 
-This project was twofold in aim: determine which insurance indicator has the largest effect on the policy charges, as well as finding which model best reflects our data. In the analysis, models of numerous variations were used, including: KNN, SVM, Decision Trees, Neural Nets, eXtreme Gradient Boosting, and Naive Bayes. Overall, the project was a deep dive into all things machine learning, from data cleaning and preparation to executing the models and checking their accuracy.
+A mix of data science and statistical analysis work in R and Python — from broadcast media research to academic projects.
 
-[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/data_mining_sem_project/)
+[View on GitHub](https://github.com/syrchanan/portfolio)
 
-## Data Viz Sem Project
+## `connoR`
 
-An early foray into the world of R and the Tidyverse, this project explores the competitive differences between Formula 1 teams who build thier own engines versus those who buy them from manufacturers. Though it is fairly basic analysis in nature, this project offered lots of practice in manipulating and plotting data using the tidyverse.
+A personal R package for TV ratings analysis and other utilities, including pareto implementations and streak counting.
 
-[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/data_viz_sem_project/)
+[View on GitHub](https://github.com/syrchanan/connoR)
 
-## Event Cvg Tern Plot
+## Civil War Simulator
 
-Created as a foray into NLP, this project utilizes the GDELT closed captioning data of cable news channels to analyze usage patterns across networks. This iteration of the project was created to analyze coverage of the Georgia Senate runoff elections in December of 2022; however, it is built in such a way that it can be used for any event - all you need is a date and a keyword to filter around.
+Python/Typescript monorepo using Lanchester equations to model Civil war battles. Takes into account unit experience, types, dynamic morale, etc.
 
-For further information about this project, and to see the results, please find it in the [blog post I wrote](https://www.blog.connorhanan.com).
+[View on GitHub](https://github.com/syrchanan/civil_war_sim)
 
-[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/r_projects/event_cvg_tern_plot/)
+## AI Tooling
 
-## Data Analysis Sem Project
+Personal infrastructure for AI development — custom Docker environments, Claude prompts, skills, and an iterative agent workflow system.
 
-Created as a final project for class, this analysis dives into the electric vehicle rebates offered by New York State. Specifically, it uses the apriori algorithm to conduct association rules mining on the information to determine which vehicles were the most popular for consumers to claim the maximum rebate with. Python’s pandas, sklearn, and mlxtend libraries featured quite prominently throughout this analysis.
-
-[Click here to check it out!](https://github.com/syrchanan/portfolio/blob/main/python_projects/data_analysis_sem_project/)
+[View on GitHub](https://github.com/syrchanan/ai_tooling)
