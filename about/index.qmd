@@ -5,16 +5,19 @@ about:
   image-width: 15em
   image-shape: round
   template: trestles
-  links: 
+  links:
     - icon: github
       text: Github
       href: https://github.com/syrchanan
+      target: _blank
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/connorhanan/
+      target: _blank
     - icon: envelope
       text: Contact Me
       href: mailto:connorhanan4@gmail.com
+      target: _blank
 ---
 
 Hi, I'm Connor! I'm from Carlsbad, CA and am a data scientist currently living in New York City.

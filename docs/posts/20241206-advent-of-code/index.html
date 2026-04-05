@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>2024 Day 6: Guard Gallivant – connorhanan</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -72,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-36055dde38e1c66a85944b0e21486264.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d390f6b1bb233dafbd59a397b5af9ca7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -156,22 +159,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/syrchanan"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/syrchanan" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/" target="_blank"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:connorhanan4@gmail.com"> <i class="bi bi-envelope" role="img">
+    <a class="nav-link" href="mailto:connorhanan4@gmail.com" target="_blank"> <i class="bi bi-envelope" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../posts/index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../posts/index.xml" target="_blank"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -225,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>Today, it feels like we are designing a videogame! I usually hide the input parsing, though I thought today’s was notable in that I found a better way to map out a grid using integer and mod division to calculate the starting position:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="174" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 173;"><span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>input <span class="op">=</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="174" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 173;"><span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>input <span class="op">=</span> {</span>
 <span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> map <span class="op">=</span> raw<span class="op">.</span><span class="fu">split</span>(<span class="st">'</span><span class="sc">\n</span><span class="st">'</span>)<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="fu">split</span>(<span class="st">""</span>)) <span class="co">// 2D array</span></span>
 <span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> [nrow<span class="op">,</span> ncol] <span class="op">=</span> [map<span class="op">.</span><span class="at">length</span><span class="op">,</span> map[<span class="dv">0</span>]<span class="op">.</span><span class="at">length</span>] <span class="co">// dims</span></span>
 <span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> start_index <span class="op">=</span> map<span class="op">.</span><span class="fu">flat</span>()<span class="op">.</span><span class="fu">indexOf</span>(<span class="st">"^"</span>) <span class="co">// guard start</span></span>
@@ -242,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> input</span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -251,12 +254,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now that that is sorted, let’s proceed to part 1…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="199" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>possible_moves <span class="op">=</span> [</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="199" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>possible_moves <span class="op">=</span> [</span>
 <span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>  [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> <span class="co">// up</span></span>
 <span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="co">// right</span></span>
 <span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">,</span> <span class="co">// down</span></span>
 <span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>] <span class="co">// left</span></span>
-<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -265,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>First, since we know we are navigating around a grid, let’s define movements in the four cardinal directions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="212" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a>move_guard <span class="op">=</span> (input<span class="op">,</span> possible_moves) <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="212" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a>move_guard <span class="op">=</span> (input<span class="op">,</span> possible_moves) <span class="kw">=&gt;</span> {</span>
 <span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pos <span class="op">=</span> [] <span class="co">// positions</span></span>
 <span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> [[row<span class="op">,</span> col]<span class="op">,</span> dir] <span class="op">=</span> [input<span class="op">.</span><span class="at">start</span><span class="op">,</span> input<span class="op">.</span><span class="at">dir</span>]</span>
 <span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
@@ -294,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a>                  col <span class="op">+</span> possible_moves[dir][<span class="dv">1</span>]]</span>
 <span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -305,8 +308,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This function traces the guard’s path by running through each step in a while loop. This way, we can set the condition to break on the guard leaving the bounds of our grid. Also, since we are keeping track of the direction using an integer, we can utilize it as an index with a little creative math.</p>
 <p>Though this function looks clean, it was not my first attempt. I originally thought that this would be a great use case for a recursive function – each call would move the guard a step forward, then call itself again (assuming it stayed in bounds). However, as soon as I scaled up to the full input, I exceeded the call stack, so I went back to the drawing board.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="253" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a><span class="kw">new</span> <span class="bu">Set</span>(<span class="fu">move_guard</span>(input<span class="op">,</span> possible_moves)</span>
-<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>( [ d[<span class="dv">0</span>]<span class="op">,</span> d[<span class="dv">1</span>] ] )))<span class="op">.</span><span class="at">size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="253" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 252;"><span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a><span class="kw">new</span> <span class="bu">Set</span>(<span class="fu">move_guard</span>(input<span class="op">,</span> possible_moves)</span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>( [ d[<span class="dv">0</span>]<span class="op">,</span> d[<span class="dv">1</span>] ] )))<span class="op">.</span><span class="at">size</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="expression">
 
@@ -322,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Uh oh, more complex now… we have to check how many discrete locations we can add an extra obstacle to in the guard’s path to send him into an infinite loop. This was daunting to start with, because anything that has to deal with checking for infinite loops seems difficult to do without launching into an infinite loop yourself. For example, if you revisit a specific location, who’s to say that your next step will continue the loop?</p>
 <p>However, after some pondering, I realized that that is <strong>not</strong> the case here. We have very specific rules about movement, so we can say with certainty that if a position is repeated, and a guard is facing the same way as before, then a loop is happening. In fact, we can abstract it away farther, and only care about checking the turn points for overlaps, since those are the ‘decision points’ where a loop could be entered.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="272" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 271;"><span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>check_loop <span class="op">=</span> (input<span class="op">,</span> possible_moves) <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="272" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 271;"><span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>check_loop <span class="op">=</span> (input<span class="op">,</span> possible_moves) <span class="kw">=&gt;</span> {</span>
 <span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pos <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>()</span>
 <span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> [[row<span class="op">,</span> col]<span class="op">,</span> dir] <span class="op">=</span> [input<span class="op">.</span><span class="at">start</span><span class="op">,</span> input<span class="op">.</span><span class="at">dir</span>]</span>
 <span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> turn <span class="op">=</span> <span class="kw">false</span></span>
@@ -359,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a>      turn <span class="op">=</span> <span class="kw">false</span></span>
 <span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="declaration">
 
@@ -370,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Another change of note is we are now keeping a boolean flag <code>turn</code> to keep track of whether each move is a turn or not. This way, we can say that if the guard is turning, check if the position has been reached before; otherwise, continue as is onto the next step.</p>
 <p>If you look closely, you’ll also see the bit shifting mentioned above being used to collapse row, col, and dir down to one number.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-startfrom="321" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-startfrom="321" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>  <span class="co">// get unique route positions</span></span>
 <span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> all_route <span class="op">=</span> <span class="fu">move_guard</span>(input<span class="op">,</span> possible_moves)</span>
 <span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> (d[<span class="dv">0</span>] <span class="op">&lt;&lt;</span> <span class="dv">8</span>) <span class="op">|</span> d[<span class="dv">1</span>] )</span>
@@ -396,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a>  <span class="co">// return unique counts</span></span>
 <span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> loop_counter<span class="op">.</span><span class="at">size</span> <span class="op">-</span> <span class="dv">1</span> <span class="co">// duped the start position</span></span>
-<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-6" data-nodetype="expression">
 
@@ -476,13 +479,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -511,6 +515,11 @@ window._ojs.runtime.interpretFromScriptTags();
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

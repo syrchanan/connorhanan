@@ -31,17 +31,23 @@ website:
     right:
       - icon: github
         href: https://github.com/syrchanan
+        target: _blank
       - icon: linkedin
         href: https://www.linkedin.com/in/connorhanan/
+        target: _blank
       - icon: envelope
         href: mailto:connorhanan4@gmail.com
+        target: _blank
       - icon: rss
         href: posts/index.xml
+        target: _blank
         
   favicon: ./images/icon.png
+  llms-txt: true
 
 format:
   html:
     theme: journal
     css: styles.css
+    link-external-newwindow: true
     # toc: true

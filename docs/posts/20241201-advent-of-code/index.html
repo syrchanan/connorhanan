@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>2024 Day 1: Historian Hysteria – connorhanan</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -72,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-36055dde38e1c66a85944b0e21486264.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d390f6b1bb233dafbd59a397b5af9ca7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -156,22 +159,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/syrchanan"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/syrchanan" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/" target="_blank"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:connorhanan4@gmail.com"> <i class="bi bi-envelope" role="img">
+    <a class="nav-link" href="mailto:connorhanan4@gmail.com" target="_blank"> <i class="bi bi-envelope" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../posts/index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../posts/index.xml" target="_blank"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -226,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="part-1" class="level3">
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="1032" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1031;"><span id="cb1-1032"><a href="#cb1-1032" aria-hidden="true" tabindex="-1"></a>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-startfrom="1032" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1031;"><span id="cb1-1032"><a href="#cb1-1032" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb1-1033"><a href="#cb1-1033" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> parsed <span class="op">=</span> raw<span class="op">.</span><span class="fu">split</span>(<span class="st">'</span><span class="sc">\n</span><span class="st">'</span>)</span>
 <span id="cb1-1034"><a href="#cb1-1034" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> {</span>
 <span id="cb1-1035"><a href="#cb1-1035" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> d<span class="op">.</span><span class="fu">trimStart</span>()</span>
@@ -240,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-1043"><a href="#cb1-1043" aria-hidden="true" tabindex="-1"></a>                   me<span class="op">.</span><span class="fu">map</span>(elem <span class="kw">=&gt;</span> elem[<span class="dv">1</span>])<span class="op">.</span><span class="fu">sort</span>()[i]</span>
 <span id="cb1-1044"><a href="#cb1-1044" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> diff <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> diff <span class="op">*</span> <span class="op">-</span><span class="dv">1</span> <span class="op">:</span> diff</span>
 <span id="cb1-1045"><a href="#cb1-1045" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">reduce</span>((nxt<span class="op">,</span> acc) <span class="kw">=&gt;</span> nxt <span class="op">+</span> acc<span class="op">,</span> <span class="dv">0</span>)</span>
-<span id="cb1-1046"><a href="#cb1-1046" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-1046"><a href="#cb1-1046" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="expression">
 
@@ -252,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A simple conditional brings us home to our first star of the year!</p>
 <p>Just for fun, let’s do the same in R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>raw <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>raw <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">n"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  .[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(str_squish) <span class="sc">%&gt;%</span> </span>
@@ -275,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>clean_data <span class="sc">%&gt;%</span> </span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> <span class="fu">abs</span>(part_2 <span class="sc">-</span> part_1)) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(diff)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2164381</code></pre>
 </div>
@@ -287,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>So for this part, we are tasked with counting the appearances of the first number list in the second, then multiplying across:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="1097" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1096;"><span id="cb4-1097"><a href="#cb4-1097" aria-hidden="true" tabindex="-1"></a>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="1097" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1096;"><span id="cb4-1097"><a href="#cb4-1097" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb4-1098"><a href="#cb4-1098" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> parsed <span class="op">=</span> raw<span class="op">.</span><span class="fu">split</span>(<span class="st">'</span><span class="sc">\n</span><span class="st">'</span>)</span>
 <span id="cb4-1099"><a href="#cb4-1099" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> {</span>
 <span id="cb4-1100"><a href="#cb4-1100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> d<span class="op">.</span><span class="fu">trimStart</span>()</span>
@@ -302,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-1109"><a href="#cb4-1109" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> part_1<span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> nxt) <span class="kw">=&gt;</span> {</span>
 <span id="cb4-1110"><a href="#cb4-1110" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> acc <span class="op">+</span> nxt <span class="op">*</span> ( part_2<span class="op">.</span><span class="fu">filter</span>(elem <span class="kw">=&gt;</span> elem <span class="op">===</span> nxt)<span class="op">.</span><span class="at">length</span> )</span>
 <span id="cb4-1111"><a href="#cb4-1111" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span> <span class="dv">0</span>)</span>
-<span id="cb4-1112"><a href="#cb4-1112" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-1112"><a href="#cb4-1112" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="expression">
 
@@ -312,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Not too bad of a solution, just copied/pasted the parsing from above, and actually split it into two arrays now instead of doing it all at once. That way, a basic accumulation across the first array (which we are treating as the ‘keys’ in this case), nets us our answer. Another way to do it would be create an object from list #2, with each number as a key and each count as a value, which would eliminate the repeating lookups.</p>
 <p>And again in R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>parsed <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>parsed <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">as.numeric</span>(.x[[<span class="dv">1</span>]])) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_c</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>() <span class="sc">%&gt;%</span> </span>
@@ -328,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prod =</span> part_1 <span class="sc">*</span> n) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(prod, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20719933</code></pre>
 </div>
@@ -405,13 +408,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -440,6 +444,11 @@ window._ojs.runtime.interpretFromScriptTags();
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

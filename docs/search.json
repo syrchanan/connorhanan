@@ -347,42 +347,42 @@
     "href": "portfolio/index.html",
     "title": "Portfolio",
     "section": "",
-    "text": "A side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.\nClick here to check it out!"
+    "text": "A collection of annual programming puzzles, solved using a mix of R, Julia, Python, ObservableJS, and more.\nView on GitHub\n\n\n\nA mix of data science and statistical analysis work in R and Python — from broadcast media research to academic projects.\nView on GitHub\n\n\n\nA personal R package for TV ratings analysis and other utilities, including pareto implementations and streak counting.\nView on GitHub\n\n\n\nPython/Typescript monorepo using Lanchester equations to model Civil war battles. Takes into account unit experience, types, dynamic morale, etc.\nView on GitHub\n\n\n\nPersonal infrastructure for AI development — custom Docker environments, Claude prompts, skills, and an iterative agent workflow system.\nView on GitHub"
   },
   {
-    "objectID": "portfolio/index.html#automated-television-ratings",
-    "href": "portfolio/index.html#automated-television-ratings",
+    "objectID": "portfolio/index.html#advent-of-code",
+    "href": "portfolio/index.html#advent-of-code",
     "title": "Portfolio",
     "section": "",
-    "text": "A side project, this was created out of my interest in tracking the daily cable news Nielsen ratings. This script was scheduled to run as a specific time each day, and would scrape the information off of a site, process the data into nice tables, and automatically email me the results. Web scraping was initially quite complex, though after this project using the rvest package is now a much more familiar process.\nClick here to check it out!"
+    "text": "A collection of annual programming puzzles, solved using a mix of R, Julia, Python, ObservableJS, and more.\nView on GitHub"
   },
   {
-    "objectID": "portfolio/index.html#data-mining-sem-project",
-    "href": "portfolio/index.html#data-mining-sem-project",
+    "objectID": "portfolio/index.html#assorted-projects",
+    "href": "portfolio/index.html#assorted-projects",
     "title": "Portfolio",
-    "section": "Data Mining Sem Project",
-    "text": "Data Mining Sem Project\nThis project was twofold in aim: determine which insurance indicator has the largest effect on the policy charges, as well as finding which model best reflects our data. In the analysis, models of numerous variations were used, including: KNN, SVM, Decision Trees, Neural Nets, eXtreme Gradient Boosting, and Naive Bayes. Overall, the project was a deep dive into all things machine learning, from data cleaning and preparation to executing the models and checking their accuracy.\nClick here to check it out!"
+    "section": "",
+    "text": "A mix of data science and statistical analysis work in R and Python — from broadcast media research to academic projects.\nView on GitHub"
   },
   {
-    "objectID": "portfolio/index.html#data-viz-sem-project",
-    "href": "portfolio/index.html#data-viz-sem-project",
+    "objectID": "portfolio/index.html#connor",
+    "href": "portfolio/index.html#connor",
     "title": "Portfolio",
-    "section": "Data Viz Sem Project",
-    "text": "Data Viz Sem Project\nAn early foray into the world of R and the Tidyverse, this project explores the competitive differences between Formula 1 teams who build thier own engines versus those who buy them from manufacturers. Though it is fairly basic analysis in nature, this project offered lots of practice in manipulating and plotting data using the tidyverse.\nClick here to check it out!"
+    "section": "",
+    "text": "A personal R package for TV ratings analysis and other utilities, including pareto implementations and streak counting.\nView on GitHub"
   },
   {
-    "objectID": "portfolio/index.html#event-cvg-tern-plot",
-    "href": "portfolio/index.html#event-cvg-tern-plot",
+    "objectID": "portfolio/index.html#civil-war-simulator",
+    "href": "portfolio/index.html#civil-war-simulator",
     "title": "Portfolio",
-    "section": "Event Cvg Tern Plot",
-    "text": "Event Cvg Tern Plot\nCreated as a foray into NLP, this project utilizes the GDELT closed captioning data of cable news channels to analyze usage patterns across networks. This iteration of the project was created to analyze coverage of the Georgia Senate runoff elections in December of 2022; however, it is built in such a way that it can be used for any event - all you need is a date and a keyword to filter around.\nFor further information about this project, and to see the results, please find it in the blog post I wrote.\nClick here to check it out!"
+    "section": "",
+    "text": "Python/Typescript monorepo using Lanchester equations to model Civil war battles. Takes into account unit experience, types, dynamic morale, etc.\nView on GitHub"
   },
   {
-    "objectID": "portfolio/index.html#data-analysis-sem-project",
-    "href": "portfolio/index.html#data-analysis-sem-project",
+    "objectID": "portfolio/index.html#ai-tooling",
+    "href": "portfolio/index.html#ai-tooling",
     "title": "Portfolio",
-    "section": "Data Analysis Sem Project",
-    "text": "Data Analysis Sem Project\nCreated as a final project for class, this analysis dives into the electric vehicle rebates offered by New York State. Specifically, it uses the apriori algorithm to conduct association rules mining on the information to determine which vehicles were the most popular for consumers to claim the maximum rebate with. Python’s pandas, sklearn, and mlxtend libraries featured quite prominently throughout this analysis.\nClick here to check it out!"
+    "section": "",
+    "text": "Personal infrastructure for AI development — custom Docker environments, Claude prompts, skills, and an iterative agent workflow system.\nView on GitHub"
   },
   {
     "objectID": "posts/20221211-ga-runoff/index.html",

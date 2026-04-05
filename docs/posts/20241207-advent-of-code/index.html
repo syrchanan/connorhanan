@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>2024 Day 7: Bridge Repair – connorhanan</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -72,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-36055dde38e1c66a85944b0e21486264.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d390f6b1bb233dafbd59a397b5af9ca7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -156,22 +159,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/syrchanan"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/syrchanan" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/connorhanan/" target="_blank"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:connorhanan4@gmail.com"> <i class="bi bi-envelope" role="img">
+    <a class="nav-link" href="mailto:connorhanan4@gmail.com" target="_blank"> <i class="bi bi-envelope" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../posts/index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../posts/index.xml" target="_blank"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -222,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><a href="https://adventofcode.com/2024/day/7">Day 7</a>!</p>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="901" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 900;"><span id="cb1-901"><a href="#cb1-901" aria-hidden="true" tabindex="-1"></a>input <span class="op">=</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="901" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 900;"><span id="cb1-901"><a href="#cb1-901" aria-hidden="true" tabindex="-1"></a>input <span class="op">=</span> {</span>
 <span id="cb1-902"><a href="#cb1-902" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> clean <span class="op">=</span> raw<span class="op">.</span><span class="fu">split</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb1-903"><a href="#cb1-903" aria-hidden="true" tabindex="-1"></a>  clean<span class="op">.</span><span class="fu">pop</span>()</span>
 <span id="cb1-904"><a href="#cb1-904" aria-hidden="true" tabindex="-1"></a></span>
@@ -233,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-909"><a href="#cb1-909" aria-hidden="true" tabindex="-1"></a>      <span class="dt">operands</span><span class="op">:</span> parsed<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">map</span>(elem <span class="kw">=&gt;</span> <span class="op">+</span>elem)</span>
 <span id="cb1-910"><a href="#cb1-910" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb1-911"><a href="#cb1-911" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb1-912"><a href="#cb1-912" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-912"><a href="#cb1-912" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -244,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="part-1">Part 1</h3>
 <p>In this puzzle, we are given a bunch of numbers, and have to figure out how to reach the result by different operations. Those pesky elves stole all the operators!</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb2" data-startfrom="923" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 922;"><span id="cb2-923"><a href="#cb2-923" aria-hidden="true" tabindex="-1"></a><span class="co">// go backwards along input -- if mod div === 0 then it's multiply, else add</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-startfrom="923" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 922;"><span id="cb2-923"><a href="#cb2-923" aria-hidden="true" tabindex="-1"></a><span class="co">// go backwards along input -- if mod div === 0 then it's multiply, else add</span></span>
 <span id="cb2-924"><a href="#cb2-924" aria-hidden="true" tabindex="-1"></a>check_eq_step <span class="op">=</span> (target<span class="op">,</span> operands) <span class="kw">=&gt;</span> {</span>
 <span id="cb2-925"><a href="#cb2-925" aria-hidden="true" tabindex="-1"></a>  <span class="co">// final check</span></span>
 <span id="cb2-926"><a href="#cb2-926" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (operands<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">1</span>) <span class="cf">return</span> operands[<span class="dv">0</span>] <span class="op">===</span> target</span>
@@ -263,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-939"><a href="#cb2-939" aria-hidden="true" tabindex="-1"></a>    <span class="co">// sub case</span></span>
 <span id="cb2-940"><a href="#cb2-940" aria-hidden="true" tabindex="-1"></a>    (sub <span class="op">&amp;&amp;</span> <span class="fu">check_eq_step</span>( target <span class="op">-</span> operands[<span class="dv">0</span>]<span class="op">,</span> operands<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>) ))</span>
 <span id="cb2-941"><a href="#cb2-941" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-942"><a href="#cb2-942" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-942"><a href="#cb2-942" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -273,10 +276,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I first thought of trying to work through the equation recursively, left to right, but it quickly expanded into so many possible routes of combinations. After a while of tinkering, I landed on the above – working backwards through the equation. I realized that if the operation doesn’t cleanly work, then it’s invalid, and we can trim that route of options.</p>
 <p>This way, we can prune the options as we go, without having to calculate to the end of the equation. For example, if we know the result is 200, and we know the last number in the equation is 201, we know the calculation is impossible because (a) 200 / 201 is not an integer, and (b) 200 - 201 is negative. Therefore, with one check, we can toss the whole equation, instead of only realizing it at the end!</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb3" data-startfrom="953" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 952;"><span id="cb3-953"><a href="#cb3-953" aria-hidden="true" tabindex="-1"></a>input<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> <span class="fu">check_eq_step</span>(d<span class="op">.</span><span class="at">target</span><span class="op">,</span> d<span class="op">.</span><span class="at">operands</span><span class="op">.</span><span class="fu">slice</span>()<span class="op">.</span><span class="fu">reverse</span>()))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-startfrom="953" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 952;"><span id="cb3-953"><a href="#cb3-953" aria-hidden="true" tabindex="-1"></a>input<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> <span class="fu">check_eq_step</span>(d<span class="op">.</span><span class="at">target</span><span class="op">,</span> d<span class="op">.</span><span class="at">operands</span><span class="op">.</span><span class="fu">slice</span>()<span class="op">.</span><span class="fu">reverse</span>()))</span>
 <span id="cb3-954"><a href="#cb3-954" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> nxt) <span class="kw">=&gt;</span> {</span>
 <span id="cb3-955"><a href="#cb3-955" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> acc <span class="op">+</span> nxt<span class="op">.</span><span class="at">target</span></span>
-<span id="cb3-956"><a href="#cb3-956" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-956"><a href="#cb3-956" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="expression">
 
@@ -290,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>In part 2, we now have to worry about string concatenation as a possible operator, instead of only multiplication and addition.</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb4" data-startfrom="971" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 970;"><span id="cb4-971"><a href="#cb4-971" aria-hidden="true" tabindex="-1"></a><span class="co">// go backwards again, but add check for string end</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="971" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 970;"><span id="cb4-971"><a href="#cb4-971" aria-hidden="true" tabindex="-1"></a><span class="co">// go backwards again, but add check for string end</span></span>
 <span id="cb4-972"><a href="#cb4-972" aria-hidden="true" tabindex="-1"></a>check_eq_step_2 <span class="op">=</span> (target<span class="op">,</span> operands) <span class="kw">=&gt;</span> {</span>
 <span id="cb4-973"><a href="#cb4-973" aria-hidden="true" tabindex="-1"></a>  <span class="co">// final check</span></span>
 <span id="cb4-974"><a href="#cb4-974" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (operands<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">1</span>) <span class="cf">return</span> operands[<span class="dv">0</span>] <span class="op">===</span> target</span>
@@ -314,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-992"><a href="#cb4-992" aria-hidden="true" tabindex="-1"></a>    (cat <span class="op">&amp;&amp;</span> <span class="fu">check_eq_step_2</span>( <span class="bu">Number</span>(<span class="bu">String</span>(target)<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="bu">String</span>(operands[<span class="dv">0</span>])<span class="op">.</span><span class="at">length</span>))<span class="op">,</span> </span>
 <span id="cb4-993"><a href="#cb4-993" aria-hidden="true" tabindex="-1"></a>                             operands<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>) ))</span>
 <span id="cb4-994"><a href="#cb4-994" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-995"><a href="#cb4-995" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-995"><a href="#cb4-995" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-4" data-nodetype="declaration">
 
@@ -323,10 +326,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>However, this ends up being not too bad, as we can add an extra recursive step, and check the result and operator via slicing. For example, if the target is 156, and our operand is 6, then we have a match, since that would leave us with 15 (still working backwards here).</p>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb5" data-startfrom="1004" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1003;"><span id="cb5-1004"><a href="#cb5-1004" aria-hidden="true" tabindex="-1"></a>input<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> <span class="fu">check_eq_step_2</span>(d<span class="op">.</span><span class="at">target</span><span class="op">,</span> d<span class="op">.</span><span class="at">operands</span><span class="op">.</span><span class="fu">slice</span>()<span class="op">.</span><span class="fu">reverse</span>()))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="1004" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1003;"><span id="cb5-1004"><a href="#cb5-1004" aria-hidden="true" tabindex="-1"></a>input<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> <span class="fu">check_eq_step_2</span>(d<span class="op">.</span><span class="at">target</span><span class="op">,</span> d<span class="op">.</span><span class="at">operands</span><span class="op">.</span><span class="fu">slice</span>()<span class="op">.</span><span class="fu">reverse</span>()))</span>
 <span id="cb5-1005"><a href="#cb5-1005" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> nxt) <span class="kw">=&gt;</span> {</span>
 <span id="cb5-1006"><a href="#cb5-1006" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> acc <span class="op">+</span> nxt<span class="op">.</span><span class="at">target</span></span>
-<span id="cb5-1007"><a href="#cb5-1007" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-1007"><a href="#cb5-1007" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-5" data-nodetype="expression">
 
@@ -405,13 +408,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -440,6 +444,11 @@ window._ojs.runtime.interpretFromScriptTags();
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

@@ -1,0 +1,13 @@
+Hi, I’m Connor! I’m from Carlsbad, CA and am a data scientist currently living in New York City.
+
+I started my journey into data science from the world of television news production after I had the realization that audience viewing habits impact TV coverage in a huge way. Ever since I started working on the research and data science side of the industry (rather than production), I have developed a greater appreciation for and fascination in the media landscape as a whole.
+
+Some of my most interesting projects to date include:
+
+- forecasting the audience of a cable network’s programming, weeks to years ahead of time, to help set the overall network budget
+- using AI to process cable news closed captions to measure the impact of content on viewership
+- building custom APIs with endpoints to fetch data on demand, make predictions based on input data, share content via email and other platforms, etc.
+
+When not performing data dives, you can often find me playing and coaching water polo, reenacting the American Civil War, or at the beach.
+
+If you would like to learn more about me, or what I do, please check out some of the links on the left - and don’t hesitate to reach out!

@@ -1,64 +1,47 @@
 ---
 title: "Portfolio"
-about: 
+about:
   template: solana
-engine: knitr 
+engine: knitr
 resume:
   pdf: "Resume_Connor_Hanan.pdf"
 ---
 
-```{r get_portfolio}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
-#| output: asis
+::: {.portfolio-grid}
 
-if (!require("pacman", quietly = T)) install.packages("pacman", quiet = T)
-pacman::p_load("tidyverse", "gh", "jsonlite") |> invisible()
-set.seed(8675309)
+::: {.portfolio-card}
+## Advent of Code
+A collection of annual programming puzzles, solved using a mix of R, Julia, Python, ObservableJS, and more.
 
-r_projects <- gh::gh("/repos/syrchanan/portfolio/contents/r_projects", .token = gh::gh_token())
-py_projects <- gh::gh("/repos/syrchanan/portfolio/contents/python_projects", .token = gh::gh_token())
+[View on GitHub](https://github.com/syrchanan/advent_of_code){.btn .btn-outline-primary}
+:::
 
-paths <- tibble(
-  names = c(
-    map_chr(r_projects, ~.x$name),
-    map_chr(py_projects, ~.x$name)
-  ),
-  paths = c(
-    map_chr(r_projects, ~.x$path),
-    map_chr(py_projects, ~.x$path)
-  )
-)
+::: {.portfolio-card}
+## Assorted Projects
+A mix of data science and statistical analysis work in R and Python — from broadcast media research to academic projects.
 
-paths %>%
-  mutate(readme = map(paths,
-                      ~ gh::gh(
-                        paste0("/repos/syrchanan/portfolio/contents/", .x, "/README.md/"),
-                        .token = gh::gh_token()
-                      ))) %>% 
-  mutate(content = map(readme,
-                     ~ rawToChar(base64_dec(.x[[10]]))),
-         link = map(readme,
-                    ~ .x[[6]])) %>% 
-  mutate(link = map_chr(link,
-                        ~ str_remove_all(.x, "README\\.md"))) -> final_data
+[View on GitHub](https://github.com/syrchanan/portfolio){.btn .btn-outline-primary}
+:::
 
-create_markdown <- function(title, text, link) {
-  
-  cat(
-    paste0("\n## ", 
-           str_to_title(str_replace_all(title, "_", " "))),
-    paste0(text),
-    paste0("[Click here to check it out!](", link, ")"),
-    sep = "\n"
-  )
-  
-}
+::: {.portfolio-card}
+## `connoR`
+A personal R package for TV ratings analysis and other utilities, including pareto implementations and streak counting.
 
-pwalk(list(final_data$names, final_data$content, final_data$link),
-     create_markdown)
+[View on GitHub](https://github.com/syrchanan/connoR){.btn .btn-outline-primary}
+:::
 
-```
+::: {.portfolio-card}
+## Civil War Simulator
+Python/Typescript monorepo using Lanchester equations to model Civil war battles. Takes into account unit experience, types, dynamic morale, etc.
 
+[View on GitHub](https://github.com/syrchanan/civil_war_sim){.btn .btn-outline-primary}
+:::
+
+::: {.portfolio-card}
+## AI Tooling
+Personal infrastructure for AI development — custom Docker environments, Claude prompts, skills, and an iterative agent workflow system.
+
+[View on GitHub](https://github.com/syrchanan/ai_tooling){.btn .btn-outline-primary}
+:::
+
+:::
