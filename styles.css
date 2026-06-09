@@ -69,13 +69,13 @@
   background-color: #007ab2;
   color: #fff;
   border: 1px solid #007ab2;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .btn:hover,
-.btn:focus,
+.btn:focus-visible,
 .btn:active,
-.btn:active:focus {
+.btn:active:focus-visible {
   background-color: #fff;
   color: #007ab2;
   border-color: #007ab2;
@@ -86,9 +86,9 @@
 }
 
 .about-link:hover,
-.about-link:focus,
+.about-link:focus-visible,
 .about-link:active,
-.about-link:active:focus {
+.about-link:active:focus-visible {
   background-color: #fff !important;
   color: #007ab2 !important;
   border-color: #007ab2 !important;
@@ -145,4 +145,9 @@ a {
   display: -webkit-flex;
   padding-left: 0;
   list-style: none;
+}
+
+/* Automated post filter toggle */
+.auto-post-filter-bar {
+  margin-bottom: 1rem;
 }

@@ -348,6 +348,31 @@ Oct 24, 2022
 </section>
 <section id="all-posts" class="level2">
 <h2 class="anchored" data-anchor-id="all-posts">All Posts</h2>
+<div class="auto-post-filter-bar">
+  <button id="toggle-auto-posts" class="btn btn-sm">Hide Automated Posts</button>
+</div>
+<script>
+(function() {
+  var btn = document.getElementById('toggle-auto-posts');
+  if (!btn) return;
+  var hiding = false;
+  btn.addEventListener('click', function() {
+    hiding = !hiding;
+    var list = window['quarto-listings'] && window['quarto-listings']['listing-post-listing'];
+    if (!list) return;
+    if (hiding) {
+      list.filter(function(item) {
+        var cats = item.values()['listing-categories'] || '';
+        return cats.indexOf('Automated Updates') === -1;
+      });
+      btn.textContent = 'Show Automated Posts';
+    } else {
+      list.filter();
+      btn.textContent = 'Hide Automated Posts';
+    }
+  });
+})();
+</script>
 <div id="listing-post-listing" class="quarto-listing quarto-listing-container-grid">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">

@@ -30,6 +30,8 @@ Oct 24, 2022
 
 ## All Posts
 
+Hide Automated Posts
+
 ##### New Records
 
 2 min
