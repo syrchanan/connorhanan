@@ -30,6 +30,18 @@ Oct 24, 2022
 
 ## All Posts
 
+##### New Records
+
+2 min
+
+Jun 8, 2026
+
+##### Recently Read
+
+1 min
+
+Jun 8, 2026
+
 ##### Recently Read
 
 1 min

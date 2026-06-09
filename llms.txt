@@ -3,6 +3,7 @@
 ## Pages
 
 - [index](https://connorhanan.com/resume/index.llms.md)
+- [Recently Read](https://connorhanan.com/posts/auto/2026-06-08-goodreads.llms.md)
 - [Recently Read](https://connorhanan.com/posts/auto/2026-04-21-goodreads.llms.md)
 - [Recently Read](https://connorhanan.com/posts/auto/2026-03-21-goodreads.llms.md)
 - [New Records](https://connorhanan.com/posts/auto/2026-03-08-discogs.llms.md)
@@ -36,4 +37,5 @@
 - [New Records](https://connorhanan.com/posts/auto/2026-02-27-discogs.llms.md)
 - [New Records](https://connorhanan.com/posts/auto/2026-03-17-discogs.llms.md)
 - [Recently Read](https://connorhanan.com/posts/auto/2026-03-28-goodreads.llms.md)
+- [New Records](https://connorhanan.com/posts/auto/2026-06-08-discogs.llms.md)
 - [index](https://connorhanan.com/posts/index.llms.md)
