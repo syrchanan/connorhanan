@@ -30,5 +30,33 @@ title-block-banner: true
 
 ## All Posts
 
+```{=html}
+<div class="auto-post-filter-bar">
+  <button id="toggle-auto-posts" class="btn btn-sm">Hide Automated Posts</button>
+</div>
+<script>
+(function() {
+  var btn = document.getElementById('toggle-auto-posts');
+  if (!btn) return;
+  var hiding = false;
+  btn.addEventListener('click', function() {
+    hiding = !hiding;
+    var list = window['quarto-listings'] && window['quarto-listings']['listing-post-listing'];
+    if (!list) return;
+    if (hiding) {
+      list.filter(function(item) {
+        var cats = item.values()['listing-categories'] || '';
+        return cats.indexOf('Automated Updates') === -1;
+      });
+      btn.textContent = 'Show Automated Posts';
+    } else {
+      list.filter();
+      btn.textContent = 'Hide Automated Posts';
+    }
+  });
+})();
+</script>
+```
+
 ::: {#post-listing}
 :::

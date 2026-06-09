@@ -30,6 +30,26 @@ Oct 24, 2022
 
 ## All Posts
 
+Hide Automated Posts
+
+##### New Records
+
+2 min
+
+Jun 8, 2026
+
+##### Recently Read
+
+1 min
+
+Jun 8, 2026
+
+##### Recently Read
+
+1 min
+
+Apr 21, 2026
+
 ##### Recently Read, Automated
 
 A Custom Bash Plugin To Keep My Goodreads Posts Flipping
